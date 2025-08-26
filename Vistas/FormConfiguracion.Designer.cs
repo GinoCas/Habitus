@@ -271,8 +271,8 @@ namespace Habitus.Vistas
             tabPerfil.Controls.Add(lblIMC);
 
             // Eventos para calcular IMC automáticamente
-            this.nudPeso.ValueChanged += (sender, e) => CalcularIMC(sender, e, tabPerfil);
-            this.nudAltura.ValueChanged += (sender, e) => CalcularIMC(sender, e, tabPerfil);
+            this.nudPeso.ValueChanged += (sender, e) => CalcularIMC(sender, e);
+            this.nudAltura.ValueChanged += (sender, e) => CalcularIMC(sender, e);
         }
 
         private void InitializeTabPreferencias()

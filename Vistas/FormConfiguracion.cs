@@ -548,7 +548,7 @@ namespace Habitus.Vistas
             }
         }
 
-        private void CalcularIMC(object sender, EventArgs e)
+        public void CalcularIMC(object sender, EventArgs e)
         {
             try
             {

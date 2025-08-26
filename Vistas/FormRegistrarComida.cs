@@ -328,7 +328,6 @@ namespace Habitus.Vistas
             var alimentos = _controladorComida.BuscarAlimentos("");
             lstAlimentos.DataSource = alimentos;
             lstAlimentos.DisplayMember = "Nombre";
-            lstAlimentos.ValueMember = "Id";
         }
 
         private void TxtBuscarAlimento_TextChanged(object sender, EventArgs e)

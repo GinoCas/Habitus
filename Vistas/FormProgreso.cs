@@ -93,6 +93,10 @@ namespace Habitus.Vistas
 
         private void CrearPanelRegistro(Panel panelPadre)
         {
+            if(panelPadre == null)
+            {
+                panelPadre = new();
+            }
             var lblTituloRegistro = new Label
             {
                 Text = "Registro Diario",
