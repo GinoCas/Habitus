@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using Habitus.Controladores;
@@ -19,6 +20,30 @@ namespace Habitus.Vistas
             InitializeComponent();
             InicializarControladores();
             CargarDatosUsuario();
+            this.Load += FormPrincipal_Load;
+        }
+        
+        private void FormPrincipal_Load(object sender, EventArgs e)
+        {
+            // Centrado inicial
+            CentrarPaneles();
+            // Suscribirse al evento Resize del panel de contenido
+            this.panelContenido.Resize += new System.EventHandler(this.panelContenido_Resize);
+        }
+
+        private void panelContenido_Resize(object sender, EventArgs e)
+        {
+            CentrarPaneles();
+        }
+
+        private void CentrarPaneles()
+        {
+            var panelContenedorPrincipal = this.panelContenido.Controls.Find("panelContenedorPrincipal", true).FirstOrDefault() as Panel;
+            if (panelContenedorPrincipal != null)
+            {
+                panelContenedorPrincipal.Left = (this.panelContenido.ClientSize.Width - panelContenedorPrincipal.Width) / 2;
+                panelContenedorPrincipal.Top = (this.panelContenido.ClientSize.Height - panelContenedorPrincipal.Height) / 2;
+            }
         }
 
         private void InicializarControladores()
@@ -137,15 +162,25 @@ namespace Habitus.Vistas
 
         private void CrearPanelContenido()
         {
+            // Panel contenedor principal para centrar todo el contenido
+            var panelContenedorPrincipal = new Panel
+            {
+                Name = "panelContenedorPrincipal",
+                Size = new Size(740, 550), // Tamaño que engloba a todos los paneles
+                Location = new Point((panelContenido.ClientSize.Width - 740) / 2, 20)
+            };
+            panelContenido.Controls.Add(panelContenedorPrincipal);
+
             // Panel de resumen del día
             var panelResumen = new Panel
             {
-                Location = new Point(20, 20),
+                Name = "panelResumen",
+                Location = new Point(0, 0),
                 Size = new Size(740, 200),
                 BackColor = Color.White,
                 BorderStyle = BorderStyle.FixedSingle
             };
-            panelContenido.Controls.Add(panelResumen);
+            panelContenedorPrincipal.Controls.Add(panelResumen);
 
             // Título del resumen
             var lblTituloResumen = new Label
@@ -153,23 +188,31 @@ namespace Habitus.Vistas
                 Text = "Resumen del Día",
                 Font = new Font("Segoe UI", 14, FontStyle.Bold),
                 ForeColor = Color.FromArgb(52, 73, 94),
-                Location = new Point(20, 15),
-                Size = new Size(200, 25)
+                Location = new Point((740 - 200) / 2, 15),
+                Size = new Size(200, 25),
+                TextAlign = ContentAlignment.MiddleCenter
             };
             panelResumen.Controls.Add(lblTituloResumen);
 
-            // Crear tarjetas de resumen
             CrearTarjetasResumen(panelResumen);
+
+            // Configuración para paneles inferiores
+            int panelInferiorWidth = 360;
+            int espacioEntrePaneles = 20;
+            int totalWidthPanelesInferiores = (panelInferiorWidth * 2) + espacioEntrePaneles;
+            int startXInferior = (740 - totalWidthPanelesInferiores) / 2;
 
             // Panel de retos activos
             var panelRetosActivos = new Panel
             {
-                Location = new Point(20, 240),
-                Size = new Size(360, 300),
+                Name = "panelRetosActivos",
+                Location = new Point(startXInferior, 220),
+                Size = new Size(panelInferiorWidth, 300),
                 BackColor = Color.White,
-                BorderStyle = BorderStyle.FixedSingle
+                BorderStyle = BorderStyle.FixedSingle,
+                Padding = new Padding(15, 10, 15, 10)
             };
-            panelContenido.Controls.Add(panelRetosActivos);
+            panelContenedorPrincipal.Controls.Add(panelRetosActivos);
 
             var lblTituloRetos = new Label
             {
@@ -177,19 +220,22 @@ namespace Habitus.Vistas
                 Font = new Font("Segoe UI", 12, FontStyle.Bold),
                 ForeColor = Color.FromArgb(52, 73, 94),
                 Location = new Point(15, 15),
-                Size = new Size(150, 25)
+                Size = new Size(panelInferiorWidth - 30, 25),
+                TextAlign = ContentAlignment.MiddleCenter
             };
             panelRetosActivos.Controls.Add(lblTituloRetos);
 
             // Panel de progreso reciente
             var panelProgresoReciente = new Panel
             {
-                Location = new Point(400, 240),
-                Size = new Size(360, 300),
+                Name = "panelProgresoReciente",
+                Location = new Point(startXInferior + panelInferiorWidth + espacioEntrePaneles, 220),
+                Size = new Size(panelInferiorWidth, 300),
                 BackColor = Color.White,
-                BorderStyle = BorderStyle.FixedSingle
+                BorderStyle = BorderStyle.FixedSingle,
+                Padding = new Padding(15, 10, 15, 10)
             };
-            panelContenido.Controls.Add(panelProgresoReciente);
+            panelContenedorPrincipal.Controls.Add(panelProgresoReciente);
 
             var lblTituloProgreso = new Label
             {
@@ -197,7 +243,8 @@ namespace Habitus.Vistas
                 Font = new Font("Segoe UI", 12, FontStyle.Bold),
                 ForeColor = Color.FromArgb(52, 73, 94),
                 Location = new Point(15, 15),
-                Size = new Size(150, 25)
+                Size = new Size(panelInferiorWidth - 30, 25),
+                TextAlign = ContentAlignment.MiddleCenter
             };
             panelProgresoReciente.Controls.Add(lblTituloProgreso);
         }
@@ -212,13 +259,24 @@ namespace Habitus.Vistas
                 new { Titulo = "Pasos\nRealizados", Valor = "0", Color = Color.FromArgb(155, 89, 182) }
             };
 
+            // Agregar padding al panel padre
+            panelPadre.Padding = new Padding(20, 10, 20, 10);
+
+            // Calcular posición centrada para las tarjetas con padding
+            int tarjetaWidth = 150;
+            int espacioEntreTarjetas = 25;
+            int totalWidthTarjetas = (tarjetaWidth * tarjetas.Length) + (espacioEntreTarjetas * (tarjetas.Length - 1));
+            int availableWidth = panelPadre.Width - panelPadre.Padding.Left - panelPadre.Padding.Right;
+            int startX = panelPadre.Padding.Left + ((availableWidth - totalWidthTarjetas) / 2);
+
             for (int i = 0; i < tarjetas.Length; i++)
             {
                 var tarjeta = new Panel
                 {
-                    Location = new Point(20 + (i * 170), 50),
-                    Size = new Size(150, 120),
-                    BackColor = tarjetas[i].Color
+                    Location = new Point(startX + (i * (tarjetaWidth + espacioEntreTarjetas)), 55),
+                    Size = new Size(tarjetaWidth, 120),
+                    BackColor = tarjetas[i].Color,
+                    BorderStyle = BorderStyle.None
                 };
                 panelPadre.Controls.Add(tarjeta);
 

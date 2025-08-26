@@ -33,28 +33,32 @@ namespace Habitus.Vistas
             this.Size = new System.Drawing.Size(1000, 700);
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.BackColor = System.Drawing.Color.FromArgb(236, 240, 241);
-            this.MinimumSize = new System.Drawing.Size(800, 600);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = true;
 
             // Panel Superior
             this.panelSuperior = new System.Windows.Forms.Panel();
             this.panelSuperior.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelSuperior.Height = 80;
             this.panelSuperior.BackColor = System.Drawing.Color.FromArgb(41, 128, 185);
-            this.Controls.Add(this.panelSuperior);
 
             // Panel Lateral
             this.panelLateral = new System.Windows.Forms.Panel();
             this.panelLateral.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelLateral.Width = 200;
             this.panelLateral.BackColor = System.Drawing.Color.FromArgb(52, 73, 94);
-            this.Controls.Add(this.panelLateral);
 
             // Panel de Contenido
             this.panelContenido = new System.Windows.Forms.Panel();
             this.panelContenido.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelContenido.BackColor = System.Drawing.Color.FromArgb(236, 240, 241);
             this.panelContenido.Padding = new System.Windows.Forms.Padding(20);
+            this.panelContenido.Resize += new System.EventHandler(this.panelContenido_Resize);
+
             this.Controls.Add(this.panelContenido);
+            this.Controls.Add(this.panelLateral);
+            this.Controls.Add(this.panelSuperior);
 
             // Inicializar los componentes de los paneles
             this.lblBienvenida = new System.Windows.Forms.Label();
