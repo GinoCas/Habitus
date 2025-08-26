@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <Compile Update="Vistas\FormConfiguracion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Vistas\FormCuestionario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Vistas\FormDatosPersonales.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Vistas\FormEstadisticas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Vistas\FormPrincipal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Vistas\FormProgreso.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Vistas\FormRegistrarActividad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Vistas\FormRegistrarComida.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Vistas\FormRetos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Vistas\Placeholder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "8b20f70e-dcda-4523-983e-eb90e8710231",
+    "Nombre": "Camina 30 minutos",
+    "Descripcion": "Realiza una caminata de al menos 30 minutos",
+    "PuntosRecompensa": 50,
+    "NivelRequerido": 1,
+    "FechaInicio": "0001-01-01T00:00:00",
+    "FechaFin": "0001-01-01T00:00:00",
+    "Completado": false,
+    "TipoReto": "Ejercicio",
+    "Dificultad": "F\u00E1cil"
+  },
+  {
+    "Id": "3de16cfe-bdcd-4890-81c7-52c42c0e76e4",
+    "Nombre": "Bebe 8 vasos de agua",
+    "Descripcion": "Consume al menos 2 litros de agua durante el d\u00EDa",
+    "PuntosRecompensa": 30,
+    "NivelRequerido": 1,
+    "FechaInicio": "0001-01-01T00:00:00",
+    "FechaFin": "0001-01-01T00:00:00",
+    "Completado": false,
+    "TipoReto": "H\u00E1bito",
+    "Dificultad": "F\u00E1cil"
+  }
+]

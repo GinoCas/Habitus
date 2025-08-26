@@ -1,0 +1,79 @@
+[
+  {
+    "NumeroNivel": 1,
+    "Nombre": "Principiante",
+    "PuntosRequeridos": 0,
+    "Descripcion": "\u00A1Bienvenido a tu viaje de salud!",
+    "BeneficiosDesbloqueados": [
+      "Registro b\u00E1sico de actividades",
+      "Retos simples"
+    ],
+    "Insignia": "\uD83C\uDF31"
+  },
+  {
+    "NumeroNivel": 2,
+    "Nombre": "Explorador",
+    "PuntosRequeridos": 100,
+    "Descripcion": "Est\u00E1s comenzando a formar h\u00E1bitos saludables",
+    "BeneficiosDesbloqueados": [
+      "Seguimiento de peso",
+      "Retos de alimentaci\u00F3n"
+    ],
+    "Insignia": "\uD83D\uDE80"
+  },
+  {
+    "NumeroNivel": 3,
+    "Nombre": "Comprometido",
+    "PuntosRequeridos": 300,
+    "Descripcion": "Tu compromiso con la salud es evidente",
+    "BeneficiosDesbloqueados": [
+      "Estad\u00EDsticas avanzadas",
+      "Retos personalizados"
+    ],
+    "Insignia": "\uD83D\uDCAA"
+  },
+  {
+    "NumeroNivel": 4,
+    "Nombre": "Entusiasta",
+    "PuntosRequeridos": 600,
+    "Descripcion": "Eres un verdadero entusiasta del bienestar",
+    "BeneficiosDesbloqueados": [
+      "Reportes detallados",
+      "Retos de grupo"
+    ],
+    "Insignia": "\uD83D\uDD25"
+  },
+  {
+    "NumeroNivel": 5,
+    "Nombre": "Experto",
+    "PuntosRequeridos": 1000,
+    "Descripcion": "Has alcanzado un nivel experto en salud",
+    "BeneficiosDesbloqueados": [
+      "An\u00E1lisis de tendencias",
+      "Retos extremos"
+    ],
+    "Insignia": "\u2B50"
+  },
+  {
+    "NumeroNivel": 6,
+    "Nombre": "Maestro",
+    "PuntosRequeridos": 1500,
+    "Descripcion": "Eres un maestro del bienestar y la salud",
+    "BeneficiosDesbloqueados": [
+      "Funciones premium",
+      "Mentor de otros usuarios"
+    ],
+    "Insignia": "\uD83D\uDC51"
+  },
+  {
+    "NumeroNivel": 7,
+    "Nombre": "Leyenda",
+    "PuntosRequeridos": 2500,
+    "Descripcion": "\u00A1Eres una leyenda viviente de la salud!",
+    "BeneficiosDesbloqueados": [
+      "Acceso completo",
+      "Reconocimiento especial"
+    ],
+    "Insignia": "\uD83C\uDFC6"
+  }
+]

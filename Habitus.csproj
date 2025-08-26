@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyTitle>Habitus - Control de Salud</AssemblyTitle>
+    <AssemblyDescription>Aplicación para el control de hábitos y salud personal</AssemblyDescription>
+    <AssemblyCompany>Habitus</AssemblyCompany>
+    <AssemblyProduct>Habitus</AssemblyProduct>
+    <AssemblyCopyright>Copyright © 2024</AssemblyCopyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Datos\**" />
+    <Compile Remove="Recursos\**" />
+    <EmbeddedResource Remove="Datos\**" />
+    <EmbeddedResource Remove="Recursos\**" />
+    <None Remove="Datos\**" />
+    <None Remove="Recursos\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+  </ItemGroup>
+
+</Project>
