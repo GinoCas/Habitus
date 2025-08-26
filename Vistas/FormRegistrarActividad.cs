@@ -31,12 +31,18 @@ namespace Habitus.Vistas
 
         private void InitializeComponent()
         {
-            this.Text = "Registrar Actividad - Habitus";
-            this.Size = new Size(500, 550);
-            this.StartPosition = FormStartPosition.CenterScreen;
-            this.FormBorderStyle = FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.BackColor = Color.FromArgb(240, 248, 255);
+            SuspendLayout();
+            // 
+            // FormRegistrarActividad
+            // 
+            BackColor = Color.FromArgb(240, 248, 255);
+            ClientSize = new Size(482, 553);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            Name = "FormRegistrarActividad";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Registrar Actividad - Habitus";
+            ResumeLayout(false);
         }
 
         private void InicializarComponentes()
@@ -200,7 +206,7 @@ namespace Habitus.Vistas
             };
             this.Controls.Add(lblCaloriasEstimadas);
 
-            yPos += spacing;
+            yPos += spacing / 2;
 
             // Descripción
             var lblDescripcion = new Label
@@ -208,14 +214,14 @@ namespace Habitus.Vistas
                 Text = "Descripción (opcional):",
                 Font = new Font("Segoe UI", 10, FontStyle.Bold),
                 Location = new Point(50, yPos),
-                Size = new Size(200, 20)
+                Size = new Size(250, 20)
             };
             this.Controls.Add(lblDescripcion);
 
             txtDescripcion = new TextBox
             {
                 Location = new Point(50, yPos + 25),
-                Size = new Size(350, 60),
+                Size = new Size(370, 60),
                 Font = new Font("Segoe UI", 10),
                 Multiline = true,
                 ScrollBars = ScrollBars.Vertical
@@ -223,10 +229,11 @@ namespace Habitus.Vistas
             this.Controls.Add(txtDescripcion);
 
             // Botones
+            yPos += spacing;
             btnCancelar = new Button
             {
                 Text = "Cancelar",
-                Location = new Point(200, 470),
+                Location = new Point(200, yPos + 25),
                 Size = new Size(100, 35),
                 Font = new Font("Segoe UI", 10),
                 BackColor = Color.FromArgb(149, 165, 166),
@@ -240,7 +247,7 @@ namespace Habitus.Vistas
             btnGuardar = new Button
             {
                 Text = "Guardar",
-                Location = new Point(320, 470),
+                Location = new Point(320, yPos + 25),
                 Size = new Size(100, 35),
                 Font = new Font("Segoe UI", 10),
                 BackColor = Color.FromArgb(39, 174, 96),
