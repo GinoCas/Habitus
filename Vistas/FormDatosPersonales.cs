@@ -25,24 +25,13 @@ namespace Habitus.Vistas
             }
             
             // Configurar el ComboBox de nivel de actividad
-            var cmbNivelActividad = this.Controls.Find("cmbNivelActividad", true).FirstOrDefault() as ComboBox;
-            if (cmbNivelActividad != null)
-            {
-                cmbNivelActividad.SelectedIndex = 0;
-            }
+            cmbNivelActividad.SelectedIndex = 0;
         }
 
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
             if (ValidarDatos())
             {
-                var cmbGenero = this.Controls.Find("cmbGenero", true).FirstOrDefault() as ComboBox;
-                var cmbNivelActividad = this.Controls.Find("cmbNivelActividad", true).FirstOrDefault() as ComboBox;
-                var txtNombre = this.Controls.Find("txtNombre", true).FirstOrDefault() as TextBox;
-                var numEdad = this.Controls.Find("numEdad", true).FirstOrDefault() as NumericUpDown;
-                var numPeso = this.Controls.Find("numPeso", true).FirstOrDefault() as NumericUpDown;
-                var numAltura = this.Controls.Find("numAltura", true).FirstOrDefault() as NumericUpDown;
-                
                 var genero = (Genero)Enum.Parse(typeof(Genero), cmbGenero.SelectedItem.ToString());
                 var nivelActividad = (NivelActividad)cmbNivelActividad.SelectedIndex;
 
@@ -78,17 +67,6 @@ namespace Habitus.Vistas
 
         private bool ValidarDatos()
         {
-            var txtNombre = this.Controls.Find("txtNombre", true).FirstOrDefault() as TextBox;
-            var numEdad = this.Controls.Find("numEdad", true).FirstOrDefault() as NumericUpDown;
-            var numPeso = this.Controls.Find("numPeso", true).FirstOrDefault() as NumericUpDown;
-            var numAltura = this.Controls.Find("numAltura", true).FirstOrDefault() as NumericUpDown;
-            
-            if (txtNombre == null || numEdad == null || numPeso == null || numAltura == null)
-            {
-                MessageBox.Show("Error al encontrar los controles del formulario.", "Error", 
-                               MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
             
             if (string.IsNullOrWhiteSpace(txtNombre.Text))
             {

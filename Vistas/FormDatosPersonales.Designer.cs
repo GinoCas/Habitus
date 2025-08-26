@@ -43,7 +43,7 @@ namespace Habitus.Vistas
             this.MaximizeBox = false;
             this.BackColor = Color.FromArgb(240, 248, 255);
 
-            // Declaración de controles
+            // Inicialización de controles
             this.txtNombre = new TextBox();
             this.numEdad = new NumericUpDown();
             this.cmbGenero = new ComboBox();
