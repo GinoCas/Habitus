@@ -37,6 +37,10 @@ namespace Habitus.Vistas
 
         private void CrearFiltros(Panel panel)
         {
+            if (panel == null)
+            {
+                panel = new();
+            }
             var lblPeriodo = new Label
             {
                 Text = "Período:",
