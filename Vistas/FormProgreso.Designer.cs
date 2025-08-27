@@ -38,115 +38,175 @@ namespace Habitus.Vistas
         }
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            
-            // Configuración básica del formulario
-            this.Text = "Progreso - Habitus";
-            this.Size = new Size(900, 700);
-            this.StartPosition = FormStartPosition.CenterScreen;
-            this.BackColor = Color.FromArgb(240, 248, 255);
-            
-            // Inicialización de controles
-            this.dtpFechaInicio = new DateTimePicker();
-            this.dtpFechaFin = new DateTimePicker();
-            this.btnActualizar = new Button();
-            this.panelGraficos = new Panel();
-            this.panelEstadisticas = new Panel();
-            this.lblResumenPeriodo = new Label();
-            this.txtNotas = new TextBox();
-            this.btnGuardarNotas = new Button();
-            this.cmbEstadoAnimo = new ComboBox();
-            this.btnRegistrarProgreso = new Button();
-            
-            // Título
-            var lblTitulo = new Label
-            {
-                Text = "Seguimiento de Progreso",
-                Font = new Font("Segoe UI", 16, FontStyle.Bold),
-                ForeColor = Color.FromArgb(41, 128, 185),
-                Location = new Point(50, 20),
-                Size = new Size(800, 30),
-                TextAlign = ContentAlignment.MiddleCenter
-            };
-            this.Controls.Add(lblTitulo);
+            MinimizeBox = false;
+            MaximizeBox = false;
 
-            // Panel de filtros
-            var panelFiltros = new Panel
-            {
-                Location = new Point(20, 60),
-                Size = new Size(840, 60),
-                BackColor = Color.White,
-                BorderStyle = BorderStyle.FixedSingle
-            };
-            this.Controls.Add(panelFiltros);
-
-            // Filtros de fecha
-            var lblFechaInicio = new Label
-            {
-                Text = "Desde:",
-                Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                Location = new Point(20, 20),
-                Size = new Size(50, 20)
-            };
+            dtpFechaInicio = new DateTimePicker();
+            dtpFechaFin = new DateTimePicker();
+            btnActualizar = new Button();
+            panelGraficos = new Panel();
+            panelEstadisticas = new Panel();
+            lblResumenPeriodo = new Label();
+            txtNotas = new TextBox();
+            btnGuardarNotas = new Button();
+            cmbEstadoAnimo = new ComboBox();
+            btnRegistrarProgreso = new Button();
+            lblTitulo = new Label();
+            panelFiltros = new Panel();
+            lblFechaInicio = new Label();
+            lblFechaFin = new Label();
+            panelRegistro = new Panel();
+            panelFiltros.SuspendLayout();
+            SuspendLayout();
+            // 
+            // dtpFechaInicio
+            // 
+            dtpFechaInicio.Font = new Font("Segoe UI", 9F);
+            dtpFechaInicio.Format = DateTimePickerFormat.Short;
+            dtpFechaInicio.Location = new Point(80, 18);
+            dtpFechaInicio.Name = "dtpFechaInicio";
+            dtpFechaInicio.Size = new Size(120, 27);
+            dtpFechaInicio.TabIndex = 1;
+            dtpFechaInicio.Value = new DateTime(2025, 7, 27, 0, 0, 0, 0);
+            // 
+            // dtpFechaFin
+            // 
+            dtpFechaFin.Font = new Font("Segoe UI", 9F);
+            dtpFechaFin.Format = DateTimePickerFormat.Short;
+            dtpFechaFin.Location = new Point(280, 18);
+            dtpFechaFin.Name = "dtpFechaFin";
+            dtpFechaFin.Size = new Size(120, 27);
+            dtpFechaFin.TabIndex = 3;
+            dtpFechaFin.Value = new DateTime(2025, 8, 26, 0, 0, 0, 0);
+            // 
+            // btnActualizar
+            // 
+            btnActualizar.BackColor = Color.FromArgb(52, 152, 219);
+            btnActualizar.FlatAppearance.BorderSize = 0;
+            btnActualizar.FlatStyle = FlatStyle.Flat;
+            btnActualizar.Font = new Font("Segoe UI", 9F);
+            btnActualizar.ForeColor = Color.White;
+            btnActualizar.Location = new Point(420, 18);
+            btnActualizar.Name = "btnActualizar";
+            btnActualizar.Size = new Size(80, 25);
+            btnActualizar.TabIndex = 4;
+            btnActualizar.Text = "Actualizar";
+            btnActualizar.UseVisualStyleBackColor = false;
+            btnActualizar.Click += BtnActualizar_Click;
+            // 
+            // panelGraficos
+            // 
+            panelGraficos.BackColor = Color.White;
+            panelGraficos.BorderStyle = BorderStyle.FixedSingle;
+            panelGraficos.Location = new Point(20, 280);
+            panelGraficos.Name = "panelGraficos";
+            panelGraficos.Size = new Size(840, 250);
+            panelGraficos.TabIndex = 3;
+            // 
+            // panelEstadisticas
+            // 
+            panelEstadisticas.BackColor = Color.White;
+            panelEstadisticas.BorderStyle = BorderStyle.FixedSingle;
+            panelEstadisticas.Location = new Point(20, 140);
+            panelEstadisticas.Name = "panelEstadisticas";
+            panelEstadisticas.Size = new Size(840, 120);
+            panelEstadisticas.TabIndex = 2;
+            // 
+            // lblResumenPeriodo
+            // 
+            lblResumenPeriodo.Location = new Point(0, 0);
+            lblResumenPeriodo.Name = "lblResumenPeriodo";
+            lblResumenPeriodo.Size = new Size(100, 23);
+            lblResumenPeriodo.TabIndex = 0;
+            // 
+            // txtNotas
+            // 
+            txtNotas.Location = new Point(0, 0);
+            txtNotas.Name = "txtNotas";
+            txtNotas.Size = new Size(100, 27);
+            txtNotas.TabIndex = 0;
+            // 
+            // btnGuardarNotas
+            // 
+            btnGuardarNotas.Location = new Point(0, 0);
+            btnGuardarNotas.Name = "btnGuardarNotas";
+            btnGuardarNotas.Size = new Size(75, 23);
+            btnGuardarNotas.TabIndex = 0;
+            // 
+            // cmbEstadoAnimo
+            // 
+            cmbEstadoAnimo.Location = new Point(0, 0);
+            cmbEstadoAnimo.Name = "cmbEstadoAnimo";
+            cmbEstadoAnimo.Size = new Size(121, 28);
+            cmbEstadoAnimo.TabIndex = 0;
+            // 
+            // btnRegistrarProgreso
+            // 
+            btnRegistrarProgreso.Location = new Point(0, 0);
+            btnRegistrarProgreso.Name = "btnRegistrarProgreso";
+            btnRegistrarProgreso.Size = new Size(75, 23);
+            btnRegistrarProgreso.TabIndex = 0;
+            // 
+            // lblTitulo
+            // 
+            lblTitulo.Location = new Point(0, 0);
+            lblTitulo.Name = "lblTitulo";
+            lblTitulo.Size = new Size(100, 23);
+            lblTitulo.TabIndex = 0;
+            // 
+            // panelFiltros
+            // 
             panelFiltros.Controls.Add(lblFechaInicio);
-
-            this.dtpFechaInicio.Location = new Point(80, 18);
-            this.dtpFechaInicio.Size = new Size(120, 25);
-            this.dtpFechaInicio.Font = new Font("Segoe UI", 9);
-            this.dtpFechaInicio.Format = DateTimePickerFormat.Short;
-            this.dtpFechaInicio.Value = DateTime.Today.AddDays(-30);
-            panelFiltros.Controls.Add(this.dtpFechaInicio);
-
-            var lblFechaFin = new Label
-            {
-                Text = "Hasta:",
-                Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                Location = new Point(220, 20),
-                Size = new Size(50, 20)
-            };
+            panelFiltros.Controls.Add(dtpFechaInicio);
             panelFiltros.Controls.Add(lblFechaFin);
-
-            this.dtpFechaFin.Location = new Point(280, 18);
-            this.dtpFechaFin.Size = new Size(120, 25);
-            this.dtpFechaFin.Font = new Font("Segoe UI", 9);
-            this.dtpFechaFin.Format = DateTimePickerFormat.Short;
-            this.dtpFechaFin.Value = DateTime.Today;
-            panelFiltros.Controls.Add(this.dtpFechaFin);
-
-            this.btnActualizar.Text = "Actualizar";
-            this.btnActualizar.Location = new Point(420, 18);
-            this.btnActualizar.Size = new Size(80, 25);
-            this.btnActualizar.Font = new Font("Segoe UI", 9);
-            this.btnActualizar.BackColor = Color.FromArgb(52, 152, 219);
-            this.btnActualizar.ForeColor = Color.White;
-            this.btnActualizar.FlatStyle = FlatStyle.Flat;
-            this.btnActualizar.FlatAppearance.BorderSize = 0;
-            this.btnActualizar.Click += BtnActualizar_Click;
-            panelFiltros.Controls.Add(this.btnActualizar);
-
-            // Panel de estadísticas
-            this.panelEstadisticas.Location = new Point(20, 140);
-            this.panelEstadisticas.Size = new Size(840, 120);
-            this.panelEstadisticas.BackColor = Color.White;
-            this.panelEstadisticas.BorderStyle = BorderStyle.FixedSingle;
-            this.Controls.Add(this.panelEstadisticas);
-
-            // Panel de gráficos
-            this.panelGraficos.Location = new Point(20, 280);
-            this.panelGraficos.Size = new Size(840, 250);
-            this.panelGraficos.BackColor = Color.White;
-            this.panelGraficos.BorderStyle = BorderStyle.FixedSingle;
-            this.Controls.Add(this.panelGraficos);
-
-            // Panel de registro diario
-            var panelRegistro = new Panel
-            {
-                Location = new Point(20, 550),
-                Size = new Size(840, 100),
-                BackColor = Color.White,
-                BorderStyle = BorderStyle.FixedSingle
-            };
-            this.Controls.Add(panelRegistro);
+            panelFiltros.Controls.Add(dtpFechaFin);
+            panelFiltros.Controls.Add(btnActualizar);
+            panelFiltros.Location = new Point(0, 0);
+            panelFiltros.Name = "panelFiltros";
+            panelFiltros.Size = new Size(200, 100);
+            panelFiltros.TabIndex = 1;
+            // 
+            // lblFechaInicio
+            // 
+            lblFechaInicio.Location = new Point(0, 0);
+            lblFechaInicio.Name = "lblFechaInicio";
+            lblFechaInicio.Size = new Size(100, 23);
+            lblFechaInicio.TabIndex = 0;
+            // 
+            // lblFechaFin
+            // 
+            lblFechaFin.Location = new Point(0, 0);
+            lblFechaFin.Name = "lblFechaFin";
+            lblFechaFin.Size = new Size(100, 23);
+            lblFechaFin.TabIndex = 2;
+            // 
+            // panelRegistro
+            // 
+            panelRegistro.Location = new Point(0, 0);
+            panelRegistro.Name = "panelRegistro";
+            panelRegistro.Size = new Size(200, 100);
+            panelRegistro.TabIndex = 4;
+            // 
+            // FormProgreso
+            // 
+            BackColor = Color.FromArgb(240, 248, 255);
+            ClientSize = new Size(882, 653);
+            Controls.Add(lblTitulo);
+            Controls.Add(panelFiltros);
+            Controls.Add(panelEstadisticas);
+            Controls.Add(panelGraficos);
+            Controls.Add(panelRegistro);
+            FormBorderStyle = FormBorderStyle.Fixed3D;
+            Name = "FormProgreso";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Progreso - Habitus";
+            panelFiltros.ResumeLayout(false);
+            ResumeLayout(false);
         }
+        private Label lblTitulo;
+        private Panel panelFiltros;
+        private Label lblFechaInicio;
+        private Label lblFechaFin;
+        private Panel panelRegistro;
     }
 }
