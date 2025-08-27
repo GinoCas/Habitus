@@ -34,10 +34,16 @@ namespace Habitus.Vistas
 
         private void InitializeComponent()
         {
-            this.Text = "Retos - Habitus";
-            this.Size = new Size(800, 600);
-            this.StartPosition = FormStartPosition.CenterScreen;
-            this.BackColor = Color.FromArgb(240, 248, 255);
+            SuspendLayout();
+            // 
+            // FormRetos
+            // 
+            BackColor = Color.FromArgb(240, 248, 255);
+            ClientSize = new Size(782, 753);
+            Name = "FormRetos";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Retos - Habitus";
+            ResumeLayout(false);
         }
 
         private void InicializarComponentes()
@@ -96,7 +102,7 @@ namespace Habitus.Vistas
             var panelInfo = new Panel
             {
                 Location = new Point(20, 500),
-                Size = new Size(740, 80),
+                Size = new Size(740, 230),
                 BackColor = Color.White,
                 BorderStyle = BorderStyle.FixedSingle
             };
@@ -114,10 +120,11 @@ namespace Habitus.Vistas
             lblInfoReto = new Label
             {
                 Text = "Selecciona un reto para ver más información",
-                Font = new Font("Segoe UI", 9),
+                Font = new Font("Segoe UI", 12),
                 ForeColor = Color.Gray,
-                Location = new Point(10, 35),
-                Size = new Size(720, 40)
+                Padding = new Padding(10),
+                Size = new Size(720, 200),
+                Dock = DockStyle.Bottom
             };
             panelInfo.Controls.Add(lblInfoReto);
         }
