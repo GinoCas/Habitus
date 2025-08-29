@@ -252,6 +252,9 @@ namespace Habitus.Vistas
                 
                 // Actualizar estadísticas
                 ActualizarEstadisticas();
+                
+                // Establecer el resultado como OK para que el formulario principal se actualice
+                this.DialogResult = DialogResult.OK;
             }
             catch (Exception ex)
             {

@@ -54,7 +54,6 @@ namespace Habitus.Vistas
             this.panelContenido.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelContenido.BackColor = System.Drawing.Color.FromArgb(236, 240, 241);
             this.panelContenido.Padding = new System.Windows.Forms.Padding(20);
-            this.panelContenido.Resize += new System.EventHandler(this.panelContenido_Resize);
 
             this.Controls.Add(this.panelContenido);
             this.Controls.Add(this.panelLateral);

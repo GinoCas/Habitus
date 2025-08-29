@@ -389,6 +389,9 @@ namespace Habitus.Vistas
                         
                         CargarRetos(); // Actualizar listas
                         tabControl.SelectedIndex = 1; // Cambiar a pestaña de retos activos
+                        
+                        // Establecer el resultado como OK para que el formulario principal se actualice
+                        this.DialogResult = DialogResult.OK;
                     }
                     catch (Exception ex)
                     {
@@ -428,6 +431,9 @@ namespace Habitus.Vistas
                                        "¡Reto Completado!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         
                         CargarRetos(); // Actualizar listas
+                        
+                        // Establecer el resultado como OK para que el formulario principal se actualice
+                        this.DialogResult = DialogResult.OK;
                     }
                     catch (Exception ex)
                     {

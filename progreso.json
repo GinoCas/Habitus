@@ -1,0 +1,35 @@
+[
+  {
+    "Fecha": "2023-11-01T00:00:00",
+    "Peso": 70.5,
+    "CaloriasConsumidas": 2000,
+    "CaloriasQuemadas": 500,
+    "MinutosActividad": 45,
+    "PasosRealizados": 8000,
+    "EstadoAnimo": "Bien",
+    "Notas": "Buen día de actividad",
+    "PuntosGanados": 50
+  },
+  {
+    "Fecha": "2023-11-02T00:00:00",
+    "Peso": 70.3,
+    "CaloriasConsumidas": 1800,
+    "CaloriasQuemadas": 600,
+    "MinutosActividad": 60,
+    "PasosRealizados": 10000,
+    "EstadoAnimo": "Excelente",
+    "Notas": "Gran día de ejercicio",
+    "PuntosGanados": 75
+  },
+  {
+    "Fecha": "2023-11-03T00:00:00",
+    "Peso": 70.2,
+    "CaloriasConsumidas": 1900,
+    "CaloriasQuemadas": 550,
+    "MinutosActividad": 50,
+    "PasosRealizados": 9000,
+    "EstadoAnimo": "Bien",
+    "Notas": "Día normal",
+    "PuntosGanados": 60
+  }
+]
