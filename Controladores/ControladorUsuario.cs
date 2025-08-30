@@ -14,6 +14,7 @@ namespace Habitus.Controladores
 
         public Usuario ObtenerUsuario()
         {
+            CargarUsuario();
             return _usuario;
         }
 

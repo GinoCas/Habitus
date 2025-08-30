@@ -27,6 +27,12 @@ namespace Habitus.Controladores
             GuardarActividades();
         }
 
+        public List<Actividad> ObtenerActividades()
+        {
+            CargarActividades();
+            return _actividades;
+        }
+
         public List<Actividad> ObtenerActividadesPorFecha(DateTime fecha)
         {
             return _actividades.Where(a => a.Fecha.Date == fecha.Date).ToList();

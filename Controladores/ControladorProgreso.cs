@@ -15,6 +15,7 @@ namespace Habitus.Controladores
         public void RegistrarProgresoDiario(double peso, double caloriasConsumidas, double caloriasQuemadas, 
                                            int minutosActividad, int pasos, string estadoAnimo, string notas)
         {
+            CargarProgreso();
             var progreso = new Progreso
             {
                 Fecha = DateTime.Now.Date,
@@ -39,13 +40,75 @@ namespace Habitus.Controladores
             GuardarProgreso();
         }
 
+        public void RegistrarConsumoCalorias(DateTime fecha, double calorias)
+        {
+            CargarProgreso();
+            var registroExistente = _registrosProgreso.FirstOrDefault(p => p.Fecha.Date == fecha.Date);
+            if (registroExistente != null)
+            {
+                registroExistente.CaloriasConsumidas += calorias;
+            }
+            else
+            {
+                var progreso = new Progreso
+                {
+                    Fecha = fecha.Date,
+                    CaloriasConsumidas = calorias
+                };
+                _registrosProgreso.Add(progreso);
+            }
+            GuardarProgreso();
+        }
+
+        public void RegistrarCaloriasQuemadas(DateTime fecha, double calorias)
+        {
+            CargarProgreso();
+            var registroExistente = _registrosProgreso.FirstOrDefault(p => p.Fecha.Date == fecha.Date);
+            if (registroExistente != null)
+            {
+                registroExistente.CaloriasQuemadas += calorias;
+            }
+            else
+            {
+                var progreso = new Progreso
+                {
+                    Fecha = fecha.Date,
+                    CaloriasQuemadas = calorias
+                };
+                _registrosProgreso.Add(progreso);
+            }
+            GuardarProgreso();
+        }
+
+        public void RegistrarMinutosActividad(DateTime fecha, int minutos)
+        {
+            CargarProgreso();
+            var registroExistente = _registrosProgreso.FirstOrDefault(p => p.Fecha.Date == fecha.Date);
+            if (registroExistente != null)
+            {
+                registroExistente.MinutosActividad += minutos;
+            }
+            else
+            {
+                var progreso = new Progreso
+                {
+                    Fecha = fecha.Date,
+                    MinutosActividad = minutos
+                };
+                _registrosProgreso.Add(progreso);
+            }
+            GuardarProgreso();
+        }
+
         public Progreso ObtenerProgresoPorFecha(DateTime fecha)
         {
+            CargarProgreso();
             return _registrosProgreso.FirstOrDefault(p => p.Fecha.Date == fecha.Date);
         }
 
         public List<Progreso> ObtenerProgresoPorPeriodo(DateTime fechaInicio, DateTime fechaFin)
         {
+            CargarProgreso();
             return _registrosProgreso.Where(p => p.Fecha.Date >= fechaInicio.Date && p.Fecha.Date <= fechaFin.Date)
                                     .OrderBy(p => p.Fecha)
                                     .ToList();

@@ -1,0 +1,14 @@
+[
+  {
+    "Id": "501229be-4904-4169-9d50-26b5af19eada",
+    "Nombre": "Camina 30 minutos",
+    "Descripcion": "Realiza una caminata de al menos 30 minutos",
+    "PuntosRecompensa": 50,
+    "NivelRequerido": 1,
+    "FechaInicio": "2025-08-29T17:45:32.0442974-03:00",
+    "FechaFin": "2025-09-05T17:45:32.0443005-03:00",
+    "Completado": false,
+    "TipoReto": "Ejercicio",
+    "Dificultad": "F\u00E1cil"
+  }
+]

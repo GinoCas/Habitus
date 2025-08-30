@@ -44,6 +44,7 @@ namespace Habitus.Controladores
 
         public List<Comida> ObtenerComidasPorFecha(DateTime fecha)
         {
+            CargarComidas();
             return _comidas.Where(c => c.Fecha.Date == fecha.Date).ToList();
         }
 

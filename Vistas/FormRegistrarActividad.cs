@@ -21,11 +21,14 @@ namespace Habitus.Vistas
         private Button btnCancelar;
         private Button btnCalcularCalorias;
 
-        public FormRegistrarActividad()
+        private ControladorProgreso _controladorProgreso;
+
+        public FormRegistrarActividad(ControladorProgreso controladorProgreso = null)
         {
             InitializeComponent();
             _controladorActividad = new ControladorActividad();
             _controladorUsuario = new ControladorUsuario();
+            _controladorProgreso = controladorProgreso ?? new ControladorProgreso();
             InicializarComponentes();
         }
 
@@ -346,6 +349,10 @@ namespace Habitus.Vistas
                     tipoActividad, intensidad, duracion, usuario.Peso);
 
                 _controladorActividad.RegistrarActividad(tipoActividad.ToString(), duracion, intensidad.ToString());
+
+                // Actualizar el progreso con las calorías quemadas y minutos de actividad
+                _controladorProgreso.RegistrarCaloriasQuemadas(fecha, calorias);
+                _controladorProgreso.RegistrarMinutosActividad(fecha, duracion);
 
                 // Actualizar puntos del usuario
                 var puntosGanados = CalcularPuntosActividad(duracion, intensidad);

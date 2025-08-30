@@ -13,6 +13,7 @@ namespace Habitus.Vistas
         private ControladorProgreso _controladorProgreso;
         private ControladorRetos _controladorRetos;
         private Usuario _usuario;
+        private Panel panelResumenDia;
 
         public FormPrincipal()
         {
@@ -141,14 +142,14 @@ namespace Habitus.Vistas
         private void CrearPanelContenido()
         {
             // Panel de resumen del día
-            var panelResumen = new Panel
+            panelResumenDia = new Panel
             {
                 Location = new Point(20, 20),
                 Size = new Size(740, 200),
                 BackColor = Color.White,
                 BorderStyle = BorderStyle.FixedSingle
             };
-            panelContenido.Controls.Add(panelResumen);
+            panelContenido.Controls.Add(panelResumenDia);
 
             // Título del resumen
             var lblTituloResumen = new Label
@@ -159,10 +160,10 @@ namespace Habitus.Vistas
                 Location = new Point(20, 15),
                 Size = new Size(200, 25)
             };
-            panelResumen.Controls.Add(lblTituloResumen);
+            panelResumenDia.Controls.Add(lblTituloResumen);
 
             // Crear tarjetas de resumen
-            CrearTarjetasResumen(panelResumen);
+            CrearTarjetasResumen(panelResumenDia);
 
             // Panel de retos activos
             panelRetosActivos = new Panel
@@ -265,6 +266,9 @@ namespace Habitus.Vistas
                 // Aseguramos que el valor esté dentro del rango permitido (0-100)
                 progressBarNivel.Value = Math.Min(100, (int)progresoNivel);
                 
+                // Actualizar tarjetas de resumen del día
+                ActualizarTarjetasResumen();
+                
                 // Cargar retos activos y progreso reciente
                 CargarRetosActivos();
                 CargarProgresoReciente();
@@ -273,7 +277,7 @@ namespace Habitus.Vistas
 
         private void BtnRegistrarActividad_Click(object sender, EventArgs e)
         {
-            var formActividad = new FormRegistrarActividad();
+            var formActividad = new FormRegistrarActividad(_controladorProgreso);
             if (formActividad.ShowDialog() == DialogResult.OK)
             {
                 CargarDatosUsuario(); // Actualizar datos después del registro
@@ -282,7 +286,7 @@ namespace Habitus.Vistas
 
         private void BtnRegistrarComida_Click(object sender, EventArgs e)
         {
-            var formComida = new FormRegistrarComida();
+            var formComida = new FormRegistrarComida(_controladorProgreso);
             if (formComida.ShowDialog() == DialogResult.OK)
             {
                 CargarDatosUsuario(); // Actualizar datos después del registro
@@ -300,7 +304,7 @@ namespace Habitus.Vistas
 
         private void BtnRetos_Click(object sender, EventArgs e)
         {
-            var formRetos = new FormRetos();
+            var formRetos = new FormRetos(_controladorProgreso);
             if (formRetos.ShowDialog() == DialogResult.OK)
             {
                 CargarDatosUsuario(); // Actualizar datos después de cambios en retos
@@ -332,7 +336,7 @@ namespace Habitus.Vistas
             }
             base.OnFormClosing(e);
         }
-        
+
         private void CargarRetosActivos()
         {
             // Limpiar controles existentes excepto el título
@@ -343,10 +347,14 @@ namespace Habitus.Vistas
                     panelRetosActivos.Controls.RemoveAt(i);
                 }
             }
-            
             // Obtener retos activos
             var retosActivos = _controladorRetos.ObtenerRetosActivos();
-            
+            foreach(var reto in retosActivos)
+            {
+                MessageBox.Show(reto.ToString());
+            }
+
+
             if (retosActivos.Count == 0)
             {
                 var lblNoRetos = new Label
@@ -524,6 +532,57 @@ namespace Habitus.Vistas
                 
                 panelListaProgreso.Controls.Add(panelProgreso);
                 yPos += 75;
+            }
+        }
+
+        private void ActualizarTarjetasResumen()
+        {
+            // Obtener el progreso del día actual
+            var progresoHoy = _controladorProgreso.ObtenerProgresoPorFecha(DateTime.Now.Date);
+            
+            // Actualizar las tarjetas con los valores del progreso
+            if (progresoHoy != null)
+            {
+                // Buscar las tarjetas por su posición y actualizar sus valores
+                foreach (Control control in panelResumenDia.Controls)
+                {
+                    if (control is Panel tarjeta)
+                    {
+                        // Obtener la etiqueta de valor (segunda etiqueta en la tarjeta)
+                        var lblValor = tarjeta.Controls.OfType<Label>().ElementAtOrDefault(1);
+                        if (lblValor != null)
+                        {
+                            // Actualizar el valor según el título de la tarjeta
+                            var lblTitulo = tarjeta.Controls.OfType<Label>().FirstOrDefault();
+                            if (lblTitulo != null)
+                            {
+                                if (lblTitulo.Text.Contains("Calorías\nConsumidas"))
+                                    lblValor.Text = progresoHoy.CaloriasConsumidas.ToString("0");
+                                else if (lblTitulo.Text.Contains("Calorías\nQuemadas"))
+                                    lblValor.Text = progresoHoy.CaloriasQuemadas.ToString("0");
+                                else if (lblTitulo.Text.Contains("Minutos de\nActividad"))
+                                    lblValor.Text = progresoHoy.MinutosActividad.ToString();
+                                else if (lblTitulo.Text.Contains("Pasos\nRealizados"))
+                                    lblValor.Text = progresoHoy.PasosRealizados.ToString();
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // Si no hay progreso hoy, mostrar valores en cero
+                foreach (Control control in panelResumenDia.Controls)
+                {
+                    if (control is Panel tarjeta)
+                    {
+                        var lblValor = tarjeta.Controls.OfType<Label>().ElementAtOrDefault(1);
+                        if (lblValor != null)
+                        {
+                            lblValor.Text = "0";
+                        }
+                    }
+                }
             }
         }
     }

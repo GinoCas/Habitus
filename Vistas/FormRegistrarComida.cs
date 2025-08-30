@@ -11,6 +11,7 @@ namespace Habitus.Vistas
     {
         private ControladorComida _controladorComida;
         private ControladorUsuario _controladorUsuario;
+        private ControladorProgreso _controladorProgreso; 
         private DateTimePicker dtpFecha;
         private ComboBox cmbTipoComida;
         private TextBox txtBuscarAlimento;
@@ -26,11 +27,12 @@ namespace Habitus.Vistas
         private Alimento _alimentoSeleccionado;
         private BindingSource _alimentosSeleccionados;
 
-        public FormRegistrarComida()
+        public FormRegistrarComida(ControladorProgreso controladorProgreso)
         {
             InitializeComponent();
             _controladorComida = new ControladorComida();
             _controladorUsuario = new ControladorUsuario();
+            _controladorProgreso = controladorProgreso; // Usar la instancia compartida
             _alimentosSeleccionados = new BindingSource();
             InicializarComponentes();
             CargarAlimentos();
@@ -353,7 +355,7 @@ namespace Habitus.Vistas
             var alimentos = _controladorComida.BuscarAlimentos(termino);
             lstAlimentos.DataSource = alimentos;
             lstAlimentos.DisplayMember = "Nombre";
-            lstAlimentos.ValueMember = "Id";
+            // Eliminamos la línea que establece ValueMember como "Id" ya que Alimento no tiene esta propiedad
         }
 
         private void LstAlimentos_SelectedIndexChanged(object sender, EventArgs e)
@@ -434,7 +436,7 @@ namespace Habitus.Vistas
                             Id = Guid.NewGuid().ToString(),
                             Fecha = fecha,
                             TipoComida = tipoComida,
-                            AlimentoId = alimentoComida.Alimento.Id,
+                            AlimentoId = alimentoComida.Alimento.Nombre,
                             NombreAlimento = alimentoComida.Alimento.Nombre,
                             Cantidad = alimentoComida.Cantidad,
                             CaloriasConsumidas = alimentoComida.CaloriasTotal
@@ -447,6 +449,10 @@ namespace Habitus.Vistas
                 // Calcular puntos ganados
                 var totalCalorias = _alimentosSeleccionados.Cast<dynamic>()
                     .Sum(item => (double)item.CaloriasTotal);
+
+                // Registrar el consumo de calorías en el progreso diario
+                _controladorProgreso.RegistrarConsumoCalorias(fecha, totalCalorias);
+
                 var puntosGanados = CalcularPuntosComida(totalCalorias);
                 _controladorUsuario.ActualizarPuntos(puntosGanados);
 

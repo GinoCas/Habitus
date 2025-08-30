@@ -17,6 +17,8 @@ namespace Habitus.Controladores
 
         public List<Reto> ObtenerRetosDisponibles(int nivelUsuario, int puntosUsuario)
         {
+            CargarRetos();
+            CargarRetosActivos();
             return _retosDisponibles.Where(r => r.NivelRequerido <= nivelUsuario && !_retosActivos.Any(ra => ra.Nombre == r.Nombre))
                                    .Take(5)
                                    .ToList();
