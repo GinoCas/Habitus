@@ -8,7 +8,6 @@ namespace Habitus.Modelos
         public double CaloriasQuemadas { get; set; }
         public int MinutosActividad { get; set; }
         public int PasosRealizados { get; set; }
-        public string EstadoAnimo { get; set; }
         public string Notas { get; set; }
         public int PuntosGanados { get; set; }
 

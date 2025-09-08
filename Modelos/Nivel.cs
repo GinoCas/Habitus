@@ -2,7 +2,7 @@ namespace Habitus.Modelos
 {
     public class Nivel
     {
-        public int NumeroNivel { get; set; }
+        public int Numero { get; set; }
         public string Nombre { get; set; }
         public int PuntosRequeridos { get; set; }
         public string Descripcion { get; set; }

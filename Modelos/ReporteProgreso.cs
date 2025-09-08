@@ -3,7 +3,7 @@ namespace Habitus.Modelos
     public class ReporteProgreso
     {
         public DateTime FechaGeneracion { get; set; }
-        public string TipoReporte { get; set; } // Diario, Semanal, Mensual
+        public string TipoReporte { get; set; } // Diario, Semanal, Mensual TODO: Enum
         public Resumen ResumenPeriodo { get; set; }
         public List<Tendencia> Tendencias { get; set; }
         public List<Objetivo> ObjetivosEvaluados { get; set; }

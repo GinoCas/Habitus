@@ -1,6 +1,6 @@
 namespace Habitus.Modelos
 {
-    public enum Intensidad
+    public enum ActividadIntensidad
     {
         Baja,
         Media,

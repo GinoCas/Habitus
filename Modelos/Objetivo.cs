@@ -8,7 +8,7 @@ namespace Habitus.Modelos
         public DateTime FechaInicio { get; set; }
         public DateTime FechaFin { get; set; }
         public bool Completado { get; set; }
-        public string TipoObjetivo { get; set; } // Peso, Calorias, Actividad, etc.
+        public string TipoObjetivo { get; set; } // Peso, Calorias, Actividad, etc. TODO: Enum
 
         public double PorcentajeCompletado
         {
