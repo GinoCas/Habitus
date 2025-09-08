@@ -1,27 +1,27 @@
 using Habitus.Modelos;
+using Habitus.Utilidades;
 
 namespace Habitus.Controladores
 {
     public class ControladorRetos
     {
-        private List<Reto> _retosDisponibles;
-        private List<Reto> _retosActivos;
-        private string _rutaArchivoRetos = "retos.json";
-        private string _rutaArchivoRetosActivos = "retos_activos.json";
+        private GestorJson<Reto> _retosDisponibles;
+        private GestorJson<Reto> _retosActivos;
 
         public ControladorRetos()
         {
-            CargarRetos();
-            CargarRetosActivos();
+            _retosDisponibles = new GestorJson<Reto>("retos.json");
+            _retosActivos = new GestorJson<Reto>("retosActivos.json");
         }
 
         public List<Reto> ObtenerRetosDisponibles(int nivelUsuario, int puntosUsuario)
         {
-            CargarRetos();
+            /*CargarRetos();
             CargarRetosActivos();
             return _retosDisponibles.Where(r => r.NivelRequerido <= nivelUsuario && !_retosActivos.Any(ra => ra.Nombre == r.Nombre))
                                    .Take(5)
-                                   .ToList();
+                                   .ToList();*/
+            return new List<Reto>();
         }
 
         public void AsignarReto(Reto reto)
@@ -40,38 +40,37 @@ namespace Habitus.Controladores
             };
 
             _retosActivos.Add(retoActivo);
-            GuardarRetosActivos();
         }
 
         public List<Reto> ObtenerRetosActivos()
         {
-            return _retosActivos.Where(r => !r.Completado && r.FechaFin >= DateTime.Now).ToList();
+            return _retosActivos.GetAll().Where(r => !r.Completado && r.FechaFin >= DateTime.Now).ToList();
         }
 
         public bool CompletarReto(string idReto)
         {
-            var reto = _retosActivos.FirstOrDefault(r => r.Id == idReto && !r.Completado);
+            /*var reto = _retosActivos.FirstOrDefault(r => r.Id == idReto && !r.Completado);
             if (reto != null)
             {
                 reto.Completado = true;
                 GuardarRetosActivos();
                 return true;
-            }
+            }*/
             return false;
         }
 
         public int ObtenerPuntosReto(string nombreReto)
         {
-            var reto = _retosActivos.FirstOrDefault(r => r.Nombre == nombreReto && r.Completado);
+            var reto = _retosActivos.GetAll().FirstOrDefault(r => r.Nombre == nombreReto && r.Completado);
             return reto?.PuntosRecompensa ?? 0;
         }
 
         public int ObtenerPuntosRetos()
         {
-            return _retosActivos.Where(r => r.Completado).Sum(r => r.PuntosRecompensa);
+            return _retosActivos.GetAll().Where(r => r.Completado).Sum(r => r.PuntosRecompensa);
         }
 
-        public void GenerarRetosAutomaticos(int nivelUsuario)
+        /*public void GenerarRetosAutomaticos(int nivelUsuario)
         {
             // Generar retos automáticos basados en el nivel del usuario
             var retosAutomaticos = new List<Reto>
@@ -114,73 +113,6 @@ namespace Habitus.Controladores
             }
 
             GuardarRetos();
-        }
-
-        private void CargarRetos()
-        {
-            try
-            {
-                if (File.Exists(_rutaArchivoRetos))
-                {
-                    string json = File.ReadAllText(_rutaArchivoRetos);
-                    _retosDisponibles = System.Text.Json.JsonSerializer.Deserialize<List<Reto>>(json) ?? new List<Reto>();
-                }
-                else
-                {
-                    _retosDisponibles = new List<Reto>();
-                    GenerarRetosAutomaticos(1);
-                }
-            }
-            catch (Exception ex)
-            {
-                _retosDisponibles = new List<Reto>();
-            }
-        }
-
-        private void GuardarRetos()
-        {
-            try
-            {
-                string json = System.Text.Json.JsonSerializer.Serialize(_retosDisponibles, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(_rutaArchivoRetos, json);
-            }
-            catch (Exception ex)
-            {
-                // Log error
-            }
-        }
-
-        private void CargarRetosActivos()
-        {
-            try
-            {
-                if (File.Exists(_rutaArchivoRetosActivos))
-                {
-                    string json = File.ReadAllText(_rutaArchivoRetosActivos);
-                    _retosActivos = System.Text.Json.JsonSerializer.Deserialize<List<Reto>>(json) ?? new List<Reto>();
-                }
-                else
-                {
-                    _retosActivos = new List<Reto>();
-                }
-            }
-            catch (Exception ex)
-            {
-                _retosActivos = new List<Reto>();
-            }
-        }
-
-        private void GuardarRetosActivos()
-        {
-            try
-            {
-                string json = System.Text.Json.JsonSerializer.Serialize(_retosActivos, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(_rutaArchivoRetosActivos, json);
-            }
-            catch (Exception ex)
-            {
-                // Log error
-            }
-        }
+        }*/
     }
 }

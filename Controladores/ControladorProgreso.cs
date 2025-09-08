@@ -1,21 +1,21 @@
 using Habitus.Modelos;
+using Habitus.Utilidades;
 
 namespace Habitus.Controladores
 {
     public class ControladorProgreso
     {
-        private List<Progreso> _registrosProgreso;
-        private string _rutaArchivo = "progreso.json";
+        private GestorJson<Progreso> _progreso;
 
         public ControladorProgreso()
         {
-            CargarProgreso();
+            _progreso = new GestorJson<Progreso>("progreso.json");
         }
 
         public void RegistrarProgresoDiario(double peso, double caloriasConsumidas, double caloriasQuemadas, 
-                                           int minutosActividad, int pasos, string estadoAnimo, string notas)
+                                           int minutosActividad, int pasos, string notas)
         {
-            CargarProgreso();
+            /*CargarProgreso();
             var progreso = new Progreso
             {
                 Fecha = DateTime.Now.Date,
@@ -24,7 +24,6 @@ namespace Habitus.Controladores
                 CaloriasQuemadas = caloriasQuemadas,
                 MinutosActividad = minutosActividad,
                 PasosRealizados = pasos,
-                EstadoAnimo = estadoAnimo,
                 Notas = notas,
                 PuntosGanados = CalcularPuntosDiarios(caloriasConsumidas, caloriasQuemadas, minutosActividad, pasos)
             };
@@ -37,12 +36,12 @@ namespace Habitus.Controladores
             }
 
             _registrosProgreso.Add(progreso);
-            GuardarProgreso();
+            GuardarProgreso();*/
         }
 
         public void RegistrarConsumoCalorias(DateTime fecha, double calorias)
         {
-            CargarProgreso();
+            /*CargarProgreso();
             var registroExistente = _registrosProgreso.FirstOrDefault(p => p.Fecha.Date == fecha.Date);
             if (registroExistente != null)
             {
@@ -57,12 +56,12 @@ namespace Habitus.Controladores
                 };
                 _registrosProgreso.Add(progreso);
             }
-            GuardarProgreso();
+            GuardarProgreso();*/
         }
 
         public void RegistrarCaloriasQuemadas(DateTime fecha, double calorias)
         {
-            CargarProgreso();
+            /*CargarProgreso();
             var registroExistente = _registrosProgreso.FirstOrDefault(p => p.Fecha.Date == fecha.Date);
             if (registroExistente != null)
             {
@@ -77,12 +76,12 @@ namespace Habitus.Controladores
                 };
                 _registrosProgreso.Add(progreso);
             }
-            GuardarProgreso();
+            GuardarProgreso();*/
         }
 
         public void RegistrarMinutosActividad(DateTime fecha, int minutos)
         {
-            CargarProgreso();
+            /*CargarProgreso();
             var registroExistente = _registrosProgreso.FirstOrDefault(p => p.Fecha.Date == fecha.Date);
             if (registroExistente != null)
             {
@@ -97,21 +96,22 @@ namespace Habitus.Controladores
                 };
                 _registrosProgreso.Add(progreso);
             }
-            GuardarProgreso();
+            GuardarProgreso();*/
         }
 
         public Progreso ObtenerProgresoPorFecha(DateTime fecha)
         {
-            CargarProgreso();
-            return _registrosProgreso.FirstOrDefault(p => p.Fecha.Date == fecha.Date);
+            /*CargarProgreso();
+            return _registrosProgreso.FirstOrDefault(p => p.Fecha.Date == fecha.Date);*/
         }
 
         public List<Progreso> ObtenerProgresoPorPeriodo(DateTime fechaInicio, DateTime fechaFin)
         {
-            CargarProgreso();
+            /*CargarProgreso();
             return _registrosProgreso.Where(p => p.Fecha.Date >= fechaInicio.Date && p.Fecha.Date <= fechaFin.Date)
                                     .OrderBy(p => p.Fecha)
-                                    .ToList();
+                                    .ToList();*/
+            return new List<Progreso>();
         }
 
         public Resumen GenerarResumen(DateTime fechaInicio, DateTime fechaFin)
@@ -234,63 +234,6 @@ namespace Habitus.Controladores
         {
             if (valorInicial == 0) return 0;
             return ((valorFinal - valorInicial) / valorInicial) * 100;
-        }
-
-        private void CargarProgreso()
-        {
-            try
-            {
-                if (File.Exists(_rutaArchivo))
-                {
-                    string json = File.ReadAllText(_rutaArchivo);
-                    _registrosProgreso = System.Text.Json.JsonSerializer.Deserialize<List<Progreso>>(json) ?? new List<Progreso>();
-                }
-                else
-                {
-                    _registrosProgreso = new List<Progreso>();
-                }
-            }
-            catch (Exception ex)
-            {
-                _registrosProgreso = new List<Progreso>();
-            }
-        }
-
-        private void GuardarProgreso()
-        {
-            try
-            {
-                string json = System.Text.Json.JsonSerializer.Serialize(_registrosProgreso, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(_rutaArchivo, json);
-            }
-            catch (Exception ex)
-            {
-                // Log error
-            }
-        }
-
-        public void RegistrarProgreso(string estadoAnimo, string notas)
-        {
-            var progreso = new Progreso
-            {
-                Fecha = DateTime.Now.Date,
-                EstadoAnimo = estadoAnimo,
-                Notas = notas
-            };
-
-            // Verificar si ya existe un registro para hoy
-            var registroExistente = _registrosProgreso.FirstOrDefault(p => p.Fecha.Date == DateTime.Now.Date);
-            if (registroExistente != null)
-            {
-                registroExistente.EstadoAnimo = estadoAnimo;
-                registroExistente.Notas = notas;
-            }
-            else
-            {
-                _registrosProgreso.Add(progreso);
-            }
-
-            GuardarProgreso();
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Habitus
 {
     internal static class Program
     {
+
         [STAThread]
         static void Main()
         {
@@ -16,7 +17,6 @@ namespace Habitus
 
             try
             {
-                CrearDirectoriosDatos();
                 if (EsPrimeraEjecucion())
                 {
                     // Mostrar cuestionario inicial
@@ -48,45 +48,6 @@ namespace Habitus
                 // Manejar errores críticos de la aplicación
                 MessageBox.Show($"Error crítico al iniciar la aplicación:\n\n{ex.Message}\n\nLa aplicación se cerrará.", 
                                "Error Crítico - Habitus", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        private static void CrearDirectoriosDatos()
-        {
-            try
-            {
-                var directorioBase = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Habitus");
-                
-                if (!Directory.Exists(directorioBase))
-                {
-                    Directory.CreateDirectory(directorioBase);
-                }
-
-                // Crear subdirectorios para diferentes tipos de datos
-                var subdirectorios = new[]
-                {
-                    "Usuarios",
-                    "Actividades", 
-                    "Comidas",
-                    "Progreso",
-                    "Retos",
-                    "Niveles",
-                    "Cuestionarios",
-                    "Respaldos"
-                };
-
-                foreach (var subdirectorio in subdirectorios)
-                {
-                    var ruta = Path.Combine(directorioBase, subdirectorio);
-                    if (!Directory.Exists(ruta))
-                    {
-                        Directory.CreateDirectory(ruta);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al crear directorios de datos:\n{ex.Message}\n\nLa aplicación podría no funcionar correctamente.", 
-                               "Advertencia - Habitus", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         private static bool EsPrimeraEjecucion()
@@ -138,29 +99,5 @@ namespace Habitus
                 return true;
             }
         }
-        public static string ObtenerRutaDatos()
-        {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Habitus");
-        }
-
-        public static string ObtenerRutaSubdirectorio(string subdirectorio)
-        {
-            return Path.Combine(ObtenerRutaDatos(), subdirectorio);
-        }
-
-        public static bool VerificarPermisos()
-        {
-            try
-            {
-                var rutaPrueba = Path.Combine(ObtenerRutaDatos(), "test_permisos.tmp");
-                File.WriteAllText(rutaPrueba, "test");
-                File.Delete(rutaPrueba);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-    }
+}
 }

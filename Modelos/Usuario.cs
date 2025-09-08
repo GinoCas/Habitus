@@ -1,6 +1,6 @@
 namespace Habitus.Modelos
 {
-    public class Usuario
+    public class PerfilUsuario
     {
         public string Nombre { get; set; }
         public int Edad { get; set; }
@@ -12,7 +12,7 @@ namespace Habitus.Modelos
         public List<Actividad> Actividades { get; set; }
         public int Puntos { get; set; }
 
-        public Usuario()
+        public PerfilUsuario()
         {
             Comidas = new List<Comida>();
             Actividades = new List<Actividad>();

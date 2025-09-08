@@ -1,3 +1,5 @@
+using Habitus.Modelos.Enums;
+
 namespace Habitus.Modelos
 {
     public class Actividad

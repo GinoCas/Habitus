@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Habitus.Controladores;
-using Habitus.Modelos;
+using Habitus.Modelos.Enums;
 
 namespace Habitus.Vistas
 {

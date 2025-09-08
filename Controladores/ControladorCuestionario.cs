@@ -1,27 +1,28 @@
 using Habitus.Modelos;
+using Habitus.Utilidades;
 
 namespace Habitus.Controladores
 {
     public class ControladorCuestionario
     {
-        private Cuestionario _cuestionario;
-        private string _rutaArchivo = "cuestionario.json";
+        private GestorJson<Cuestionario> _cuestionario;
 
         public ControladorCuestionario()
         {
-            InicializarCuestionario();
+            _cuestionario = new GestorJson<Cuestionario>("cuestionario.json");
         }
 
         public Cuestionario ObtenerCuestionario()
         {
-            return _cuestionario;
+            return _cuestionario.GetAll()[0];
         }
 
         public void ResponderPregunta(int indicePregunta, string respuesta)
         {
-            if (indicePregunta >= 0 && indicePregunta < _cuestionario.Preguntas.Count)
+            var cuestionario = _cuestionario.GetAll()[0];
+            if (indicePregunta >= 0 && indicePregunta < cuestionario.Preguntas.Count)
             {
-                var pregunta = _cuestionario.Preguntas[indicePregunta];
+                var pregunta = cuestionario.Preguntas[indicePregunta];
                 pregunta.RespuestaSeleccionada = respuesta;
                 pregunta.PuntosAsignados = CalcularPuntosPregunta(indicePregunta, respuesta);
             }
@@ -30,7 +31,7 @@ namespace Habitus.Controladores
         public int CalcularPuntosTotal()
         {
             int puntosTotal = 0;
-            foreach (var pregunta in _cuestionario.Preguntas)
+            foreach (var pregunta in _cuestionario.GetAll()[0].Preguntas)
             {
                 puntosTotal += pregunta.PuntosAsignados;
             }
@@ -39,33 +40,20 @@ namespace Habitus.Controladores
 
         public void CompletarCuestionario()
         {
-            _cuestionario.Completado = true;
-            _cuestionario.FechaCompletado = DateTime.Now;
-            _cuestionario.PuntosObtenidos = CalcularPuntosTotal();
-            GuardarCuestionario();
+            var cuestionario = _cuestionario.GetAll()[0];
+            cuestionario.Completado = true;
+            cuestionario.FechaCompletado = DateTime.Now;
+            cuestionario.PuntosObtenidos = CalcularPuntosTotal();
         }
 
         public bool EstaCompletado()
         {
-            return _cuestionario.Completado;
-        }
-
-        private void InicializarCuestionario()
-        {
-            if (File.Exists(_rutaArchivo))
-            {
-                CargarCuestionario();
-            }
-            else
-            {
-                _cuestionario = new Cuestionario();
-                CrearPreguntasIniciales();
-            }
+            return _cuestionario.GetAll()[0].Completado;
         }
 
         private void CrearPreguntasIniciales()
         {
-            _cuestionario.Preguntas = new List<Pregunta>
+           /* _cuestionario.Preguntas = new List<Pregunta>
             {
                 new Pregunta
                 {
@@ -97,13 +85,12 @@ namespace Habitus.Controladores
                     Texto = "¿Qué tan motivado/a te sientes para cambiar tus hábitos?",
                     Opciones = new List<string> { "Poco motivado", "Algo motivado", "Muy motivado", "Extremadamente motivado" }
                 }
-            };
+            };*/
         }
 
         private int CalcularPuntosPregunta(int indicePregunta, string respuesta)
         {
-            // Sistema de puntuación basado en las respuestas
-            switch (indicePregunta)
+            /*switch (indicePregunta)
             {
                 case 0: // Objetivo principal
                     return respuesta switch
@@ -161,34 +148,8 @@ namespace Habitus.Controladores
                     };
                 default:
                     return 10;
-            }
-        }
-
-        private void CargarCuestionario()
-        {
-            try
-            {
-                string json = File.ReadAllText(_rutaArchivo);
-                _cuestionario = System.Text.Json.JsonSerializer.Deserialize<Cuestionario>(json) ?? new Cuestionario();
-            }
-            catch (Exception ex)
-            {
-                _cuestionario = new Cuestionario();
-                CrearPreguntasIniciales();
-            }
-        }
-
-        private void GuardarCuestionario()
-        {
-            try
-            {
-                string json = System.Text.Json.JsonSerializer.Serialize(_cuestionario, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(_rutaArchivo, json);
-            }
-            catch (Exception ex)
-            {
-                // Log error
-            }
+            }*/
+            return 0;
         }
     }
 }

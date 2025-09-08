@@ -1,23 +1,23 @@
 using Habitus.Modelos;
+using Habitus.Modelos.Enums;
+using Habitus.Utilidades;
 
 namespace Habitus.Controladores
 {
     public class ControladorComida
     {
-        private List<Comida> _comidas;
-        private List<Alimento> _baseDatosAlimentos;
-        private string _rutaArchivoComidas = "comidas.json";
-        private string _rutaArchivoAlimentos = "alimentos.json";
+        private readonly GestorJson<Comida> _catalogoComidas;
+        private readonly GestorJson<Comida> _comidasConsumidas;
 
         public ControladorComida()
         {
-            CargarComidas();
-            CargarBaseDatosAlimentos();
+            _catalogoComidas = new GestorJson<Comida>("catalogoComidas.json");
+            _comidasConsumidas = new GestorJson<Comida>("comidasConsumidas.json");
         }
 
-        public void RegistrarComida(string nombreAlimento, double cantidad, string tipoComida)
+        public void RegistrarComida(string nombre, double cantidad, TipoComida tipo)
         {
-            var alimento = _baseDatosAlimentos.FirstOrDefault(a => a.Nombre.ToLower() == nombreAlimento.ToLower());
+            /*var alimento = _catalogoComidas.FirstOrDefault(a => a.Nombre.ToLower() == nombreAlimento.ToLower());
             double calorias = 0;
 
             if (alimento != null)
@@ -39,112 +39,39 @@ namespace Habitus.Controladores
             };
 
             _comidas.Add(comida);
-            GuardarComidas();
+            GuardarComidas();*/
         }
 
         public List<Comida> ObtenerComidasPorFecha(DateTime fecha)
         {
-            CargarComidas();
-            return _comidas.Where(c => c.Fecha.Date == fecha.Date).ToList();
+            return _comidasConsumidas.GetAll().Where(c => c.Fecha.Date == fecha.Date).ToList();
         }
 
-        public List<Comida> ObtenerComidasPorTipo(DateTime fecha, string tipoComida)
+        public List<Comida> ObtenerComidasPorTipo(DateTime fecha, TipoComida tipoComida)
         {
-            return _comidas.Where(c => c.Fecha.Date == fecha.Date && c.Tipo.ToLower() == tipoComida.ToLower()).ToList();
+            return _comidasConsumidas.GetAll().Where(c => c.Fecha.Date == fecha.Date && c.Tipo == tipoComida).ToList();
         }
 
         public List<Comida> ObtenerComidasPorPeriodo(DateTime fechaInicio, DateTime fechaFin)
         {
-            return _comidas.Where(c => c.Fecha.Date >= fechaInicio.Date && c.Fecha.Date <= fechaFin.Date).ToList();
+            return _comidasConsumidas.GetAll().Where(c => c.Fecha.Date >= fechaInicio.Date && c.Fecha.Date <= fechaFin.Date).ToList();
         }
 
         public double ObtenerTotalCaloriasConsumidas(DateTime fecha)
         {
-            return _comidas.Where(c => c.Fecha.Date == fecha.Date)
+            return _comidasConsumidas.GetAll().Where(c => c.Fecha.Date == fecha.Date)
                           .Sum(c => c.Calorias);
         }
 
-        public List<Alimento> BuscarAlimentos(string termino)
+        public List<Comida> BuscarComidaPorTermino(string termino)
         {
-            return _baseDatosAlimentos.Where(a => a.Nombre.ToLower().Contains(termino.ToLower()))
+            /*return _baseDatosAlimentos.Where(a => a.Nombre.ToLower().Contains(termino.ToLower()))
                                      .Take(10)
-                                     .ToList();
+                                     .ToList();*/
+            return new List<Comida>();
         }
 
-        public void AgregarAlimento(Alimento alimento)
-        {
-            _baseDatosAlimentos.Add(alimento);
-            GuardarBaseDatosAlimentos();
-        }
-
-        private void CargarComidas()
-        {
-            try
-            {
-                if (File.Exists(_rutaArchivoComidas))
-                {
-                    string json = File.ReadAllText(_rutaArchivoComidas);
-                    _comidas = System.Text.Json.JsonSerializer.Deserialize<List<Comida>>(json) ?? new List<Comida>();
-                }
-                else
-                {
-                    _comidas = new List<Comida>();
-                }
-            }
-            catch (Exception ex)
-            {
-                _comidas = new List<Comida>();
-            }
-        }
-
-        private void GuardarComidas()
-        {
-            try
-            {
-                string json = System.Text.Json.JsonSerializer.Serialize(_comidas, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(_rutaArchivoComidas, json);
-            }
-            catch (Exception ex)
-            {
-                // Log error
-            }
-        }
-
-        private void CargarBaseDatosAlimentos()
-        {
-            try
-            {
-                if (File.Exists(_rutaArchivoAlimentos))
-                {
-                    string json = File.ReadAllText(_rutaArchivoAlimentos);
-                    _baseDatosAlimentos = System.Text.Json.JsonSerializer.Deserialize<List<Alimento>>(json) ?? new List<Alimento>();
-                }
-                else
-                {
-                    _baseDatosAlimentos = InicializarAlimentosBasicos();
-                    GuardarBaseDatosAlimentos();
-                }
-            }
-            catch (Exception ex)
-            {
-                _baseDatosAlimentos = InicializarAlimentosBasicos();
-            }
-        }
-
-        private void GuardarBaseDatosAlimentos()
-        {
-            try
-            {
-                string json = System.Text.Json.JsonSerializer.Serialize(_baseDatosAlimentos, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(_rutaArchivoAlimentos, json);
-            }
-            catch (Exception ex)
-            {
-                // Log error
-            }
-        }
-
-        private List<Alimento> InicializarAlimentosBasicos()
+        /*private List<Alimento> InicializarAlimentosBasicos()
         {
             return new List<Alimento>
             {
@@ -154,6 +81,6 @@ namespace Habitus.Controladores
                 new Alimento { Nombre = "Arroz blanco", CaloriasPor100g = 130, Proteinas = 2.7, Carbohidratos = 28, Grasas = 0.3, Fibra = 0.4, Categoria = "Cereales" },
                 new Alimento { Nombre = "Brócoli", CaloriasPor100g = 34, Proteinas = 2.8, Carbohidratos = 7, Grasas = 0.4, Fibra = 2.6, Categoria = "Verduras" }
             };
-        }
+        }*/
     }
 }

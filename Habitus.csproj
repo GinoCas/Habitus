@@ -16,17 +16,29 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Datos\**" />
     <Compile Remove="Recursos\**" />
-    <EmbeddedResource Remove="Datos\**" />
     <EmbeddedResource Remove="Recursos\**" />
-    <None Remove="Datos\**" />
     <None Remove="Recursos\**" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Datos\Sistema\catalogoComida.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Datos\Sistema\cuestionario.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Datos\Sistema\niveles.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Datos\Sistema\retos.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

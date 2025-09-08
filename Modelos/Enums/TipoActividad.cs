@@ -1,4 +1,4 @@
-namespace Habitus.Modelos
+namespace Habitus.Modelos.Enums
 {
     public enum TipoActividad
     {

@@ -1,26 +1,27 @@
 using Habitus.Modelos;
+using Habitus.Modelos.Enums;
+using Habitus.Utilidades;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Habitus.Controladores
 {
-    public class ControladorUsuario
+    public class ControladorPerfilUsuario
     {
-        private Usuario _usuario;
-        private string _rutaArchivo = "usuario.json";
+        private GestorJson<PerfilUsuario> _perfilUsuario;
 
-        public ControladorUsuario()
+        public ControladorPerfilUsuario()
         {
-            CargarUsuario();
+            _perfilUsuario = new GestorJson<PerfilUsuario>("perfil.json");
         }
 
-        public Usuario ObtenerUsuario()
+        public PerfilUsuario ObtenerUsuario()
         {
-            CargarUsuario();
-            return _usuario;
+            return _perfilUsuario.GetAll().First();
         }
 
         public void CrearUsuario(string nombre, int edad, double peso, double altura, Genero genero, NivelActividad nivelActividad, int puntos)
         {
-            _usuario = new Usuario
+            /*_usuario = new Usuario
             {
                 Nombre = nombre,
                 Edad = edad,
@@ -30,73 +31,40 @@ namespace Habitus.Controladores
                 NivelActividad = nivelActividad.ToString(),
                 Puntos = puntos
             };
-            GuardarUsuario();
+            GuardarUsuario();*/
         }
 
         public void ActualizarPuntos(int puntos)
         {
-            if (_usuario != null)
+            /*if (_usuario != null)
             {
                 _usuario.Puntos += puntos;
                 GuardarUsuario();
-            }
+            }*/
         }
 
         public void ActualizarPeso(double nuevoPeso)
         {
-            if (_usuario != null)
+            /*if (_usuario != null)
             {
                 _usuario.Peso = nuevoPeso;
                 GuardarUsuario();
-            }
+            }*/
         }
 
         public double CalcularIMC()
         {
-            if (_usuario != null && _usuario.Altura > 0)
+            /*if (_usuario != null && _usuario.Altura > 0)
             {
                 double alturaEnMetros = _usuario.Altura / 100;
                 return _usuario.Peso / (alturaEnMetros * alturaEnMetros);
-            }
+            }*/
             return 0;
-        }
-
-        private void CargarUsuario()
-        {
-            try
-            {
-                if (File.Exists(_rutaArchivo))
-                {
-                    string json = File.ReadAllText(_rutaArchivo);
-                    _usuario = System.Text.Json.JsonSerializer.Deserialize<Usuario>(json);
-                }
-            }
-            catch (Exception ex)
-            {
-                // Log error
-                _usuario = null;
-            }
-        }
-
-        private void GuardarUsuario()
-        {
-            try
-            {
-                if (_usuario != null)
-                {
-                    string json = System.Text.Json.JsonSerializer.Serialize(_usuario, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
-                    File.WriteAllText(_rutaArchivo, json);
-                }
-            }
-            catch (Exception ex)
-            {
-                // Log error
-            }
         }
 
         public bool UsuarioExiste()
         {
-            return _usuario != null;
+            return _perfilUsuario.GetAll().FirstOrDefault() != null;
         }
     }
 }

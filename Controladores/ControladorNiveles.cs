@@ -1,27 +1,28 @@
 using Habitus.Modelos;
+using Habitus.Utilidades;
 
 namespace Habitus.Controladores
 {
     public class ControladorNiveles
     {
-        private List<Nivel> _niveles;
-        private string _rutaArchivo = "niveles.json";
+        private GestorJson<Nivel> _niveles;
 
         public ControladorNiveles()
         {
-            CargarNiveles();
+            _niveles = new GestorJson<Nivel>("niveles.json");
         }
 
         public Nivel ObtenerNivelActual(int puntos)
         {
-            return _niveles.Where(n => n.PuntosRequeridos <= puntos)
+            var niveles = _niveles.GetAll();
+            return niveles.Where(n => n.PuntosRequeridos <= puntos)
                           .OrderByDescending(n => n.PuntosRequeridos)
-                          .FirstOrDefault() ?? _niveles.First();
+                          .FirstOrDefault() ?? niveles.First();
         }
 
         public Nivel ObtenerSiguienteNivel(int puntos)
         {
-            return _niveles.Where(n => n.PuntosRequeridos > puntos)
+            return _niveles.GetAll().Where(n => n.PuntosRequeridos > puntos)
                           .OrderBy(n => n.PuntosRequeridos)
                           .FirstOrDefault();
         }
@@ -50,7 +51,7 @@ namespace Habitus.Controladores
             var nivelActual = ObtenerNivelActual(puntos);
             var beneficios = new List<string>();
 
-            foreach (var nivel in _niveles.Where(n => n.PuntosRequeridos <= puntos))
+            foreach (var nivel in _niveles.GetAll().Where(n => n.PuntosRequeridos <= puntos))
             {
                 beneficios.AddRange(nivel.BeneficiosDesbloqueados);
             }
@@ -63,44 +64,9 @@ namespace Habitus.Controladores
             var nivelAnterior = ObtenerNivelActual(puntosAnteriores);
             var nivelNuevo = ObtenerNivelActual(puntosNuevos);
 
-            return nivelNuevo.NumeroNivel > nivelAnterior.NumeroNivel;
+            return nivelNuevo.Numero > nivelAnterior.Numero;
         }
-
-        private void CargarNiveles()
-        {
-            try
-            {
-                if (File.Exists(_rutaArchivo))
-                {
-                    string json = File.ReadAllText(_rutaArchivo);
-                    _niveles = System.Text.Json.JsonSerializer.Deserialize<List<Nivel>>(json) ?? new List<Nivel>();
-                }
-                else
-                {
-                    _niveles = InicializarNiveles();
-                    GuardarNiveles();
-                }
-            }
-            catch (Exception ex)
-            {
-                _niveles = InicializarNiveles();
-            }
-        }
-
-        private void GuardarNiveles()
-        {
-            try
-            {
-                string json = System.Text.Json.JsonSerializer.Serialize(_niveles, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
-                File.WriteAllText(_rutaArchivo, json);
-            }
-            catch (Exception ex)
-            {
-                // Log error
-            }
-        }
-
-        private List<Nivel> InicializarNiveles()
+        /*private List<Nivel> InicializarNiveles()
         {
             return new List<Nivel>
             {
@@ -168,6 +134,6 @@ namespace Habitus.Controladores
                     Insignia = "🏆"
                 }
             };
-        }
+        }*/
     }
 }
