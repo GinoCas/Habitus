@@ -19,9 +19,8 @@ namespace Habitus.Controladores
                 MessageBox.Show("El json del cuestionario esta vacio.");
                 return null;
             }
-            return result.First();
+            return result.FirstOrDefault();
         }
-
         public void ResponderPregunta(int indicePregunta, string respuesta)
         {
             var cuestionario = _cuestionario.GetAll()[0];

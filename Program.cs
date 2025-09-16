@@ -27,15 +27,11 @@ namespace Habitus
                 {
                     // Verificar si el usuario existe
                     var controladorUsuario = new ControladorPerfilUsuario();
-                    PerfilUsuario usuario = null;
-                    //MessageBox.Show("test");
-                    //var usuario = controladorUsuario.ObtenerUsuario();
-                    //MessageBox.Show(usuario.Nombre);
+                    var usuario = controladorUsuario.ObtenerUsuario();
 
                     if (usuario == null)
                     {
                         // Si no hay usuario, mostrar cuestionario
-                        MessageBox.Show("TEST");
                         var formCuestionario = new FormCuestionario();
                         Application.Run(formCuestionario);
                     }
@@ -105,7 +101,6 @@ namespace Habitus
             }
             catch
             {
-                // En caso de error, asumir que es primera ejecución
                 return true;
             }
         }

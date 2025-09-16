@@ -22,30 +22,36 @@ namespace Habitus.Utilidades
             {
                 Directory.CreateDirectory(directory);
             }
+            if (!isSystemFile && !File.Exists(_filePath))
+            {
+                File.WriteAllText(_filePath, "[]");
+            }
+
             _options = new JsonSerializerOptions { WriteIndented = true };
         }
 
         private List<T> Load()
         {
             if (!File.Exists(_filePath))
+            {
                 MessageBox.Show("No existe un archivo json para el archivo:" + _filePath);
                 return new List<T>();
-
+            }
             var json = File.ReadAllText(_filePath);
             return JsonSerializer.Deserialize<List<T>>(json, _options) ?? new List<T>();
         }
 
         private void Save(List<T> items)
         {
-            /*var json = JsonSerializer.Serialize(items, _options);
-            File.WriteAllText(_filePath, json);*/
+            var json = JsonSerializer.Serialize(items, _options);
+            File.WriteAllText(_filePath, json);
         }
 
         public void Add(T item)
         {
-            /*var items = Load();
+            var items = Load();
             items.Add(item);
-            Save(items);*/
+            Save(items);
         }
 
         public List<T> GetAll() => Load();

@@ -11,20 +11,17 @@ namespace Habitus.Controladores
 
         public ControladorPerfilUsuario()
         {
-            _perfilUsuario = new GestorJson<PerfilUsuario>("perfil.json", true);
+            _perfilUsuario = new GestorJson<PerfilUsuario>("perfil.json", false);
         }
 
         public PerfilUsuario? ObtenerUsuario()
         {
-            var result = _perfilUsuario.GetAll();
-            return result.Count == 0 
-                ? null
-                : result[0];
+            return _perfilUsuario.GetAll().FirstOrDefault();
         }
 
         public void CrearUsuario(string nombre, int edad, double peso, double altura, Genero genero, NivelActividad nivelActividad, int puntos)
         {
-            /*_usuario = new Usuario
+            var _usuario = new PerfilUsuario
             {
                 Nombre = nombre,
                 Edad = edad,
@@ -34,7 +31,7 @@ namespace Habitus.Controladores
                 NivelActividad = nivelActividad.ToString(),
                 Puntos = puntos
             };
-            GuardarUsuario();*/
+            _perfilUsuario.Add(_usuario);
         }
 
         public void ActualizarPuntos(int puntos)
