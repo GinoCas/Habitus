@@ -14,10 +14,11 @@ namespace Habitus.Controladores
 
         public Nivel ObtenerNivelActual(int puntos)
         {
-            var niveles = _niveles.GetAll();
+            /*var niveles = _niveles.GetAll();
             return niveles.Where(n => n.PuntosRequeridos <= puntos)
                           .OrderByDescending(n => n.PuntosRequeridos)
-                          .FirstOrDefault() ?? niveles.First();
+                          .FirstOrDefault() ?? niveles.First();*/
+            return new Nivel();
         }
 
         public Nivel ObtenerSiguienteNivel(int puntos)

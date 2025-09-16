@@ -8,13 +8,13 @@ namespace Habitus.Vistas
 {
     public partial class FormDatosPersonales : Form
     {
-        private ControladorUsuario _controladorUsuario;
+        private ControladorPerfilUsuario _controladorUsuario;
         private int _puntosIniciales;
 
         public FormDatosPersonales(int puntosIniciales)
         {
             _puntosIniciales = puntosIniciales;
-            _controladorUsuario = new ControladorUsuario();
+            _controladorUsuario = new ControladorPerfilUsuario();
             InitializeComponent();
             
             // Actualizar el subtítulo con los puntos iniciales

@@ -10,7 +10,7 @@ namespace Habitus.Vistas
     public partial class FormRetos : Form
     {
         private ControladorRetos _controladorRetos;
-        private ControladorUsuario _controladorUsuario;
+        private ControladorPerfilUsuario _controladorUsuario;
         private ControladorNiveles _controladorNiveles;
         private TabControl tabControl;
         private ListView lstRetosDisponibles;
@@ -19,7 +19,7 @@ namespace Habitus.Vistas
         private Button btnCompletarReto;
         private Button btnGenerarRetos;
         private Label lblInfoReto;
-        private Usuario _usuario;
+        private PerfilUsuario _usuario;
 
         private ControladorProgreso _controladorProgreso;
 
@@ -27,7 +27,7 @@ namespace Habitus.Vistas
         {
             InitializeComponent();
             _controladorRetos = new ControladorRetos();
-            _controladorUsuario = new ControladorUsuario();
+            _controladorUsuario = new ControladorPerfilUsuario();
             _controladorNiveles = new ControladorNiveles();
             _controladorProgreso = controladorProgreso ?? new ControladorProgreso();
             _usuario = _controladorUsuario.ObtenerUsuario();
@@ -66,7 +66,7 @@ namespace Habitus.Vistas
             // Información del usuario
             var lblInfoUsuario = new Label
             {
-                Text = _usuario != null ? $"Nivel: {_controladorNiveles.ObtenerNivelActual(_usuario.Puntos).NumeroNivel} | Puntos: {_usuario.Puntos}" : "Usuario no encontrado",
+                Text = _usuario != null ? $"Nivel: {_controladorNiveles.ObtenerNivelActual(_usuario.Puntos).Numero} | Puntos: {_usuario.Puntos}" : "Usuario no encontrado",
                 Font = new Font("Segoe UI", 10),
                 ForeColor = Color.FromArgb(52, 73, 94),
                 Location = new Point(50, 55),
@@ -267,7 +267,7 @@ namespace Habitus.Vistas
         private void CargarRetosDisponibles()
         {
             lstRetosDisponibles.Items.Clear();
-            var nivelUsuario = _usuario != null ? _controladorNiveles.ObtenerNivelActual(_usuario.Puntos).NumeroNivel : 1;
+            var nivelUsuario = _usuario != null ? _controladorNiveles.ObtenerNivelActual(_usuario.Puntos).Numero: 1;
             var puntosUsuario = _usuario != null ? _usuario.Puntos : 0;
             var retosDisponibles = _controladorRetos.ObtenerRetosDisponibles(nivelUsuario, puntosUsuario);
 
@@ -451,8 +451,8 @@ namespace Habitus.Vistas
         {
             try
             {
-                var nivelUsuario = _usuario != null ? _controladorNiveles.ObtenerNivelActual(_usuario.Puntos).NumeroNivel : 1;
-                _controladorRetos.GenerarRetosAutomaticos(nivelUsuario);
+                var nivelUsuario = _usuario != null ? _controladorNiveles.ObtenerNivelActual(_usuario.Puntos).Numero : 1;
+                //_controladorRetos.ObtenerRetosDisponibles(nivelUsuario);
                 
                 MessageBox.Show("¡Nuevos retos generados exitosamente!\n\n" +
                                "Los retos se han adaptado a tu nivel actual.", 

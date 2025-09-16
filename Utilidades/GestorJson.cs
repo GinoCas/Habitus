@@ -20,12 +20,12 @@
 
         private List<T> Load()
         {
-            /*if (!File.Exists(_filePath))
+            if (!File.Exists(_filePath))
                 return new List<T>();
 
             var json = File.ReadAllText(_filePath);
-            return JsonSerializer.Deserialize<List<T>>(json, _options) ?? new List<T>();*/
-            return new List<T>();
+            return JsonSerializer.Deserialize<List<T>>(json, _options) ?? new List<T>();
+            //return new List<T>();
         }
 
         private void Save(List<T> items)

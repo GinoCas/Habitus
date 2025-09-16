@@ -10,14 +10,14 @@ namespace Habitus.Vistas
     public partial class FormCuestionario : Form
     {
         private ControladorCuestionario _controladorCuestionario;
-        private ControladorUsuario _controladorUsuario;
+        private ControladorPerfilUsuario _controladorUsuario;
         private int _preguntaActual = 0;
 
         public FormCuestionario()
         {
             InitializeComponent();
             _controladorCuestionario = new ControladorCuestionario();
-            _controladorUsuario = new ControladorUsuario();
+            _controladorUsuario = new ControladorPerfilUsuario();
             
             // Configurar la barra de progreso con el número de preguntas
             progressBar.Maximum = _controladorCuestionario.ObtenerCuestionario().Preguntas.Count;

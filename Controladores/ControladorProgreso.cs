@@ -101,6 +101,7 @@ namespace Habitus.Controladores
 
         public Progreso ObtenerProgresoPorFecha(DateTime fecha)
         {
+            return new Progreso();
             /*CargarProgreso();
             return _registrosProgreso.FirstOrDefault(p => p.Fecha.Date == fecha.Date);*/
         }

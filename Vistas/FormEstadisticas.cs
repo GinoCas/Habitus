@@ -10,18 +10,18 @@ namespace Habitus.Vistas
     public partial class FormEstadisticas : Form
     {
         private ControladorProgreso _controladorProgreso;
-        private ControladorUsuario _controladorUsuario;
+        private ControladorPerfilUsuario _controladorUsuario;
         private ControladorActividad _controladorActividad;
         private ControladorComida _controladorComida;
         private ControladorRetos _controladorRetos;
         private ControladorNiveles _controladorNiveles;
-        private Usuario _usuario;
+        private PerfilUsuario _usuario;
 
         public FormEstadisticas()
         {
             InitializeComponent();
             _controladorProgreso = new ControladorProgreso();
-            _controladorUsuario = new ControladorUsuario();
+            _controladorUsuario = new ControladorPerfilUsuario();
             _controladorActividad = new ControladorActividad();
             _controladorComida = new ControladorComida();
             _controladorRetos = new ControladorRetos();

@@ -11,7 +11,7 @@ namespace Habitus.Vistas
     public partial class FormRegistrarComida : Form
     {
         private ControladorComida _controladorComida;
-        private ControladorUsuario _controladorUsuario;
+        private ControladorPerfilUsuario _controladorUsuario;
         private ControladorProgreso _controladorProgreso; 
         private DateTimePicker dtpFecha;
         private ComboBox cmbTipoComida;
@@ -25,14 +25,14 @@ namespace Habitus.Vistas
         private Button btnGuardar;
         private Button btnCancelar;
         private Button btnBuscar;
-        private Alimento _alimentoSeleccionado;
+        private Comida _alimentoSeleccionado;
         private BindingSource _alimentosSeleccionados;
 
         public FormRegistrarComida(ControladorProgreso controladorProgreso)
         {
             InitializeComponent();
             _controladorComida = new ControladorComida();
-            _controladorUsuario = new ControladorUsuario();
+            _controladorUsuario = new ControladorPerfilUsuario();
             _controladorProgreso = controladorProgreso; // Usar la instancia compartida
             _alimentosSeleccionados = new BindingSource();
             InicializarComponentes();
@@ -328,7 +328,7 @@ namespace Habitus.Vistas
 
         private void CargarAlimentos()
         {
-            var alimentos = _controladorComida.BuscarAlimentos("");
+            var alimentos = _controladorComida.BuscarComidaPorTermino("");
             lstAlimentos.DataSource = alimentos;
             lstAlimentos.DisplayMember = "Nombre";
         }
@@ -353,7 +353,7 @@ namespace Habitus.Vistas
         private void BuscarAlimentos()
         {
             var termino = txtBuscarAlimento.Text.Trim();
-            var alimentos = _controladorComida.BuscarAlimentos(termino);
+            var alimentos = _controladorComida.BuscarComidaPorTermino(termino);
             lstAlimentos.DataSource = alimentos;
             lstAlimentos.DisplayMember = "Nombre";
             // Eliminamos la línea que establece ValueMember como "Id" ya que Alimento no tiene esta propiedad
@@ -361,15 +361,15 @@ namespace Habitus.Vistas
 
         private void LstAlimentos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (lstAlimentos.SelectedItem is Alimento alimento)
+            if (lstAlimentos.SelectedItem is Comida alimento)
             {
                 _alimentoSeleccionado = alimento;
                 btnAgregarAlimento.Enabled = true;
                 
-                lblCaloriasSeleccionadas.Text = $"Calorías: {alimento.CaloriasPor100g} kcal\n" +
-                                              $"Proteínas: {alimento.Proteinas}g\n" +
-                                              $"Carbohidratos: {alimento.Carbohidratos}g\n" +
-                                              $"Grasas: {alimento.Grasas}g";
+                lblCaloriasSeleccionadas.Text = $"Calorías: {alimento.Calorias} kcal\n" + alimento;
+                                            //  $"Proteínas: {alimento.Proteinas}g\n" +
+                                             // $"Carbohidratos: {alimento.Carbohidratos}g\n" +
+                                             // $"Grasas: {alimento.Grasas}g";
             }
             else
             {
@@ -390,8 +390,8 @@ namespace Habitus.Vistas
                 {
                     Alimento = _alimentoSeleccionado,
                     Cantidad = cantidad,
-                    CaloriasTotal = _alimentoSeleccionado.CaloriasPor100g * factor,
-                    Descripcion = $"{_alimentoSeleccionado.Nombre} - {cantidad}g ({_alimentoSeleccionado.CaloriasPor100g * factor:F0} kcal)"
+                    CaloriasTotal = _alimentoSeleccionado.Calorias * factor,
+                    Descripcion = $"{_alimentoSeleccionado.Nombre} - {cantidad}g ({_alimentoSeleccionado.Calorias * factor:F0} kcal)"
                 };
                 
                 _alimentosSeleccionados.Add(alimentoComida);
@@ -436,14 +436,14 @@ namespace Habitus.Vistas
                         {
                             Id = Guid.NewGuid().ToString(),
                             Fecha = fecha,
-                            TipoComida = tipoComida,
-                            AlimentoId = alimentoComida.Alimento.Nombre,
-                            NombreAlimento = alimentoComida.Alimento.Nombre,
+                            Tipo = tipoComida,
+                            //AlimentoId = alimentoComida.Alimento.Nombre,
+                            Nombre = alimentoComida.Alimento.Nombre,
                             Cantidad = alimentoComida.Cantidad,
-                            CaloriasConsumidas = alimentoComida.CaloriasTotal
+                            Calorias = alimentoComida.CaloriasTotal
                         };
                         
-                        _controladorComida.RegistrarComida(comida.NombreAlimento, comida.Cantidad, comida.TipoComida.ToString());
+                        //_controladorComida.RegistrarComida(comida.Nombre, comida.Cantidad, comida.Tipo.ToString());
                     }
                 }
 

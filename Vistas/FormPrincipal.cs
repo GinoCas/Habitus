@@ -8,11 +8,11 @@ namespace Habitus.Vistas
 {
     public partial class FormPrincipal : Form
     {
-        private ControladorUsuario _controladorUsuario;
+        private ControladorPerfilUsuario _controladorUsuario;
         private ControladorNiveles _controladorNiveles;
         private ControladorProgreso _controladorProgreso;
         private ControladorRetos _controladorRetos;
-        private Usuario _usuario;
+        private PerfilUsuario _usuario;
         private Panel panelResumenDia;
 
         public FormPrincipal()
@@ -24,7 +24,7 @@ namespace Habitus.Vistas
 
         private void InicializarControladores()
         {
-            _controladorUsuario = new ControladorUsuario();
+            _controladorUsuario = new ControladorPerfilUsuario();
             _controladorNiveles = new ControladorNiveles();
             _controladorProgreso = new ControladorProgreso();
             _controladorRetos = new ControladorRetos();
@@ -259,7 +259,7 @@ namespace Habitus.Vistas
                 lblPuntos.Text = $"Puntos: {_usuario.Puntos}";
                 
                 var nivelActual = _controladorNiveles.ObtenerNivelActual(_usuario.Puntos);
-                lblNivel.Text = $"Nivel {nivelActual.NumeroNivel}";
+                lblNivel.Text = $"Nivel {nivelActual.Numero}";
                 
                 var progresoNivel = _controladorNiveles.CalcularProgresoNivel(_usuario.Puntos);
                 // El método CalcularProgresoNivel ya devuelve un valor multiplicado por 100

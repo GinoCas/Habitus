@@ -10,13 +10,13 @@ namespace Habitus.Vistas
     public partial class FormProgreso : Form
     {
         private ControladorProgreso _controladorProgreso;
-        private ControladorUsuario _controladorUsuario;
+        private ControladorPerfilUsuario _controladorUsuario;
 
         public FormProgreso()
         {
             InitializeComponent();
             _controladorProgreso = new ControladorProgreso();
-            _controladorUsuario = new ControladorUsuario();
+            _controladorUsuario = new ControladorPerfilUsuario();
             
             CrearPanelEstadisticas();
             CrearPanelGraficos();
@@ -241,7 +241,7 @@ namespace Habitus.Vistas
 
             try
             {
-                _controladorProgreso.RegistrarProgreso(estadoAnimo.ToString(), notas);
+               // _controladorProgreso.RegistrarProgreso(estadoAnimo.ToString(), notas);
                 
                 MessageBox.Show("Progreso registrado exitosamente.", "Registro Completado", 
                                MessageBoxButtons.OK, MessageBoxIcon.Information);

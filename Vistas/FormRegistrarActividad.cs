@@ -10,7 +10,7 @@ namespace Habitus.Vistas
     public partial class FormRegistrarActividad : Form
     {
         private ControladorActividad _controladorActividad;
-        private ControladorUsuario _controladorUsuario;
+        private ControladorPerfilUsuario _controladorUsuario;
         private ComboBox cmbTipoActividad;
         private ComboBox cmbIntensidad;
         private NumericUpDown numDuracion;
@@ -27,7 +27,7 @@ namespace Habitus.Vistas
         {
             InitializeComponent();
             _controladorActividad = new ControladorActividad();
-            _controladorUsuario = new ControladorUsuario();
+            _controladorUsuario = new ControladorPerfilUsuario();
             _controladorProgreso = controladorProgreso ?? new ControladorProgreso();
             InicializarComponentes();
         }
@@ -137,8 +137,8 @@ namespace Habitus.Vistas
                 DropDownStyle = ComboBoxStyle.DropDownList
             };
             
-            var intensidades = Enum.GetValues(typeof(Intensidad))
-                .Cast<Intensidad>()
+            var intensidades = Enum.GetValues(typeof(ActividadIntensidad))
+                .Cast<ActividadIntensidad>()
                 .Select(i => new { Value = i, Text = ObtenerTextoIntensidad(i) })
                 .ToArray();
             
@@ -285,13 +285,13 @@ namespace Habitus.Vistas
             };
         }
 
-        private string ObtenerTextoIntensidad(Intensidad intensidad)
+        private string ObtenerTextoIntensidad(ActividadIntensidad intensidad)
         {
             return intensidad switch
             {
-                Intensidad.Baja => "Baja",
-                Intensidad.Moderada => "Moderada",
-                Intensidad.Alta => "Alta",
+                ActividadIntensidad.Baja => "Baja",
+                ActividadIntensidad.Moderada => "Moderada",
+                ActividadIntensidad.Alta => "Alta",
                 _ => intensidad.ToString()
             };
         }
@@ -321,7 +321,7 @@ namespace Habitus.Vistas
             if (cmbTipoActividad.SelectedValue != null && cmbIntensidad.SelectedValue != null)
             {
                 var tipoActividad = (TipoActividad)cmbTipoActividad.SelectedValue;
-                var intensidad = (Intensidad)cmbIntensidad.SelectedValue;
+                var intensidad = (ActividadIntensidad)cmbIntensidad.SelectedValue;
                 var duracion = (int)numDuracion.Value;
 
                 var usuario = _controladorUsuario.ObtenerUsuario();
@@ -339,7 +339,7 @@ namespace Habitus.Vistas
             if (ValidarDatos())
             {
                 var tipoActividad = (TipoActividad)cmbTipoActividad.SelectedValue;
-                var intensidad = (Intensidad)cmbIntensidad.SelectedValue;
+                var intensidad = (ActividadIntensidad)cmbIntensidad.SelectedValue;
                 var duracion = (int)numDuracion.Value;
                 var fecha = dtpFecha.Value.Date;
                 var descripcion = txtDescripcion.Text.Trim();
@@ -348,7 +348,7 @@ namespace Habitus.Vistas
                 var calorias = _controladorActividad.CalcularCaloriasQuemadas(
                     tipoActividad, intensidad, duracion, usuario.Peso);
 
-                _controladorActividad.RegistrarActividad(tipoActividad.ToString(), duracion, intensidad.ToString());
+               // _controladorActividad.RegistrarActividad(tipoActividad.ToString(), duracion, intensidad.ToString());
 
                 // Actualizar el progreso con las calorías quemadas y minutos de actividad
                 _controladorProgreso.RegistrarCaloriasQuemadas(fecha, calorias);
@@ -366,13 +366,13 @@ namespace Habitus.Vistas
             }
         }
 
-        private int CalcularPuntosActividad(int duracion, Intensidad intensidad)
+        private int CalcularPuntosActividad(int duracion, ActividadIntensidad intensidad)
         {
             int puntosPorMinuto = intensidad switch
             {
-                Intensidad.Baja => 1,
-                Intensidad.Moderada => 2,
-                Intensidad.Alta => 3,
+                ActividadIntensidad.Baja => 1,
+                ActividadIntensidad.Moderada => 2,
+                ActividadIntensidad.Alta => 3,
                 _ => 1
             };
 

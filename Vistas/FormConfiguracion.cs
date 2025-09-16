@@ -9,14 +9,14 @@ namespace Habitus.Vistas
 {
     public partial class FormConfiguracion : Form
     {
-        private ControladorUsuario _controladorUsuario;
+        private ControladorPerfilUsuario _controladorUsuario;
         private ControladorNiveles _controladorNiveles;
-        private Usuario _usuario;
+        private PerfilUsuario _usuario;
 
         public FormConfiguracion()
         {
             InitializeComponent();
-            _controladorUsuario = new ControladorUsuario();
+            _controladorUsuario = new ControladorPerfilUsuario();
             _controladorNiveles = new ControladorNiveles();
             _usuario = _controladorUsuario.ObtenerUsuario();
             CargarDatosUsuario();
@@ -541,7 +541,7 @@ namespace Habitus.Vistas
                 var lblNivelInfo = this.Controls.Find("lblNivelInfo", true)[0] as Label;
                 if (lblNivelInfo != null)
                 {
-                    lblNivelInfo.Text = $"Nivel {nivel.NumeroNivel}: {nivel.Nombre} | Puntos: {_usuario.Puntos}\n" +
+                    lblNivelInfo.Text = $"Nivel {nivel.Numero}: {nivel.Nombre} | Puntos: {_usuario.Puntos}\n" +
                                        $"Faltan {puntosParaSiguiente} puntos para el siguiente nivel";
                 }
 
@@ -608,7 +608,7 @@ namespace Habitus.Vistas
                     // Actualizar datos del usuario
                     if (_usuario == null)
                     {
-                        _usuario = new Usuario();
+                        _usuario = new PerfilUsuario();
                     }
 
                     _usuario.Nombre = txtNombre.Text.Trim();
