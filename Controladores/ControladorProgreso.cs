@@ -9,7 +9,7 @@ namespace Habitus.Controladores
 
         public ControladorProgreso()
         {
-            _progreso = new GestorJson<Progreso>("progreso.json");
+            _progreso = new GestorJson<Progreso>("progreso.json", false);
         }
 
         public void RegistrarProgresoDiario(double peso, double caloriasConsumidas, double caloriasQuemadas, 

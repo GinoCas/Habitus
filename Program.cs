@@ -15,10 +15,7 @@ namespace Habitus
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            var formPrincipal = new FormPrincipal();
-            Application.Run(formPrincipal);
-
-            /*try
+            try
             {
                 if (EsPrimeraEjecucion())
                 {
@@ -55,7 +52,7 @@ namespace Habitus
                 // Manejar errores críticos de la aplicación
                 MessageBox.Show($"Error crítico al iniciar la aplicación:\n\n{ex.Message}\n\nLa aplicación se cerrará.", 
                                "Error Crítico - Habitus", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }*/
+            }
         }
         private static bool EsPrimeraEjecucion()
         {
@@ -66,6 +63,12 @@ namespace Habitus
                 
                 if (!File.Exists(archivoConfiguracion))
                 {
+                    // Crear directorios necesarios
+                    Directory.CreateDirectory(directorioBase);
+
+                    // Copiar archivos de datos
+                    CopiarArchivosDeDatos();
+
                     // Crear archivo de configuración inicial
                     var configuracionInicial = new
                     {
@@ -104,6 +107,35 @@ namespace Habitus
             {
                 // En caso de error, asumir que es primera ejecución
                 return true;
+            }
+        }
+
+        private static void CopiarArchivosDeDatos()
+        {
+            try
+            {
+                string directorioBaseApp = AppDomain.CurrentDomain.BaseDirectory;
+                string directorioFuente = Path.Combine(directorioBaseApp, "Datos", "Sistema");
+
+                string directorioDestino = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Habitus", "Datos", "Sistema");
+
+                if (!Directory.Exists(directorioDestino))
+                {
+                    Directory.CreateDirectory(directorioDestino);
+                }
+
+                string[] archivosJson = Directory.GetFiles(directorioFuente, "*.json");
+
+                foreach (string archivo in archivosJson)
+                {
+                    string nombreArchivo = Path.GetFileName(archivo);
+                    string rutaDestino = Path.Combine(directorioDestino, nombreArchivo);
+                    File.Copy(archivo, rutaDestino, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al copiar los archivos de datos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 }

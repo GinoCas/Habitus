@@ -11,12 +11,15 @@ namespace Habitus.Controladores
 
         public ControladorPerfilUsuario()
         {
-            _perfilUsuario = new GestorJson<PerfilUsuario>("perfil.json");
+            _perfilUsuario = new GestorJson<PerfilUsuario>("perfil.json", true);
         }
 
-        public PerfilUsuario ObtenerUsuario()
+        public PerfilUsuario? ObtenerUsuario()
         {
-            return _perfilUsuario.GetAll().First();
+            var result = _perfilUsuario.GetAll();
+            return result.Count == 0 
+                ? null
+                : result[0];
         }
 
         public void CrearUsuario(string nombre, int edad, double peso, double altura, Genero genero, NivelActividad nivelActividad, int puntos)

@@ -9,7 +9,7 @@ namespace Habitus.Controladores
         private readonly GestorJson<Actividad> _actividades;
         public ControladorActividad()
         {
-            //_gestorJson = new GestorJson<Actividad>("actividadesRealizadas.json");
+            _actividades = new GestorJson<Actividad>("actividadesRealizadas.json", false);
         }
 
         public void RegistrarActividad(TipoActividad tipo, int duracion, ActividadIntensidad intensidad)

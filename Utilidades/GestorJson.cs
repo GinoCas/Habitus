@@ -1,5 +1,9 @@
-﻿namespace Habitus.Utilidades
+namespace Habitus.Utilidades
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
     using System.Text.Json;
 
     public class GestorJson<T> where T : class
@@ -7,13 +11,16 @@
         private readonly string _filePath;
         private readonly JsonSerializerOptions _options;
 
-        public GestorJson(string fileName)
+        public GestorJson(string fileName, bool isSystemFile)
         {
-            var appPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Habitus");
+            string subfolder = isSystemFile ? Path.Combine("Datos", "Sistema") : Path.Combine("Datos", "Usuario");
+            var appPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Habitus", subfolder);
             _filePath = Path.Combine(appPath, fileName);
-            if (!File.Exists(_filePath))
+
+            var directory = Path.GetDirectoryName(_filePath);
+            if (directory != null && !Directory.Exists(directory))
             {
-                File.WriteAllText(_filePath, "[]");
+                Directory.CreateDirectory(directory);
             }
             _options = new JsonSerializerOptions { WriteIndented = true };
         }
@@ -21,11 +28,11 @@
         private List<T> Load()
         {
             if (!File.Exists(_filePath))
+                MessageBox.Show("No existe un archivo json para el archivo:" + _filePath);
                 return new List<T>();
 
             var json = File.ReadAllText(_filePath);
             return JsonSerializer.Deserialize<List<T>>(json, _options) ?? new List<T>();
-            //return new List<T>();
         }
 
         private void Save(List<T> items)
@@ -57,10 +64,10 @@
         public void Delete(Func<T, bool> predicate)
         {
             /*var items = Load();
-            var item = items.FirstOrDefault(predicate);
-            if (item != null)
+            var itemsToDelete = items.Where(predicate).ToList();
+            if (itemsToDelete.Any())
             {
-                items.Remove(item);
+                items = items.Except(itemsToDelete).ToList();
                 Save(items);
             }*/
         }

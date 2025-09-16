@@ -10,8 +10,8 @@ namespace Habitus.Controladores
 
         public ControladorRetos()
         {
-            _retosDisponibles = new GestorJson<Reto>("retos.json");
-            _retosActivos = new GestorJson<Reto>("retosActivos.json");
+            _retosDisponibles = new GestorJson<Reto>("retos.json", true);
+            _retosActivos = new GestorJson<Reto>("retosActivos.json", false);
         }
 
         public List<Reto> ObtenerRetosDisponibles(int nivelUsuario, int puntosUsuario)

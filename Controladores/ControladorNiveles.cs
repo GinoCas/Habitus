@@ -9,7 +9,7 @@ namespace Habitus.Controladores
 
         public ControladorNiveles()
         {
-            _niveles = new GestorJson<Nivel>("niveles.json");
+            _niveles = new GestorJson<Nivel>("niveles.json", true);
         }
 
         public Nivel ObtenerNivelActual(int puntos)

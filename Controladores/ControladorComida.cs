@@ -11,8 +11,8 @@ namespace Habitus.Controladores
 
         public ControladorComida()
         {
-            _catalogoComidas = new GestorJson<Comida>("catalogoComidas.json");
-            _comidasConsumidas = new GestorJson<Comida>("comidasConsumidas.json");
+            _catalogoComidas = new GestorJson<Comida>("catalogoComidas.json", true);
+            _comidasConsumidas = new GestorJson<Comida>("comidasConsumidas.json", false);
         }
 
         public void RegistrarComida(string nombre, double cantidad, TipoComida tipo)

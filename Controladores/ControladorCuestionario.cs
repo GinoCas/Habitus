@@ -9,12 +9,17 @@ namespace Habitus.Controladores
 
         public ControladorCuestionario()
         {
-            _cuestionario = new GestorJson<Cuestionario>("cuestionario.json");
+            _cuestionario = new GestorJson<Cuestionario>("cuestionario.json", true);
         }
 
-        public Cuestionario ObtenerCuestionario()
+        public Cuestionario? ObtenerCuestionario()
         {
-            return _cuestionario.GetAll()[0];
+            var result = _cuestionario.GetAll();
+            if (result.Count == 0) {
+                MessageBox.Show("El json del cuestionario esta vacio.");
+                return null;
+            }
+            return result.First();
         }
 
         public void ResponderPregunta(int indicePregunta, string respuesta)
