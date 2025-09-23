@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -25,8 +26,8 @@ namespace Habitus.Vistas
         private Button btnGuardar;
         private Button btnCancelar;
         private Button btnBuscar;
-        private Comida _alimentoSeleccionado;
-        private BindingSource _alimentosSeleccionados;
+        private Comida _comidaSeleccionada;
+        private BindingList<Comida> _comidaSeleccionadas;
 
         public FormRegistrarComida(ControladorProgreso controladorProgreso)
         {
@@ -34,7 +35,7 @@ namespace Habitus.Vistas
             _controladorComida = new ControladorComida();
             _controladorUsuario = new ControladorPerfilUsuario();
             _controladorProgreso = controladorProgreso; // Usar la instancia compartida
-            _alimentosSeleccionados = new BindingSource();
+            _comidaSeleccionadas = new BindingList<Comida>();
             InicializarComponentes();
             CargarAlimentos();
         }
@@ -251,7 +252,7 @@ namespace Habitus.Vistas
                 Location = new Point(50, yPos + 25),
                 Size = new Size(480, 100),
                 Font = new Font("Segoe UI", 9),
-                DataSource = _alimentosSeleccionados
+                DataSource = _comidaSeleccionadas
             };
             this.Controls.Add(lstAlimentosSeleccionados);
 
@@ -281,7 +282,7 @@ namespace Habitus.Vistas
                 Size = new Size(300, 25)
             };
             this.Controls.Add(lblTotalCalorias);
-            _alimentosSeleccionados.ListChanged += (s, e) => ActualizarTotalCalorias(lblTotalCalorias);
+			_comidaSeleccionadas.ListChanged += (s, e) => ActualizarTotalCalorias(lblTotalCalorias);
 
             // Botones
             btnCancelar = new Button
@@ -361,19 +362,19 @@ namespace Habitus.Vistas
 
         private void LstAlimentos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (lstAlimentos.SelectedItem is Comida alimento)
+            if (lstAlimentos.SelectedItem is Comida comida)
             {
-                _alimentoSeleccionado = alimento;
+                _comidaSeleccionada = comida;
                 btnAgregarAlimento.Enabled = true;
                 
-                lblCaloriasSeleccionadas.Text = $"Calorías: {alimento.Calorias} kcal\n" + alimento;
+                lblCaloriasSeleccionadas.Text = $"Calorías: {comida.Calorias} kcal\n" + comida;
                                             //  $"Proteínas: {alimento.Proteinas}g\n" +
                                              // $"Carbohidratos: {alimento.Carbohidratos}g\n" +
                                              // $"Grasas: {alimento.Grasas}g";
             }
             else
             {
-                _alimentoSeleccionado = null;
+                _comidaSeleccionada = null;
                 btnAgregarAlimento.Enabled = false;
                 lblCaloriasSeleccionadas.Text = "Selecciona un alimento";
             }
@@ -381,75 +382,61 @@ namespace Habitus.Vistas
 
         private void BtnAgregarAlimento_Click(object sender, EventArgs e)
         {
-            if (_alimentoSeleccionado != null)
+            if (_comidaSeleccionada != null)
             {
                 var cantidad = (double)numCantidad.Value;
                 var factor = cantidad / 100.0;
-                
-                var alimentoComida = new
-                {
-                    Alimento = _alimentoSeleccionado,
-                    Cantidad = cantidad,
-                    CaloriasTotal = _alimentoSeleccionado.Calorias * factor,
-                    Descripcion = $"{_alimentoSeleccionado.Nombre} - {cantidad}g ({_alimentoSeleccionado.Calorias * factor:F0} kcal)"
-                };
-                
-                _alimentosSeleccionados.Add(alimentoComida);
+
+				var comida = new Comida
+				{
+					Id = Guid.NewGuid().ToString(),
+					Nombre = _comidaSeleccionada.Nombre,
+					Cantidad = cantidad,
+					Calorias = _comidaSeleccionada.Calorias * factor,
+					Tipo = (TipoComida)cmbTipoComida.SelectedValue,
+					Fecha = dtpFecha.Value.Date
+				};
+
+				_comidaSeleccionadas.Add(comida);
             }
         }
 
-        private void BtnRemoverAlimento_Click(object sender, EventArgs e)
-        {
-            if (lstAlimentosSeleccionados.SelectedItem != null)
-            {
-                _alimentosSeleccionados.Remove(lstAlimentosSeleccionados.SelectedItem);
-            }
-        }
+		private void BtnRemoverAlimento_Click(object sender, EventArgs e)
+		{
+			if (lstAlimentosSeleccionados.SelectedItem is Comida seleccionada)
+			{
+				_comidaSeleccionadas.Remove(seleccionada);
+			}
+		}
 
-        private void ActualizarTotalCalorias(Label lblTotal)
-        {
-            double totalCalorias = 0;
-            foreach (var item in _alimentosSeleccionados)
-            {
-                var alimentoComida = item as dynamic;
-                if (alimentoComida != null)
-                {
-                    totalCalorias += alimentoComida.CaloriasTotal;
-                }
-            }
-            lblTotal.Text = $"Total de Calorías: {totalCalorias:F0} kcal";
-        }
+		private void ActualizarTotalCalorias(Label lblTotal)
+		{
+			double totalCalorias = _comidaSeleccionadas.Sum(c => c.Calorias);
+			lblTotal.Text = $"Total de Calorías: {totalCalorias:F0} kcal";
+		}
 
-        private void BtnGuardar_Click(object sender, EventArgs e)
+		private void BtnGuardar_Click(object sender, EventArgs e)
         {
             if (ValidarDatos())
             {
                 var fecha = dtpFecha.Value.Date;
                 var tipoComida = (TipoComida)cmbTipoComida.SelectedValue;
-                
-                foreach (var item in _alimentosSeleccionados)
-                {
-                    var alimentoComida = item as dynamic;
-                    if (alimentoComida != null)
-                    {
-                        var comida = new Comida
-                        {
-                            Id = Guid.NewGuid().ToString(),
-                            Fecha = fecha,
-                            Tipo = tipoComida,
-                            //AlimentoId = alimentoComida.Alimento.Nombre,
-                            Nombre = alimentoComida.Alimento.Nombre,
-                            Cantidad = alimentoComida.Cantidad,
-                            Calorias = alimentoComida.CaloriasTotal
-                        };
-                        
-                        //_controladorComida.RegistrarComida(comida.Nombre, comida.Cantidad, comida.Tipo.ToString());
-                    }
-                }
 
-                // Calcular puntos ganados
-                var totalCalorias = _alimentosSeleccionados.Cast<dynamic>()
-                    .Sum(item => (double)item.CaloriasTotal);
+				foreach (var item in _comidaSeleccionadas)
+				{
+					if (item != null)
+					{
+						_controladorComida.RegistrarComida(
+							item.Nombre,
+							item.Cantidad,
+							tipoComida,
+							fecha
+						);
+					}
+				}
+				// Calcular puntos ganados
+				var totalCalorias = _comidaSeleccionadas.Cast<Comida>()
+                    .Sum(item => (double)item.Calorias);
 
                 // Registrar el consumo de calorías en el progreso diario
                 _controladorProgreso.RegistrarConsumoCalorias(fecha, totalCalorias);
@@ -487,7 +474,7 @@ namespace Habitus.Vistas
                 return false;
             }
 
-            if (_alimentosSeleccionados.Count == 0)
+            if (_comidaSeleccionadas.Count == 0)
             {
                 MessageBox.Show("Por favor, agrega al menos un alimento.", "Sin alimentos", 
                                MessageBoxButtons.OK, MessageBoxIcon.Warning);

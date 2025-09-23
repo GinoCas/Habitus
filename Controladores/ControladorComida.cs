@@ -15,7 +15,7 @@ namespace Habitus.Controladores
             _comidasConsumidas = new GestorJson<Comida>("comidasConsumidas.json", false);
         }
 
-        public void RegistrarComida(string nombre, double cantidad, TipoComida tipo)
+        public void RegistrarComida(string nombre, double cantidad, TipoComida tipo, DateTime fecha)
         {
             var comida = _catalogoComida.GetAll().FirstOrDefault(a => a.Nombre.ToLower() == nombre.ToLower());
             double calorias = 0;
@@ -29,8 +29,16 @@ namespace Habitus.Controladores
                 // Si no está en la base de datos, permitir ingreso manual
                 calorias = cantidad; // Asumiendo que el usuario ingresa las calorías directamente
             }
-
-            _comidasConsumidas.Add(comida);
+			var comidaRegistrada = new Comida
+			{
+				Id = Guid.NewGuid().ToString(),
+				Nombre = nombre,
+				Cantidad = cantidad,
+				Calorias = calorias,
+				Tipo = tipo,
+				Fecha = fecha
+			};
+			_comidasConsumidas.Add(comidaRegistrada);
         }
 
         public List<Comida> ObtenerComidasPorFecha(DateTime fecha)

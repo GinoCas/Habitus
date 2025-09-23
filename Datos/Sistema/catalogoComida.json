@@ -1,7 +1,7 @@
 [
   {
     "Nombre": "Manzana",
-    "CaloriasPor100g": 52,
+    "Calorias": 52,
     "Proteinas": 0.3,
     "Carbohidratos": 14,
     "Grasas": 0.2,
@@ -10,7 +10,7 @@
   },
   {
     "Nombre": "Pl\u00E1tano",
-    "CaloriasPor100g": 89,
+    "Calorias": 89,
     "Proteinas": 1.1,
     "Carbohidratos": 23,
     "Grasas": 0.3,
@@ -19,7 +19,7 @@
   },
   {
     "Nombre": "Pollo (pechuga)",
-    "CaloriasPor100g": 165,
+    "Calorias": 165,
     "Proteinas": 31,
     "Carbohidratos": 0,
     "Grasas": 3.6,
@@ -28,7 +28,7 @@
   },
   {
     "Nombre": "Arroz blanco",
-    "CaloriasPor100g": 130,
+    "Calorias": 130,
     "Proteinas": 2.7,
     "Carbohidratos": 28,
     "Grasas": 0.3,
@@ -37,7 +37,7 @@
   },
   {
     "Nombre": "Br\u00F3coli",
-    "CaloriasPor100g": 34,
+    "Calorias": 34,
     "Proteinas": 2.8,
     "Carbohidratos": 7,
     "Grasas": 0.4,
