@@ -6,23 +6,23 @@ namespace Habitus.Controladores
 {
     public class ControladorComida
     {
-        private readonly GestorJson<Comida> _catalogoComidas;
+        private readonly GestorJson<Comida> _catalogoComida;
         private readonly GestorJson<Comida> _comidasConsumidas;
 
         public ControladorComida()
         {
-            _catalogoComidas = new GestorJson<Comida>("catalogoComidas.json", true);
+            _catalogoComida = new GestorJson<Comida>("catalogoComida.json", true);
             _comidasConsumidas = new GestorJson<Comida>("comidasConsumidas.json", false);
         }
 
         public void RegistrarComida(string nombre, double cantidad, TipoComida tipo)
         {
-            /*var alimento = _catalogoComidas.FirstOrDefault(a => a.Nombre.ToLower() == nombreAlimento.ToLower());
+            var comida = _catalogoComida.GetAll().FirstOrDefault(a => a.Nombre.ToLower() == nombre.ToLower());
             double calorias = 0;
 
-            if (alimento != null)
+            if (comida != null)
             {
-                calorias = (alimento.CaloriasPor100g * cantidad) / 100;
+                calorias = (comida.Calorias * cantidad) / 100;
             }
             else
             {
@@ -30,16 +30,7 @@ namespace Habitus.Controladores
                 calorias = cantidad; // Asumiendo que el usuario ingresa las calorías directamente
             }
 
-            var comida = new Comida
-            {
-                Nombre = nombreAlimento,
-                Calorias = calorias,
-                Tipo = tipoComida,
-                Fecha = DateTime.Now
-            };
-
-            _comidas.Add(comida);
-            GuardarComidas();*/
+            _comidasConsumidas.Add(comida);
         }
 
         public List<Comida> ObtenerComidasPorFecha(DateTime fecha)
@@ -65,22 +56,9 @@ namespace Habitus.Controladores
 
         public List<Comida> BuscarComidaPorTermino(string termino)
         {
-            /*return _baseDatosAlimentos.Where(a => a.Nombre.ToLower().Contains(termino.ToLower()))
+            return _catalogoComida.GetAll().Where(a => a.Nombre.ToLower().Contains(termino.ToLower()))
                                      .Take(10)
-                                     .ToList();*/
-            return new List<Comida>();
+                                     .ToList();
         }
-
-        /*private List<Alimento> InicializarAlimentosBasicos()
-        {
-            return new List<Alimento>
-            {
-                new Alimento { Nombre = "Manzana", CaloriasPor100g = 52, Proteinas = 0.3, Carbohidratos = 14, Grasas = 0.2, Fibra = 2.4, Categoria = "Frutas" },
-                new Alimento { Nombre = "Plátano", CaloriasPor100g = 89, Proteinas = 1.1, Carbohidratos = 23, Grasas = 0.3, Fibra = 2.6, Categoria = "Frutas" },
-                new Alimento { Nombre = "Pollo (pechuga)", CaloriasPor100g = 165, Proteinas = 31, Carbohidratos = 0, Grasas = 3.6, Fibra = 0, Categoria = "Carnes" },
-                new Alimento { Nombre = "Arroz blanco", CaloriasPor100g = 130, Proteinas = 2.7, Carbohidratos = 28, Grasas = 0.3, Fibra = 0.4, Categoria = "Cereales" },
-                new Alimento { Nombre = "Brócoli", CaloriasPor100g = 34, Proteinas = 2.8, Carbohidratos = 7, Grasas = 0.4, Fibra = 2.6, Categoria = "Verduras" }
-            };
-        }*/
     }
 }
