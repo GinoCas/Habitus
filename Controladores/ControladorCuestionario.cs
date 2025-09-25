@@ -55,43 +55,6 @@ namespace Habitus.Controladores
             return _cuestionario.GetAll()[0].Completado;
         }
 
-        private void CrearPreguntasIniciales()
-        {
-           /* _cuestionario.Preguntas = new List<Pregunta>
-            {
-                new Pregunta
-                {
-                    Texto = "¿Cuál es tu objetivo principal?",
-                    Opciones = new List<string> { "Perder peso", "Ganar músculo", "Mantener peso", "Mejorar salud general" }
-                },
-                new Pregunta
-                {
-                    Texto = "¿Con qué frecuencia haces ejercicio actualmente?",
-                    Opciones = new List<string> { "Nunca", "1-2 veces por semana", "3-4 veces por semana", "5+ veces por semana" }
-                },
-                new Pregunta
-                {
-                    Texto = "¿Cómo describirías tu alimentación actual?",
-                    Opciones = new List<string> { "Muy mala", "Regular", "Buena", "Excelente" }
-                },
-                new Pregunta
-                {
-                    Texto = "¿Cuántas horas duermes por noche?",
-                    Opciones = new List<string> { "Menos de 6 horas", "6-7 horas", "7-8 horas", "Más de 8 horas" }
-                },
-                new Pregunta
-                {
-                    Texto = "¿Cuánta agua bebes al día?",
-                    Opciones = new List<string> { "Menos de 1 litro", "1-2 litros", "2-3 litros", "Más de 3 litros" }
-                },
-                new Pregunta
-                {
-                    Texto = "¿Qué tan motivado/a te sientes para cambiar tus hábitos?",
-                    Opciones = new List<string> { "Poco motivado", "Algo motivado", "Muy motivado", "Extremadamente motivado" }
-                }
-            };*/
-        }
-
         private int CalcularPuntosPregunta(int indicePregunta, string respuesta)
         {
             /*switch (indicePregunta)

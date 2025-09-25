@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Habitus.Controladores;
+using Habitus.Modelos;
 using Habitus.Modelos.Enums;
 
 namespace Habitus.Vistas
@@ -11,7 +12,8 @@ namespace Habitus.Vistas
     {
         private ControladorActividad _controladorActividad;
         private ControladorPerfilUsuario _controladorUsuario;
-        private ComboBox cmbTipoActividad;
+		private ControladorProgreso _controladorProgreso;
+		private ComboBox cmbTipoActividad;
         private ComboBox cmbIntensidad;
         private NumericUpDown numDuracion;
         private DateTimePicker dtpFecha;
@@ -20,8 +22,6 @@ namespace Habitus.Vistas
         private Button btnGuardar;
         private Button btnCancelar;
         private Button btnCalcularCalorias;
-
-        private ControladorProgreso _controladorProgreso;
 
         public FormRegistrarActividad(ControladorProgreso controladorProgreso = null)
         {
@@ -336,29 +336,27 @@ namespace Habitus.Vistas
 
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
-            if (ValidarDatos())
-            {
-                var tipoActividad = (TipoActividad)cmbTipoActividad.SelectedValue;
-                var intensidad = (ActividadIntensidad)cmbIntensidad.SelectedValue;
-                var duracion = (int)numDuracion.Value;
-                var fecha = dtpFecha.Value.Date;
-                var descripcion = txtDescripcion.Text.Trim();
+			if (ValidarDatos())
+			{
+				Actividad actividad = new Actividad();
+				actividad.Intensidad = (ActividadIntensidad)cmbIntensidad.SelectedValue;
+				actividad.DuracionMinutos = (int)numDuracion.Value;
+				actividad.Fecha = dtpFecha.Value.Date;
+				actividad.Descripcion = txtDescripcion.Text.Trim();
 
-                var usuario = _controladorUsuario.ObtenerUsuario();
-                var calorias = _controladorActividad.CalcularCaloriasQuemadas(
-                    tipoActividad, intensidad, duracion, usuario.Peso);
+				var usuario = _controladorUsuario.ObtenerUsuario();
+				actividad.CaloriasQuemadas = _controladorActividad.CalcularCaloriasQuemadas(actividad.Tipo, actividad.Intensidad, actividad.DuracionMinutos, usuario.Peso);
+				_controladorActividad.RegistrarActividad(actividad);
 
-               // _controladorActividad.RegistrarActividad(tipoActividad.ToString(), duracion, intensidad.ToString());
-
-                // Actualizar el progreso con las calorías quemadas y minutos de actividad
-                _controladorProgreso.RegistrarCaloriasQuemadas(fecha, calorias);
-                _controladorProgreso.RegistrarMinutosActividad(fecha, duracion);
+				// Actualizar el progreso con las calorías quemadas y minutos de actividad
+				_controladorProgreso.RegistrarCaloriasQuemadas(actividad.Fecha, actividad.CaloriasQuemadas);
+				_controladorProgreso.RegistrarMinutosActividad(actividad.Fecha, actividad.DuracionMinutos);
 
                 // Actualizar puntos del usuario
-                var puntosGanados = CalcularPuntosActividad(duracion, intensidad);
+                var puntosGanados = CalcularPuntosActividad(actividad.DuracionMinutos, actividad.Intensidad);
                 _controladorUsuario.ActualizarPuntos(puntosGanados);
 
-                MessageBox.Show($"Actividad registrada exitosamente.\n\nCalorías quemadas: {calorias:F0} kcal\nPuntos ganados: {puntosGanados}", 
+                MessageBox.Show($"Actividad registrada exitosamente.\n\nCalorías quemadas: {actividad.CaloriasQuemadas:F0} kcal\nPuntos ganados: {puntosGanados}", 
                                "Actividad Registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 this.DialogResult = DialogResult.OK;

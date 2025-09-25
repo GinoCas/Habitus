@@ -12,17 +12,11 @@ namespace Habitus.Controladores
             _actividades = new GestorJson<Actividad>("actividadesRealizadas.json", false);
         }
 
-        public void RegistrarActividad(TipoActividad tipo, int duracion, ActividadIntensidad intensidad)
+        public Actividad RegistrarActividad(Actividad actividad)
         {
-            var actividad = new Actividad
-            {
-                Tipo = tipo,
-                DuracionMinutos = duracion,
-                Intensidad = intensidad,
-                Fecha = DateTime.Now,
-                //CaloriasQuemadas = CalcularCaloriasQuemadas(tipo, duracion, intensidad)
-            };
+			actividad.Id = Guid.NewGuid().ToString();
             _actividades.Add(actividad);
+			return actividad;
         }
 
         public List<Actividad> ObtenerActividades()

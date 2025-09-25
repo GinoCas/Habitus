@@ -43,19 +43,14 @@ namespace Habitus.Utilidades
 
         private void Save(List<T> items)
         {
-			MessageBox.Show("Guardando...");
 			var json = JsonSerializer.Serialize(items, _options);
-			MessageBox.Show(items.ToString());
             File.WriteAllText(_filePath, json);
         }
 
         public void Add(T item)
         {
-			MessageBox.Show("Cargar");
 			var items = Load();
-			MessageBox.Show("Añadir");
 			items.Add(item);
-			MessageBox.Show("Antes de guardar");
 			Save(items);
         }
 
