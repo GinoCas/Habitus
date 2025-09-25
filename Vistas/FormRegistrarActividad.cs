@@ -339,6 +339,7 @@ namespace Habitus.Vistas
 			if (ValidarDatos())
 			{
 				Actividad actividad = new Actividad();
+				actividad.Tipo = (TipoActividad)cmbTipoActividad.SelectedValue;
 				actividad.Intensidad = (ActividadIntensidad)cmbIntensidad.SelectedValue;
 				actividad.DuracionMinutos = (int)numDuracion.Value;
 				actividad.Fecha = dtpFecha.Value.Date;
