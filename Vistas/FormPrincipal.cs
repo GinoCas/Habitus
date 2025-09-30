@@ -46,33 +46,21 @@ namespace Habitus.Vistas
             };
             panelSuperior.Controls.Add(lblBienvenida);
 
-            // Puntos
-            lblPuntos = new Label
-            {
-                Text = "Puntos: 0",
-                Font = new Font("Segoe UI", 12, FontStyle.Bold),
-                ForeColor = Color.FromArgb(241, 196, 15),
-                Location = new Point(600, 15),
-                Size = new Size(150, 25),
-                TextAlign = ContentAlignment.MiddleRight
-            };
-            panelSuperior.Controls.Add(lblPuntos);
-
             // Nivel
             lblNivel = new Label
             {
                 Text = "Nivel 1",
                 Font = new Font("Segoe UI", 10),
                 ForeColor = Color.White,
-                Location = new Point(600, 45),
-                Size = new Size(100, 20)
+                Location = new Point(20, 45),
+                Size = new Size(70, 20)
             };
             panelSuperior.Controls.Add(lblNivel);
 
             // Barra de progreso del nivel
             progressBarNivel = new ProgressBar
             {
-                Location = new Point(710, 47),
+                Location = new Point(95, 47),
                 Size = new Size(150, 16),
                 Style = ProgressBarStyle.Continuous
             };
