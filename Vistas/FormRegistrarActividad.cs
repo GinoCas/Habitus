@@ -12,8 +12,8 @@ namespace Habitus.Vistas
     {
         private ControladorActividad _controladorActividad;
         private ControladorPerfilUsuario _controladorUsuario;
-		private ControladorProgreso _controladorProgreso;
-		private ComboBox cmbTipoActividad;
+        private ControladorProgreso _controladorProgreso;
+        private ComboBox cmbTipoActividad;
         private ComboBox cmbIntensidad;
         private NumericUpDown numDuracion;
         private DateTimePicker dtpFecha;
@@ -45,11 +45,13 @@ namespace Habitus.Vistas
             Name = "FormRegistrarActividad";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Registrar Actividad - Habitus";
+            Load += FormRegistrarActividad_Load;
             ResumeLayout(false);
         }
 
         private void InicializarComponentes()
         {
+
             // Título
             var lblTitulo = new Label
             {
@@ -104,13 +106,13 @@ namespace Habitus.Vistas
                 Font = new Font("Segoe UI", 10),
                 DropDownStyle = ComboBoxStyle.DropDownList
             };
-            
+
             // Cargar tipos de actividad desde el enum
             var tiposActividad = Enum.GetValues(typeof(TipoActividad))
                 .Cast<TipoActividad>()
                 .Select(t => new { Value = t, Text = ObtenerTextoTipoActividad(t) })
                 .ToArray();
-            
+
             cmbTipoActividad.DataSource = tiposActividad;
             cmbTipoActividad.DisplayMember = "Text";
             cmbTipoActividad.ValueMember = "Value";
@@ -136,12 +138,12 @@ namespace Habitus.Vistas
                 Font = new Font("Segoe UI", 10),
                 DropDownStyle = ComboBoxStyle.DropDownList
             };
-            
+
             var intensidades = Enum.GetValues(typeof(ActividadIntensidad))
                 .Cast<ActividadIntensidad>()
                 .Select(i => new { Value = i, Text = ObtenerTextoIntensidad(i) })
                 .ToArray();
-            
+
             cmbIntensidad.DataSource = intensidades;
             cmbIntensidad.DisplayMember = "Text";
             cmbIntensidad.ValueMember = "Value";
@@ -171,21 +173,6 @@ namespace Habitus.Vistas
             };
             numDuracion.ValueChanged += NumDuracion_ValueChanged;
             this.Controls.Add(numDuracion);
-
-            // Botón calcular calorías
-            btnCalcularCalorias = new Button
-            {
-                Text = "Calcular Calorías",
-                Location = new Point(170, yPos + 25),
-                Size = new Size(120, 25),
-                Font = new Font("Segoe UI", 9),
-                BackColor = Color.FromArgb(52, 152, 219),
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat
-            };
-            btnCalcularCalorias.FlatAppearance.BorderSize = 0;
-            btnCalcularCalorias.Click += BtnCalcularCalorias_Click;
-            this.Controls.Add(btnCalcularCalorias);
 
             yPos += spacing;
 
@@ -243,6 +230,7 @@ namespace Habitus.Vistas
                 ForeColor = Color.White,
                 FlatStyle = FlatStyle.Flat
             };
+
             btnCancelar.FlatAppearance.BorderSize = 0;
             btnCancelar.Click += BtnCancelar_Click;
             this.Controls.Add(btnCancelar);
@@ -336,28 +324,28 @@ namespace Habitus.Vistas
 
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
-			if (ValidarDatos())
-			{
-				Actividad actividad = new Actividad();
-				actividad.Tipo = (TipoActividad)cmbTipoActividad.SelectedValue;
-				actividad.Intensidad = (ActividadIntensidad)cmbIntensidad.SelectedValue;
-				actividad.DuracionMinutos = (int)numDuracion.Value;
-				actividad.Fecha = dtpFecha.Value.Date;
-				actividad.Descripcion = txtDescripcion.Text.Trim();
+            if (ValidarDatos())
+            {
+                Actividad actividad = new Actividad();
+                actividad.Tipo = (TipoActividad)cmbTipoActividad.SelectedValue;
+                actividad.Intensidad = (ActividadIntensidad)cmbIntensidad.SelectedValue;
+                actividad.DuracionMinutos = (int)numDuracion.Value;
+                actividad.Fecha = dtpFecha.Value.Date;
+                actividad.Descripcion = txtDescripcion.Text.Trim();
 
-				var usuario = _controladorUsuario.ObtenerUsuario();
-				actividad.CaloriasQuemadas = _controladorActividad.CalcularCaloriasQuemadas(actividad.Tipo, actividad.Intensidad, actividad.DuracionMinutos, usuario.Peso);
-				_controladorActividad.RegistrarActividad(actividad);
+                var usuario = _controladorUsuario.ObtenerUsuario();
+                actividad.CaloriasQuemadas = _controladorActividad.CalcularCaloriasQuemadas(actividad.Tipo, actividad.Intensidad, actividad.DuracionMinutos, usuario.Peso);
+                _controladorActividad.RegistrarActividad(actividad);
 
-				// Actualizar el progreso con las calorías quemadas y minutos de actividad
-				_controladorProgreso.RegistrarCaloriasQuemadas(actividad.Fecha, actividad.CaloriasQuemadas);
-				_controladorProgreso.RegistrarMinutosActividad(actividad.Fecha, actividad.DuracionMinutos);
+                // Actualizar el progreso con las calorías quemadas y minutos de actividad
+                _controladorProgreso.RegistrarCaloriasQuemadas(actividad.Fecha, actividad.CaloriasQuemadas);
+                _controladorProgreso.RegistrarMinutosActividad(actividad.Fecha, actividad.DuracionMinutos);
 
                 // Actualizar puntos del usuario
                 var puntosGanados = CalcularPuntosActividad(actividad.DuracionMinutos, actividad.Intensidad);
                 _controladorUsuario.ActualizarPuntos(puntosGanados);
 
-                MessageBox.Show($"Actividad registrada exitosamente.\n\nCalorías quemadas: {actividad.CaloriasQuemadas:F0} kcal\nPuntos ganados: {puntosGanados}", 
+                MessageBox.Show($"Actividad registrada exitosamente.\n\nCalorías quemadas: {actividad.CaloriasQuemadas:F0} kcal\nPuntos ganados: {puntosGanados}",
                                "Actividad Registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 this.DialogResult = DialogResult.OK;
@@ -388,7 +376,7 @@ namespace Habitus.Vistas
         {
             if (cmbTipoActividad.SelectedValue == null)
             {
-                MessageBox.Show("Por favor, selecciona un tipo de actividad.", "Campo requerido", 
+                MessageBox.Show("Por favor, selecciona un tipo de actividad.", "Campo requerido",
                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 cmbTipoActividad.Focus();
                 return false;
@@ -396,7 +384,7 @@ namespace Habitus.Vistas
 
             if (cmbIntensidad.SelectedValue == null)
             {
-                MessageBox.Show("Por favor, selecciona una intensidad.", "Campo requerido", 
+                MessageBox.Show("Por favor, selecciona una intensidad.", "Campo requerido",
                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 cmbIntensidad.Focus();
                 return false;
@@ -404,7 +392,7 @@ namespace Habitus.Vistas
 
             if (numDuracion.Value <= 0)
             {
-                MessageBox.Show("La duración debe ser mayor a 0 minutos.", "Duración inválida", 
+                MessageBox.Show("La duración debe ser mayor a 0 minutos.", "Duración inválida",
                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 numDuracion.Focus();
                 return false;
@@ -412,13 +400,18 @@ namespace Habitus.Vistas
 
             if (dtpFecha.Value.Date > DateTime.Today)
             {
-                MessageBox.Show("No puedes registrar actividades en fechas futuras.", "Fecha inválida", 
+                MessageBox.Show("No puedes registrar actividades en fechas futuras.", "Fecha inválida",
                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 dtpFecha.Focus();
                 return false;
             }
 
             return true;
+        }
+
+        private void FormRegistrarActividad_Load(object sender, EventArgs e)
+        {
+            CalcularCalorias();
         }
     }
 }
