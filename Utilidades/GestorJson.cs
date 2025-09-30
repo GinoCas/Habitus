@@ -69,13 +69,13 @@ namespace Habitus.Utilidades
 
         public void Delete(Func<T, bool> predicate)
         {
-            /*var items = Load();
+            var items = Load();
             var itemsToDelete = items.Where(predicate).ToList();
             if (itemsToDelete.Any())
             {
                 items = items.Except(itemsToDelete).ToList();
                 Save(items);
-            }*/
+            }
         }
     }
 }
