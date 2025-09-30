@@ -1,5 +1,8 @@
 using Habitus.Modelos;
 using Habitus.Utilidades;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Habitus.Controladores
 {
@@ -12,10 +15,9 @@ namespace Habitus.Controladores
             _progreso = new GestorJson<Progreso>("progreso.json", false);
         }
 
-        public void RegistrarProgresoDiario(double peso, double caloriasConsumidas, double caloriasQuemadas, 
+        public void RegistrarProgresoDiario(double peso, double caloriasConsumidas, double caloriasQuemadas,
                                            int minutosActividad, int pasos, string notas)
         {
-            /*CargarProgreso();
             var progreso = new Progreso
             {
                 Fecha = DateTime.Now.Date,
@@ -28,97 +30,96 @@ namespace Habitus.Controladores
                 PuntosGanados = CalcularPuntosDiarios(caloriasConsumidas, caloriasQuemadas, minutosActividad, pasos)
             };
 
-            // Verificar si ya existe un registro para hoy
-            var registroExistente = _registrosProgreso.FirstOrDefault(p => p.Fecha.Date == DateTime.Now.Date);
-            if (registroExistente != null)
-            {
-                _registrosProgreso.Remove(registroExistente);
-            }
+            // Eliminar cualquier progreso existente del día
+            _progreso.Delete(p => p.Fecha.Date == DateTime.Now.Date);
 
-            _registrosProgreso.Add(progreso);
-            GuardarProgreso();*/
+            // Agregar el nuevo progreso
+            _progreso.Add(progreso);
         }
 
         public void RegistrarConsumoCalorias(DateTime fecha, double calorias)
         {
-            /*CargarProgreso();
-            var registroExistente = _registrosProgreso.FirstOrDefault(p => p.Fecha.Date == fecha.Date);
+            var registros = _progreso.GetAll();
+            var registroExistente = registros.FirstOrDefault(p => p.Fecha.Date == fecha.Date);
+
             if (registroExistente != null)
             {
                 registroExistente.CaloriasConsumidas += calorias;
+                _progreso.Delete(p => p.Fecha.Date == fecha.Date);
+                _progreso.Add(registroExistente);
             }
             else
             {
-                var progreso = new Progreso
+                var nuevoProgreso = new Progreso
                 {
                     Fecha = fecha.Date,
                     CaloriasConsumidas = calorias
                 };
-                _registrosProgreso.Add(progreso);
+                _progreso.Add(nuevoProgreso);
             }
-            GuardarProgreso();*/
         }
 
         public void RegistrarCaloriasQuemadas(DateTime fecha, double calorias)
         {
-            /*CargarProgreso();
-            var registroExistente = _registrosProgreso.FirstOrDefault(p => p.Fecha.Date == fecha.Date);
+            var registros = _progreso.GetAll();
+            var registroExistente = registros.FirstOrDefault(p => p.Fecha.Date == fecha.Date);
+
             if (registroExistente != null)
             {
                 registroExistente.CaloriasQuemadas += calorias;
+                _progreso.Delete(p => p.Fecha.Date == fecha.Date);
+                _progreso.Add(registroExistente);
             }
             else
             {
-                var progreso = new Progreso
+                var nuevoProgreso = new Progreso
                 {
                     Fecha = fecha.Date,
                     CaloriasQuemadas = calorias
                 };
-                _registrosProgreso.Add(progreso);
+                _progreso.Add(nuevoProgreso);
             }
-            GuardarProgreso();*/
         }
 
         public void RegistrarMinutosActividad(DateTime fecha, int minutos)
         {
-            /*CargarProgreso();
-            var registroExistente = _registrosProgreso.FirstOrDefault(p => p.Fecha.Date == fecha.Date);
+            var registros = _progreso.GetAll();
+            var registroExistente = registros.FirstOrDefault(p => p.Fecha.Date == fecha.Date);
+
             if (registroExistente != null)
             {
                 registroExistente.MinutosActividad += minutos;
+                _progreso.Delete(p => p.Fecha.Date == fecha.Date);
+                _progreso.Add(registroExistente);
             }
             else
             {
-                var progreso = new Progreso
+                var nuevoProgreso = new Progreso
                 {
                     Fecha = fecha.Date,
                     MinutosActividad = minutos
                 };
-                _registrosProgreso.Add(progreso);
+                _progreso.Add(nuevoProgreso);
             }
-            GuardarProgreso();*/
         }
 
         public Progreso ObtenerProgresoPorFecha(DateTime fecha)
         {
-            return new Progreso();
-            /*CargarProgreso();
-            return _registrosProgreso.FirstOrDefault(p => p.Fecha.Date == fecha.Date);*/
+            return _progreso.GetAll().FirstOrDefault(p => p.Fecha.Date == fecha.Date);
         }
 
         public List<Progreso> ObtenerProgresoPorPeriodo(DateTime fechaInicio, DateTime fechaFin)
         {
-            /*CargarProgreso();
-            return _registrosProgreso.Where(p => p.Fecha.Date >= fechaInicio.Date && p.Fecha.Date <= fechaFin.Date)
-                                    .OrderBy(p => p.Fecha)
-                                    .ToList();*/
-            return new List<Progreso>();
+            return _progreso.GetAll()
+                            .Where(p => p.Fecha.Date >= fechaInicio.Date && p.Fecha.Date <= fechaFin.Date)
+                            .OrderBy(p => p.Fecha)
+                            .ToList();
         }
 
         public Resumen GenerarResumen(DateTime fechaInicio, DateTime fechaFin)
         {
             var registros = ObtenerProgresoPorPeriodo(fechaInicio, fechaFin);
-            
+
             if (!registros.Any())
                 return new Resumen { FechaInicio = fechaInicio, FechaFin = fechaFin };
 
@@ -132,10 +133,9 @@ namespace Habitus.Controladores
                 PuntosGanados = registros.Sum(r => r.PuntosGanados)
             };
 
-            // Calcular cambio de peso
             var primerRegistro = registros.OrderBy(r => r.Fecha).FirstOrDefault();
             var ultimoRegistro = registros.OrderByDescending(r => r.Fecha).FirstOrDefault();
-            
+
             if (primerRegistro != null && ultimoRegistro != null)
             {
                 resumen.CambioPeso = ultimoRegistro.Peso - primerRegistro.Peso;
@@ -153,42 +153,29 @@ namespace Habitus.Controladores
                 return tendencias;
 
             // Tendencia de peso
-            var tendenciaPeso = new Tendencia
-            {
-                TipoMetrica = "Peso",
-                Valores = registros.Select(r => r.Peso).ToList(),
-                Fechas = registros.Select(r => r.Fecha).ToList(),
-                Periodo = "Personalizado"
-            };
-            tendenciaPeso.TendenciaGeneral = CalcularTendenciaGeneral(tendenciaPeso.Valores);
-            tendenciaPeso.PorcentajeCambio = CalcularPorcentajeCambio(tendenciaPeso.Valores.First(), tendenciaPeso.Valores.Last());
-            tendencias.Add(tendenciaPeso);
+            tendencias.Add(CrearTendencia("Peso", registros.Select(r => r.Peso).ToList(), registros.Select(r => r.Fecha).ToList()));
 
-            // Tendencia de calorías
-            var tendenciaCalorias = new Tendencia
-            {
-                TipoMetrica = "Calorías Consumidas",
-                Valores = registros.Select(r => r.CaloriasConsumidas).ToList(),
-                Fechas = registros.Select(r => r.Fecha).ToList(),
-                Periodo = "Personalizado"
-            };
-            tendenciaCalorias.TendenciaGeneral = CalcularTendenciaGeneral(tendenciaCalorias.Valores);
-            tendenciaCalorias.PorcentajeCambio = CalcularPorcentajeCambio(tendenciaCalorias.Valores.First(), tendenciaCalorias.Valores.Last());
-            tendencias.Add(tendenciaCalorias);
+            // Tendencia de calorías consumidas
+            tendencias.Add(CrearTendencia("Calorías Consumidas", registros.Select(r => r.CaloriasConsumidas).ToList(), registros.Select(r => r.Fecha).ToList()));
 
-            // Tendencia de actividad
-            var tendenciaActividad = new Tendencia
-            {
-                TipoMetrica = "Minutos de Actividad",
-                Valores = registros.Select(r => (double)r.MinutosActividad).ToList(),
-                Fechas = registros.Select(r => r.Fecha).ToList(),
-                Periodo = "Personalizado"
-            };
-            tendenciaActividad.TendenciaGeneral = CalcularTendenciaGeneral(tendenciaActividad.Valores);
-            tendenciaActividad.PorcentajeCambio = CalcularPorcentajeCambio(tendenciaActividad.Valores.First(), tendenciaActividad.Valores.Last());
-            tendencias.Add(tendenciaActividad);
+            // Tendencia de minutos de actividad
+            tendencias.Add(CrearTendencia("Minutos de Actividad", registros.Select(r => (double)r.MinutosActividad).ToList(), registros.Select(r => r.Fecha).ToList()));
 
             return tendencias;
+        }
+
+        private Tendencia CrearTendencia(string tipo, List<double> valores, List<DateTime> fechas)
+        {
+            var tendencia = new Tendencia
+            {
+                TipoMetrica = tipo,
+                Valores = valores,
+                Fechas = fechas,
+                Periodo = "Personalizado",
+                TendenciaGeneral = CalcularTendenciaGeneral(valores),
+                PorcentajeCambio = CalcularPorcentajeCambio(valores.First(), valores.Last())
+            };
+            return tendencia;
         }
 
         private int CalcularPuntosDiarios(double caloriasConsumidas, double caloriasQuemadas, int minutosActividad, int pasos)
@@ -197,12 +184,9 @@ namespace Habitus.Controladores
 
             // Puntos por balance calórico
             double balanceCalorico = caloriasConsumidas - caloriasQuemadas;
-            if (balanceCalorico >= -500 && balanceCalorico <= 500) // Balance saludable
-                puntos += 20;
-            else if (balanceCalorico < -500) // Déficit muy alto
-                puntos += 10;
-            else // Superávit muy alto
-                puntos += 5;
+            if (balanceCalorico >= -500 && balanceCalorico <= 500) puntos += 20;
+            else if (balanceCalorico < -500) puntos += 10;
+            else puntos += 5;
 
             // Puntos por actividad física
             if (minutosActividad >= 60) puntos += 30;
