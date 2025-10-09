@@ -250,14 +250,8 @@ namespace Habitus.Vistas
                 lblNivel.Text = $"Nivel {nivelActual.Numero}";
                 
                 var progresoNivel = _controladorNiveles.CalcularProgresoNivel(_usuario.Puntos);
-                // El método CalcularProgresoNivel ya devuelve un valor multiplicado por 100
-                // Aseguramos que el valor esté dentro del rango permitido (0-100)
                 progressBarNivel.Value = Math.Min(100, (int)progresoNivel);
-                
-                // Actualizar tarjetas de resumen del día
                 ActualizarTarjetasResumen();
-                
-                // Cargar retos activos y progreso reciente
                 CargarRetosActivos();
                 CargarProgresoReciente();
             }
@@ -408,7 +402,7 @@ namespace Habitus.Vistas
                     Size = new Size(150, 15)
                 };
                 panelReto.Controls.Add(lblFecha);
-                
+                // TODO: arreglar que los puntos siempre son 0
                 var lblPuntos = new Label
                 {
                     Text = $"+{reto.PuntosRecompensa} pts",

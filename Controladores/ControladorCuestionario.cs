@@ -54,10 +54,10 @@ namespace Habitus.Controladores
         {
             return _cuestionario.GetAll()[0].Completado;
         }
-
+        // TODO: Chequear si estan bien los puntos asignados -> Baja prioridad
         private int CalcularPuntosPregunta(int indicePregunta, string respuesta)
         {
-            /*switch (indicePregunta)
+            switch (indicePregunta)
             {
                 case 0: // Objetivo principal
                     return respuesta switch
@@ -115,7 +115,7 @@ namespace Habitus.Controladores
                     };
                 default:
                     return 10;
-            }*/
+            }
             return 0;
         }
     }

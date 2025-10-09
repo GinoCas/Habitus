@@ -252,7 +252,8 @@ namespace Habitus.Vistas
                 Location = new Point(50, yPos + 25),
                 Size = new Size(480, 100),
                 Font = new Font("Segoe UI", 9),
-                DataSource = _comidaSeleccionadas
+                DataSource = _comidaSeleccionadas,
+                DisplayMember = "Nombre"
             };
             this.Controls.Add(lstAlimentosSeleccionados);
 
@@ -357,7 +358,6 @@ namespace Habitus.Vistas
             var alimentos = _controladorComida.BuscarComidaPorTermino(termino);
             lstAlimentos.DataSource = alimentos;
             lstAlimentos.DisplayMember = "Nombre";
-            // Eliminamos la línea que establece ValueMember como "Id" ya que Alimento no tiene esta propiedad
         }
 
         private void LstAlimentos_SelectedIndexChanged(object sender, EventArgs e)
@@ -367,6 +367,7 @@ namespace Habitus.Vistas
                 _comidaSeleccionada = comida;
                 btnAgregarAlimento.Enabled = true;
                 
+                // TODO: Usar el nombre de la comida
                 lblCaloriasSeleccionadas.Text = $"Calorías: {comida.Calorias} kcal\n" + comida;
                                             //  $"Proteínas: {alimento.Proteinas}g\n" +
                                              // $"Carbohidratos: {alimento.Carbohidratos}g\n" +

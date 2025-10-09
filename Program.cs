@@ -18,26 +18,22 @@ namespace Habitus
             try
             {
                 if (EsPrimeraEjecucion())
-                {
-                    // Mostrar cuestionario inicial 
+                { 
                     var formCuestionario = new FormCuestionario();
                     Application.Run(formCuestionario);
                 }
                 else
                 {
-                    // Verificar si el usuario existe
                     var controladorUsuario = new ControladorPerfilUsuario();
                     var usuario = controladorUsuario.ObtenerUsuario();
 
                     if (usuario == null)
                     {
-                        // Si no hay usuario, mostrar cuestionario
                         var formCuestionario = new FormCuestionario();
                         Application.Run(formCuestionario);
                     }
                     else
                     {
-                        // Usuario existe, ir directamente al formulario principal
                         var formPrincipal = new FormPrincipal();
                         Application.Run(formPrincipal);
                     }
@@ -45,7 +41,6 @@ namespace Habitus
             }
             catch (Exception ex)
             {
-                // Manejar errores críticos de la aplicación
                 MessageBox.Show($"Error crítico al iniciar la aplicación:\n\n{ex.Message}\n\nLa aplicación se cerrará.", 
                                "Error Crítico - Habitus", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -59,13 +54,8 @@ namespace Habitus
                 
                 if (!File.Exists(archivoConfiguracion))
                 {
-                    // Crear directorios necesarios
                     Directory.CreateDirectory(directorioBase);
-
-                    // Copiar archivos de datos
                     CopiarArchivosDeDatos();
-
-                    // Crear archivo de configuración inicial
                     var configuracionInicial = new
                     {
                         PrimeraEjecucion = false,
@@ -81,7 +71,6 @@ namespace Habitus
                 }
                 else
                 {
-                    // Actualizar última ejecución
                     try
                     {
                         var contenido = File.ReadAllText(archivoConfiguracion);
@@ -93,7 +82,6 @@ namespace Habitus
                     }
                     catch
                     {
-                        // Si hay error al actualizar, continuar sin problemas
                     }
                     
                     return false;

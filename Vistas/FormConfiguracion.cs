@@ -23,7 +23,7 @@ namespace Habitus.Vistas
         }
 
 
-
+        // TODO: No se guarda al cambiar los valores
         private void CrearTabPerfil()
         {
             var tabPerfil = new TabPage("👤 Perfil")
@@ -32,7 +32,6 @@ namespace Habitus.Vistas
             };
             tabControl.TabPages.Add(tabPerfil);
 
-            // Información del nivel actual
             var panelNivel = new Panel
             {
                 Location = new Point(20, 20),
@@ -63,7 +62,6 @@ namespace Habitus.Vistas
             };
             panelNivel.Controls.Add(lblNivelInfo);
 
-            // Datos personales
             var lblDatosPersonales = new Label
             {
                 Text = "📝 Datos Personales",
@@ -74,7 +72,6 @@ namespace Habitus.Vistas
             };
             tabPerfil.Controls.Add(lblDatosPersonales);
 
-            // Nombre
             var lblNombre = new Label
             {
                 Text = "Nombre:",
@@ -92,7 +89,6 @@ namespace Habitus.Vistas
             };
             tabPerfil.Controls.Add(txtNombre);
 
-            // Edad
             var lblEdad = new Label
             {
                 Text = "Edad:",
@@ -113,7 +109,6 @@ namespace Habitus.Vistas
             };
             tabPerfil.Controls.Add(nudEdad);
 
-            // Género
             var lblGenero = new Label
             {
                 Text = "Género:",
@@ -133,7 +128,6 @@ namespace Habitus.Vistas
             cmbGenero.Items.AddRange(new[] { "Masculino", "Femenino", "Otro" });
             tabPerfil.Controls.Add(cmbGenero);
 
-            // Peso
             var lblPeso = new Label
             {
                 Text = "Peso (kg):",
@@ -155,7 +149,6 @@ namespace Habitus.Vistas
             };
             tabPerfil.Controls.Add(nudPeso);
 
-            // Altura
             var lblAltura = new Label
             {
                 Text = "Altura (cm):",
@@ -176,7 +169,6 @@ namespace Habitus.Vistas
             };
             tabPerfil.Controls.Add(nudAltura);
 
-            // Nivel de actividad
             var lblNivelActividad = new Label
             {
                 Text = "Nivel de Actividad:",
@@ -196,7 +188,6 @@ namespace Habitus.Vistas
             cmbNivelActividad.Items.AddRange(new[] { "Sedentario", "Ligero", "Moderado", "Activo", "Muy Activo" });
             tabPerfil.Controls.Add(cmbNivelActividad);
 
-            // Información adicional
             var lblIMC = new Label
             {
                 Text = "IMC: Calculando...",
@@ -208,11 +199,11 @@ namespace Habitus.Vistas
             };
             tabPerfil.Controls.Add(lblIMC);
 
-            // Eventos para calcular IMC automáticamente
             nudPeso.ValueChanged += CalcularIMC;
             nudAltura.ValueChanged += CalcularIMC;
         }
 
+        // TODO: Eliminar este tab entero
         private void CrearTabPreferencias()
         {
             var tabPreferencias = new TabPage("🎨 Preferencias")
@@ -221,7 +212,6 @@ namespace Habitus.Vistas
             };
             tabControl.TabPages.Add(tabPreferencias);
 
-            // Notificaciones
             var lblNotificaciones = new Label
             {
                 Text = "🔔 Notificaciones",
@@ -252,7 +242,6 @@ namespace Habitus.Vistas
             };
             tabPreferencias.Controls.Add(chkSonidos);
 
-            // Apariencia
             var lblApariencia = new Label
             {
                 Text = "🎨 Apariencia",
@@ -283,7 +272,6 @@ namespace Habitus.Vistas
             cmbTema.SelectedIndex = 0;
             tabPreferencias.Controls.Add(cmbTema);
 
-            // Información adicional
             var lblInfo = new Label
             {
                 Text = "💡 Tip: Las notificaciones te ayudarán a mantener\nconsistencia en tus hábitos de salud.",
@@ -294,7 +282,7 @@ namespace Habitus.Vistas
             };
             tabPreferencias.Controls.Add(lblInfo);
         }
-
+        // TODO: evaluar para que sirve, si es realmente necesario, y sino, eliminarlo
         private void CrearTabObjetivos()
         {
             var tabObjetivos = new TabPage("🎯 Objetivos")
@@ -418,7 +406,7 @@ namespace Habitus.Vistas
             };
             tabObjetivos.Controls.Add(lblRecomendacionesTexto);
         }
-
+        // TODO: Hacer funcionar este tab -> Baja prioridad
         private void CrearTabDatos()
         {
             var tabDatos = new TabPage("💾 Datos")
@@ -605,7 +593,6 @@ namespace Habitus.Vistas
             {
                 if (ValidarDatos())
                 {
-                    // Actualizar datos del usuario
                     if (_usuario == null)
                     {
                         _usuario = new PerfilUsuario();
@@ -617,11 +604,8 @@ namespace Habitus.Vistas
                     _usuario.Peso = (double)nudPeso.Value;
                     _usuario.Altura = (double)nudAltura.Value;
                     _usuario.NivelActividad = cmbNivelActividad.SelectedItem?.ToString() ?? "Moderado";
-
-                    // Guardar usuario
                     if (_controladorUsuario.ObtenerUsuario() == null)
                     {
-                        // Convertir strings a enums
                         Genero genero = Enum.TryParse<Genero>(_usuario.Genero, out var g) ? g : Genero.Masculino;
                         NivelActividad nivelActividad = Enum.TryParse<NivelActividad>(_usuario.NivelActividad, out var na) ? na : NivelActividad.ModeradamenteActivo;
                         
@@ -630,7 +614,7 @@ namespace Habitus.Vistas
                     }
                     else
                     {
-                        // Aquí se implementaría un método para actualizar el usuario completo
+                        // TODO: Implementar un método para actualizar el usuario completo -> Baja prioridad
                         _controladorUsuario.ActualizarPeso(_usuario.Peso);
                     }
 
@@ -775,7 +759,7 @@ namespace Habitus.Vistas
                 {
                     try
                     {
-                        // Aquí se implementaría la lógica para eliminar todos los archivos de datos
+                        // TODO: Implementar lógica para eliminar todos los archivos de datos -> Baja prioridad
                         MessageBox.Show("Aplicación reiniciada. La aplicación se cerrará.", "Reinicio Completo", 
                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
                         

@@ -49,7 +49,6 @@ namespace Habitus.Controladores
 
         public double CalcularCaloriasQuemadas(TipoActividad tipo, ActividadIntensidad intensidad, int duracion, double peso)
         {
-            // Cálculo básico de calorías quemadas por minuto según tipo e intensidad
             double caloriasPorMinuto = tipo switch
             {
                 TipoActividad.Cardio => intensidad switch
@@ -72,8 +71,7 @@ namespace Habitus.Controladores
                 TipoActividad.Yoga => 2.5,
                 _ => 4
             };
-
-            // Ajustar por peso del usuario (factor básico)
+            // TODO: chequear que significan/sirven los 70kg
             double factorPeso = peso / 70.0; // 70kg como peso base
             return caloriasPorMinuto * duracion * factorPeso;
         }
