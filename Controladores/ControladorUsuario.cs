@@ -1,7 +1,6 @@
 using Habitus.Modelos;
 using Habitus.Modelos.Enums;
 using Habitus.Utilidades;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Habitus.Controladores
 {
@@ -36,35 +35,37 @@ namespace Habitus.Controladores
 
         public void ActualizarPuntos(int puntos)
         {
-            /*if (_usuario != null)
+            var usuario = ObtenerUsuario();
+            if (usuario != null)
             {
-                _usuario.Puntos += puntos;
-                GuardarUsuario();
-            }*/
+                _perfilUsuario.Update(
+                    user => user.Nombre == usuario.Nombre,
+                    user => user.Puntos += puntos
+                );
+            }
         }
 
         public void ActualizarPeso(double nuevoPeso)
         {
-            /*if (_usuario != null)
+            var usuario = ObtenerUsuario();
+            if (usuario != null)
             {
-                _usuario.Peso = nuevoPeso;
-                GuardarUsuario();
-            }*/
+                _perfilUsuario.Update(
+                    user => user.Nombre == usuario.Nombre,
+                    user => user.Peso = nuevoPeso
+                );
+            }
         }
 
         public double CalcularIMC()
         {
-            /*if (_usuario != null && _usuario.Altura > 0)
+            var usuario = ObtenerUsuario();
+            if (usuario != null && usuario.Altura > 0)
             {
-                double alturaEnMetros = _usuario.Altura / 100;
-                return _usuario.Peso / (alturaEnMetros * alturaEnMetros);
-            }*/
+                double alturaEnMetros = usuario.Altura / 100;
+                return usuario.Peso / (alturaEnMetros * alturaEnMetros);
+            }
             return 0;
-        }
-
-        public bool UsuarioExiste()
-        {
-            return _perfilUsuario.GetAll().FirstOrDefault() != null;
         }
     }
 }
