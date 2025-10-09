@@ -3,9 +3,10 @@ namespace Habitus.Modelos.Enums
     public enum NivelActividad
     {
         Sedentario,
-        LigeroActividad,
-        ModeradamenteActivo,
+        Ligero,
+        Moderado,
+        Activo,
         MuyActivo,
-        ExtraActivo
+        
     }
 }

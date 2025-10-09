@@ -54,7 +54,7 @@ namespace Habitus.Controladores
         {
             return _cuestionario.GetAll()[0].Completado;
         }
-        // TODO: Chequear si estan bien los puntos asignados -> Baja prioridad
+        // check
         private int CalcularPuntosPregunta(int indicePregunta, string respuesta)
         {
             switch (indicePregunta)

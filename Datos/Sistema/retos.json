@@ -22,5 +22,78 @@
     "Completado": false,
     "TipoReto": "H\u00E1bito",
     "Dificultad": "F\u00E1cil"
+  },
+
+  {
+    "Id": "a1d2f7cd-c7c6-4e9b-bd98-6d3a2b0a5576",
+    "Nombre": "Dormir 8 horas",
+    "Descripcion": "Duerme al menos 8 horas durante la noche.",
+    "PuntosRecompensa": 30,
+    "NivelRequerido": 1,
+    "FechaInicio": "0001-01-01T00:00:00",
+    "FechaFin": "0001-01-01T00:00:00",
+    "Completado": false,
+    "TipoReto": "Hábito",
+    "Dificultad": "Fácil"
+  },
+  {
+    "Id": "b4a67c8d-ea87-4be6-9089-9c8e45f31eae",
+    "Nombre": "Camina 10,000 pasos",
+    "Descripcion": "Da al menos 10,000 pasos durante el día.",
+    "PuntosRecompensa": 35,
+    "NivelRequerido": 1,
+    "FechaInicio": "0001-01-01T00:00:00",
+    "FechaFin": "0001-01-01T00:00:00",
+    "Completado": false,
+    "TipoReto": "Hábito",
+    "Dificultad": "Fácil"
+  },
+  {
+    "Id": "f2b982f7-4f1d-45d4-b8f4-94d1d8648b8e",
+    "Nombre": "Evita el azúcar",
+    "Descripcion": "No consumir productos con azúcar añadida durante todo el día.",
+    "PuntosRecompensa": 40,
+    "NivelRequerido": 1,
+    "FechaInicio": "0001-01-01T00:00:00",
+    "FechaFin": "0001-01-01T00:00:00",
+    "Completado": false,
+    "TipoReto": "Hábito",
+    "Dificultad": "Fácil"
+  },
+  {
+    "Id": "d6a43139-9c8f-4f4b-b25b-b2d88e0c16bc",
+    "Nombre": "Realiza estiramiento matutino",
+    "Descripcion": "Dedica 10 minutos cada mañana a estiramientos.",
+    "PuntosRecompensa": 25,
+    "NivelRequerido": 1,
+    "FechaInicio": "0001-01-01T00:00:00",
+    "FechaFin": "0001-01-01T00:00:00",
+    "Completado": false,
+    "TipoReto": "Hábito",
+    "Dificultad": "Fácil"
+  },
+  {
+    "Id": "ad567fa3-6ed5-4c1b-8858-17d209be32d1",
+    "Nombre": "Come frutas y verduras",
+    "Descripcion": "Consume al menos 5 porciones de frutas y verduras durante el día.",
+    "PuntosRecompensa": 30,
+    "NivelRequerido": 1,
+    "FechaInicio": "0001-01-01T00:00:00",
+    "FechaFin": "0001-01-01T00:00:00",
+    "Completado": false,
+    "TipoReto": "Hábito",
+    "Dificultad": "Fácil"
+  },
+  {
+    "Id": "6f97c9d1-48b0-4b35-a9b7-922c3fe18ec3",
+    "Nombre": "Medita 10 minutos",
+    "Descripcion": "Dedica 10 minutos a la meditación o respiración consciente.",
+    "PuntosRecompensa": 30,
+    "NivelRequerido": 1,
+    "FechaInicio": "0001-01-01T00:00:00",
+    "FechaFin": "0001-01-01T00:00:00",
+    "Completado": false,
+    "TipoReto": "Hábito",
+    "Dificultad": "Fácil"
   }
 ]

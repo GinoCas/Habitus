@@ -10,7 +10,7 @@ namespace Habitus.Controladores
 
         public ControladorRetos()
         {
-            _retosDisponibles = new GestorJson<Reto>("retos.json", true); // TODO: Agregar mas retos en retos.json
+            _retosDisponibles = new GestorJson<Reto>("retos.json", true); // check: se pueden agregar un poco mas
             _retosActivos = new GestorJson<Reto>("retosActivos.json", false); 
         }
 

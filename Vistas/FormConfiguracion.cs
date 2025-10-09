@@ -13,6 +13,8 @@ namespace Habitus.Vistas
         private ControladorNiveles _controladorNiveles;
         private PerfilUsuario _usuario;
 
+
+
         public FormConfiguracion()
         {
             InitializeComponent();
@@ -598,17 +600,40 @@ namespace Habitus.Vistas
                         _usuario = new PerfilUsuario();
                     }
 
-                    _usuario.Nombre = txtNombre.Text.Trim();
-                    _usuario.Edad = (int)nudEdad.Value;
-                    _usuario.Genero = cmbGenero.SelectedItem?.ToString() ?? "No especificado";
-                    _usuario.Peso = (double)nudPeso.Value;
-                    _usuario.Altura = (double)nudAltura.Value;
-                    _usuario.NivelActividad = cmbNivelActividad.SelectedItem?.ToString() ?? "Moderado";
+                    _controladorUsuario.ActualizarNombre(txtNombre.Text.Trim());
+                    _controladorUsuario.ActualizarEdad((int)nudEdad.Value);
+
+                    var generoTexto = cmbGenero.SelectedItem?.ToString() ?? "NoEspecificado";
+                    
+                    if (Enum.TryParse<Genero>(generoTexto, out var genero))
+                    {
+                        _controladorUsuario.ActualizarGenero(genero);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Género no válido.");
+                    }
+                    _controladorUsuario.ActualizarPeso( (double)nudPeso.Value);
+                    _controladorUsuario.ActualizarAltura((double)nudAltura.Value);
+
+                    var nivelTexto = (cmbNivelActividad.SelectedItem?.ToString() ?? "Moderado")
+                     .Trim()
+                     .Replace(" ", "");
+
+                    if (Enum.TryParse<NivelActividad>(nivelTexto, ignoreCase: true, out var nivelActividad))
+                    {
+                        _controladorUsuario.ActualizarNivelActividad(nivelActividad);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Nivel de actividad no válido.");
+                    }
+
+
                     if (_controladorUsuario.ObtenerUsuario() == null)
                     {
-                        Genero genero = Enum.TryParse<Genero>(_usuario.Genero, out var g) ? g : Genero.Masculino;
-                        NivelActividad nivelActividad = Enum.TryParse<NivelActividad>(_usuario.NivelActividad, out var na) ? na : NivelActividad.ModeradamenteActivo;
-                        
+                        Genero genero1 = Enum.TryParse<Genero>(_usuario.Genero, out var g) ? g : Genero.Masculino;
+
                         _controladorUsuario.CrearUsuario(_usuario.Nombre, _usuario.Edad, _usuario.Peso, 
                                                         _usuario.Altura, genero, nivelActividad, 0);
                     }
