@@ -58,13 +58,13 @@ namespace Habitus.Utilidades
 
         public void Update(Func<T, bool> predicate, Action<T> updateAction)
         {
-            /*var items = Load();
+            var items = Load();
             var item = items.FirstOrDefault(predicate);
             if (item != null)
             {
                 updateAction(item);
                 Save(items);
-            }*/
+            }
         }
 
         public void Delete(Func<T, bool> predicate)
