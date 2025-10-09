@@ -67,7 +67,6 @@ namespace Habitus.Vistas
 
                 // Crear pestañas
                 CrearTabPerfil();
-                CrearTabPreferencias();
                 CrearTabObjetivos();
                 CrearTabDatos();
 

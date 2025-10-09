@@ -284,7 +284,7 @@ namespace Habitus.Vistas
             };
             tabPreferencias.Controls.Add(lblInfo);
         }
-        // TODO: evaluar para que sirve, si es realmente necesario, y sino, eliminarlo
+        // TODO: evaluar para que sirve, si es realmente necesario, y sino, eliminarlo -> Baja prioridad
         private void CrearTabObjetivos()
         {
             var tabObjetivos = new TabPage("🎯 Objetivos")

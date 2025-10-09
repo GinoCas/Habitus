@@ -315,8 +315,7 @@ namespace Habitus.Vistas
                 var usuario = _controladorUsuario.ObtenerUsuario();
                 if (usuario != null)
                 {
-                    var calorias = _controladorActividad.CalcularCaloriasQuemadas(
-                        tipoActividad, intensidad, duracion, usuario.Peso);
+                    var calorias = _controladorActividad.CalcularCaloriasQuemadas(tipoActividad, intensidad, duracion, usuario.Peso);
                     lblCaloriasEstimadas.Text = $"{calorias:F0} kcal";
                 }
             }

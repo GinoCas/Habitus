@@ -71,8 +71,7 @@ namespace Habitus.Controladores
                 TipoActividad.Yoga => 2.5,
                 _ => 4
             };
-            // TODO: chequear que significan/sirven los 70kg
-            double factorPeso = peso / 70.0; // 70kg como peso base
+            double factorPeso = peso / 70.0; //  Calcula las calorías totales quemadas ajustadas al peso del usuario, usando como referencia los datos para una persona de 70 kg.
             return caloriasPorMinuto * duracion * factorPeso;
         }
     }
