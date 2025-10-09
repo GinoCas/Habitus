@@ -29,11 +29,7 @@ namespace Habitus.Controladores
                 Notas = notas,
                 PuntosGanados = CalcularPuntosDiarios(caloriasConsumidas, caloriasQuemadas, minutosActividad, pasos)
             };
-
-            // Eliminar cualquier progreso existente del día
             _progreso.Delete(p => p.Fecha.Date == DateTime.Now.Date);
-
-            // Agregar el nuevo progreso
             _progreso.Add(progreso);
         }
 
@@ -151,14 +147,8 @@ namespace Habitus.Controladores
 
             if (registros.Count < 2)
                 return tendencias;
-
-            // Tendencia de peso
             tendencias.Add(CrearTendencia("Peso", registros.Select(r => r.Peso).ToList(), registros.Select(r => r.Fecha).ToList()));
-
-            // Tendencia de calorías consumidas
             tendencias.Add(CrearTendencia("Calorías Consumidas", registros.Select(r => r.CaloriasConsumidas).ToList(), registros.Select(r => r.Fecha).ToList()));
-
-            // Tendencia de minutos de actividad
             tendencias.Add(CrearTendencia("Minutos de Actividad", registros.Select(r => (double)r.MinutosActividad).ToList(), registros.Select(r => r.Fecha).ToList()));
 
             return tendencias;
@@ -181,19 +171,13 @@ namespace Habitus.Controladores
         private int CalcularPuntosDiarios(double caloriasConsumidas, double caloriasQuemadas, int minutosActividad, int pasos)
         {
             int puntos = 0;
-
-            // Puntos por balance calórico
             double balanceCalorico = caloriasConsumidas - caloriasQuemadas;
             if (balanceCalorico >= -500 && balanceCalorico <= 500) puntos += 20;
             else if (balanceCalorico < -500) puntos += 10;
             else puntos += 5;
-
-            // Puntos por actividad física
             if (minutosActividad >= 60) puntos += 30;
             else if (minutosActividad >= 30) puntos += 20;
             else if (minutosActividad >= 15) puntos += 10;
-
-            // Puntos por pasos
             if (pasos >= 10000) puntos += 25;
             else if (pasos >= 7500) puntos += 20;
             else if (pasos >= 5000) puntos += 15;
