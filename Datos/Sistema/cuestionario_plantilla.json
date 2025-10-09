@@ -1,0 +1,60 @@
+[
+  {
+    "Preguntas": [
+      {
+        "Texto": "¿Cuál es tu objetivo principal?",
+        "Opciones": [
+          "Perder peso",
+          "Ganar músculo",
+          "Mantener peso",
+          "Mejorar salud general"
+        ]
+      },
+      {
+        "Texto": "¿Con qué frecuencia haces ejercicio actualmente?",
+        "Opciones": [
+          "Nunca",
+          "1-2 veces por semana",
+          "3-4 veces por semana",
+          "5+ veces por semana"
+        ]
+      },
+      {
+        "Texto": "¿Cómo describirías tu alimentación actual?",
+        "Opciones": [
+          "Muy mala",
+          "Regular",
+          "Buena",
+          "Excelente"
+        ]
+      },
+      {
+        "Texto": "¿Cuántas horas duermes por noche?",
+        "Opciones": [
+          "Menos de 6 horas",
+          "6-7 horas",
+          "7-8 horas",
+          "Más de 8 horas"
+        ]
+      },
+      {
+        "Texto": "¿Cuánta agua bebes al día?",
+        "Opciones": [
+          "Menos de 1 litro",
+          "1-2 litros",
+          "2-3 litros",
+          "Más de 3 litros"
+        ]
+      },
+      {
+        "Texto": "¿Qué tan motivado/a te sientes para cambiar tus hábitos?",
+        "Opciones": [
+          "Poco motivado",
+          "Algo motivado",
+          "Muy motivado",
+          "Extremadamente motivado"
+        ]
+      }
+    ]
+  }
+]

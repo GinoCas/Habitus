@@ -1,16 +1,26 @@
 using Habitus.Modelos;
 using Habitus.Utilidades;
+using System.IO;
+using System.Linq;
 
 namespace Habitus.Controladores
 {
     public class ControladorCuestionario
     {
-        private GestorJson<Cuestionario> _cuestionario;
+        private GestorJson<Cuestionario> _planillaCuestionario;
+		private GestorJson<Cuestionario> _cuestionario;
 
         public ControladorCuestionario()
         {
-            _cuestionario = new GestorJson<Cuestionario>("cuestionario.json", true);
-        }
+			_cuestionario = new GestorJson<Cuestionario>("cuestionario.json", false);
+			_planillaCuestionario = new GestorJson<Cuestionario>("cuestionario_plantilla.json", true);
+
+            if(_cuestionario.GetAll().Count == 0)
+            {
+                var planilla = _planillaCuestionario.GetAll();
+                _cuestionario.Add(planilla[0]);
+            }
+		}
 
         public Cuestionario? ObtenerCuestionario()
         {
@@ -23,13 +33,15 @@ namespace Habitus.Controladores
         }
         public void ResponderPregunta(int indicePregunta, string respuesta)
         {
-            var cuestionario = _cuestionario.GetAll()[0];
-            if (indicePregunta >= 0 && indicePregunta < cuestionario.Preguntas.Count)
+            _cuestionario.Update(c => true, c =>
             {
-                var pregunta = cuestionario.Preguntas[indicePregunta];
-                pregunta.RespuestaSeleccionada = respuesta;
-                pregunta.PuntosAsignados = CalcularPuntosPregunta(indicePregunta, respuesta);
-            }
+                if (indicePregunta >= 0 && indicePregunta < c.Preguntas.Count)
+                {
+                    var pregunta = c.Preguntas[indicePregunta];
+                    pregunta.RespuestaSeleccionada = respuesta;
+                    pregunta.PuntosAsignados = CalcularPuntosPregunta(indicePregunta, respuesta);
+                }
+            });
         }
 
         public int CalcularPuntosTotal()
@@ -44,10 +56,12 @@ namespace Habitus.Controladores
 
         public void CompletarCuestionario()
         {
-            var cuestionario = _cuestionario.GetAll()[0];
-            cuestionario.Completado = true;
-            cuestionario.FechaCompletado = DateTime.Now;
-            cuestionario.PuntosObtenidos = CalcularPuntosTotal();
+            _cuestionario.Update(c => true, c =>
+            {
+                c.PuntosObtenidos = c.Preguntas.Sum(p => p.PuntosAsignados);
+                c.Completado = true;
+                c.FechaCompletado = DateTime.Now;
+            });
         }
 
         public bool EstaCompletado()

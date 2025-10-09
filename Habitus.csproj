@@ -30,13 +30,10 @@
     <None Update="Datos\Sistema\catalogoComida.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Datos\Sistema\cuestionario.json">
+    <None Update="Datos\Sistema\cuestionario_plantilla.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Datos\Sistema\niveles.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Datos\Sistema\retos.json">
+    <None Update="Datos\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
