@@ -106,6 +106,7 @@ namespace Habitus.Vistas
         {
             _controladorCuestionario.CompletarCuestionario();
             var puntosObtenidos = _controladorCuestionario.CalcularPuntosTotal();
+            _controladorUsuario.ActualizarPuntos(puntosObtenidos);
 
             // Mostrar formulario de datos personales
             var formDatosPersonales = new FormDatosPersonales(puntosObtenidos);

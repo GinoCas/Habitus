@@ -1,6 +1,6 @@
 [
   {
-    "NumeroNivel": 1,
+    "Numero": 1,
     "Nombre": "Principiante",
     "PuntosRequeridos": 0,
     "Descripcion": "\u00A1Bienvenido a tu viaje de salud!",
@@ -11,7 +11,7 @@
     "Insignia": "\uD83C\uDF31"
   },
   {
-    "NumeroNivel": 2,
+    "Numero": 2,
     "Nombre": "Explorador",
     "PuntosRequeridos": 100,
     "Descripcion": "Est\u00E1s comenzando a formar h\u00E1bitos saludables",
@@ -22,7 +22,7 @@
     "Insignia": "\uD83D\uDE80"
   },
   {
-    "NumeroNivel": 3,
+    "Numero": 3,
     "Nombre": "Comprometido",
     "PuntosRequeridos": 300,
     "Descripcion": "Tu compromiso con la salud es evidente",
@@ -33,7 +33,7 @@
     "Insignia": "\uD83D\uDCAA"
   },
   {
-    "NumeroNivel": 4,
+    "Numero": 4,
     "Nombre": "Entusiasta",
     "PuntosRequeridos": 600,
     "Descripcion": "Eres un verdadero entusiasta del bienestar",
@@ -44,7 +44,7 @@
     "Insignia": "\uD83D\uDD25"
   },
   {
-    "NumeroNivel": 5,
+    "Numero": 5,
     "Nombre": "Experto",
     "PuntosRequeridos": 1000,
     "Descripcion": "Has alcanzado un nivel experto en salud",
@@ -55,7 +55,7 @@
     "Insignia": "\u2B50"
   },
   {
-    "NumeroNivel": 6,
+    "Numero": 6,
     "Nombre": "Maestro",
     "PuntosRequeridos": 1500,
     "Descripcion": "Eres un maestro del bienestar y la salud",
@@ -66,7 +66,7 @@
     "Insignia": "\uD83D\uDC51"
   },
   {
-    "NumeroNivel": 7,
+    "Numero": 7,
     "Nombre": "Leyenda",
     "PuntosRequeridos": 2500,
     "Descripcion": "\u00A1Eres una leyenda viviente de la salud!",
