@@ -9,126 +9,21 @@ namespace Habitus.Vistas
 {
     public partial class FormEstadisticas : Form
     {
-        private ControladorProgreso _controladorProgreso;
-        private ControladorPerfilUsuario _controladorUsuario;
         private ControladorActividad _controladorActividad;
         private ControladorComida _controladorComida;
         private ControladorRetos _controladorRetos;
-        private ControladorNiveles _controladorNiveles;
-        private PerfilUsuario _usuario;
 
         public FormEstadisticas()
         {
             InitializeComponent();
-            _controladorProgreso = new ControladorProgreso();
-            _controladorUsuario = new ControladorPerfilUsuario();
             _controladorActividad = new ControladorActividad();
             _controladorComida = new ControladorComida();
             _controladorRetos = new ControladorRetos();
-            _controladorNiveles = new ControladorNiveles();
-            _usuario = _controladorUsuario.ObtenerUsuario();
             
-            CrearFiltros(this.Controls.Find("panelFiltros", true).FirstOrDefault() as Panel);
             CrearPanelResumen();
             CrearPanelGraficos();
             CargarEstadisticas();
             CrearPanelTendencias();
-        }
-
-        private void CrearFiltros(Panel panel)
-        {
-            if (panel == null)
-            {
-                panel = new();
-            }
-            var lblPeriodo = new Label
-            {
-                Text = "Período:",
-                Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                Location = new Point(20, 20),
-                Size = new Size(60, 20)
-            };
-            panel.Controls.Add(lblPeriodo);
-
-            cmbPeriodo = new ComboBox
-            {
-                Location = new Point(90, 18),
-                Size = new Size(120, 25),
-                DropDownStyle = ComboBoxStyle.DropDownList,
-                Font = new Font("Segoe UI", 9)
-            };
-            cmbPeriodo.Items.AddRange(new[] { "Última semana", "Último mes", "Últimos 3 meses", "Personalizado" });
-            cmbPeriodo.SelectedIndex = 1;
-            cmbPeriodo.SelectedIndexChanged += CmbPeriodo_SelectedIndexChanged;
-            panel.Controls.Add(cmbPeriodo);
-
-            var lblDesde = new Label
-            {
-                Text = "Desde:",
-                Font = new Font("Segoe UI", 10),
-                Location = new Point(240, 20),
-                Size = new Size(50, 20)
-            };
-            panel.Controls.Add(lblDesde);
-
-            dtpFechaInicio = new DateTimePicker
-            {
-                Location = new Point(295, 18),
-                Size = new Size(120, 25),
-                Font = new Font("Segoe UI", 9),
-                Value = DateTime.Today.AddMonths(-1),
-                Enabled = false
-            };
-            dtpFechaInicio.ValueChanged += DtpFecha_ValueChanged;
-            panel.Controls.Add(dtpFechaInicio);
-
-            var lblHasta = new Label
-            {
-                Text = "Hasta:",
-                Font = new Font("Segoe UI", 10),
-                Location = new Point(440, 20),
-                Size = new Size(50, 20)
-            };
-            panel.Controls.Add(lblHasta);
-
-            dtpFechaFin = new DateTimePicker
-            {
-                Location = new Point(495, 18),
-                Size = new Size(120, 25),
-                Font = new Font("Segoe UI", 9),
-                Value = DateTime.Today,
-                Enabled = false
-            };
-            dtpFechaFin.ValueChanged += DtpFecha_ValueChanged;
-            panel.Controls.Add(dtpFechaFin);
-
-            var btnActualizar = new Button
-            {
-                Text = "🔄 Actualizar",
-                Location = new Point(640, 15),
-                Size = new Size(100, 30),
-                Font = new Font("Segoe UI", 9),
-                BackColor = Color.FromArgb(52, 152, 219),
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat
-            };
-            btnActualizar.FlatAppearance.BorderSize = 0;
-            btnActualizar.Click += BtnActualizar_Click;
-            panel.Controls.Add(btnActualizar);
-
-            var btnExportar = new Button
-            {
-                Text = "📄 Exportar",
-                Location = new Point(750, 15),
-                Size = new Size(100, 30),
-                Font = new Font("Segoe UI", 9),
-                BackColor = Color.FromArgb(39, 174, 96),
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat
-            };
-            btnExportar.FlatAppearance.BorderSize = 0;
-            btnExportar.Click += BtnExportar_Click;
-            panel.Controls.Add(btnExportar);
         }
 
         private void CrearPanelResumen()
@@ -208,17 +103,18 @@ namespace Habitus.Vistas
                 Size = new Size(200, 25)
             };
             panelGraficos.Controls.Add(lblTitulo);
-
-            // Simulación de gráfico de actividades
+        
+            // Panel para gráfico de actividades
             var panelGraficoActividades = new Panel
             {
                 Location = new Point(20, 40),
-                Size = new Size(560, 150),
+                Size = new Size(560, 325),
                 BackColor = Color.FromArgb(248, 249, 250),
-                BorderStyle = BorderStyle.FixedSingle
+                BorderStyle = BorderStyle.FixedSingle,
+                Name = "panelGraficoActividades"
             };
             panelGraficos.Controls.Add(panelGraficoActividades);
-
+        
             var lblGraficoActividades = new Label
             {
                 Text = "📈 Actividades por Día",
@@ -227,30 +123,6 @@ namespace Habitus.Vistas
                 Size = new Size(540, 20)
             };
             panelGraficoActividades.Controls.Add(lblGraficoActividades);
-
-            // Simulación de barras de gráfico
-            DibujarGraficoSimulado(panelGraficoActividades, new Point(10, 35), new Size(540, 100));
-
-            // Simulación de gráfico de calorías
-            var panelGraficoCalorias = new Panel
-            {
-                Location = new Point(20, 200),
-                Size = new Size(560, 150),
-                BackColor = Color.FromArgb(248, 249, 250),
-                BorderStyle = BorderStyle.FixedSingle
-            };
-            panelGraficos.Controls.Add(panelGraficoCalorias);
-
-            var lblGraficoCalorias = new Label
-            {
-                Text = "🔥 Calorías Quemadas vs Consumidas",
-                Font = new Font("Segoe UI", 10, FontStyle.Bold),
-                Location = new Point(10, 10),
-                Size = new Size(540, 20)
-            };
-            panelGraficoCalorias.Controls.Add(lblGraficoCalorias);
-
-            DibujarGraficoCaloriasSimulado(panelGraficoCalorias, new Point(10, 35), new Size(540, 100));
         }
 
         private void CrearPanelTendencias()
@@ -312,22 +184,64 @@ namespace Habitus.Vistas
             CargarTendencias(lstTendencias);
             CargarRecomendaciones(txtRecomendaciones);
         }
-
-        private void DibujarGraficoSimulado(Panel panel, Point ubicacion, Size tamaño)
+        
+        private void DibujarGraficoActividades(Panel panel, Point ubicacion, Size tamaño, DateTime fechaInicio, DateTime fechaFin)
         {
             var panelGrafico = new Panel
             {
                 Location = ubicacion,
                 Size = tamaño,
-                BackColor = Color.White
+                BackColor = Color.White,
             };
             panel.Controls.Add(panelGrafico);
 
-            // Simular barras de gráfico
-            var random = new Random();
-            for (int i = 0; i < 7; i++)
+            // Obtener datos reales de actividades
+            var fechas = new List<DateTime>();
+            var actividadesPorDia = new Dictionary<DateTime, int>();
+
+            // Determinar el número de días en el período
+            int diasEnPeriodo = (int)(fechaFin - fechaInicio).TotalDays + 1;
+            int numPuntos = Math.Min(7, diasEnPeriodo); // Mostrar máximo 7 puntos
+            
+            // Calcular el intervalo entre puntos
+            int intervalo = Math.Max(1, diasEnPeriodo / numPuntos);
+            
+            // Generar las fechas a mostrar
+            for (int j = 0; j < numPuntos; j++)
             {
-                var altura = random.Next(20, 80);
+                var fecha = fechaInicio.AddDays(j * intervalo);
+                if (fecha <= fechaFin)
+                {
+                    fechas.Add(fecha);
+                    actividadesPorDia[fecha] = 0;
+                }
+            }
+            
+            // Contar actividades por día
+            var actividades = _controladorActividad.ObtenerActividadesPorPeriodo(fechaInicio, fechaFin);
+            foreach (var actividad in actividades)
+            {
+                var fechaActividad = actividad.Fecha.Date;
+                // Encontrar la fecha más cercana en nuestro conjunto de fechas
+                var fechaMasCercana = fechas.OrderBy(f => Math.Abs((f - fechaActividad).TotalDays)).FirstOrDefault();
+                if (actividadesPorDia.ContainsKey(fechaMasCercana))
+                {
+                    actividadesPorDia[fechaMasCercana]++;
+                }
+            }
+            
+            // Encontrar el valor máximo para escalar el gráfico
+            int maxActividades = actividadesPorDia.Values.Any() ? actividadesPorDia.Values.Max() : 1;
+            maxActividades = Math.Max(1, maxActividades); // Evitar división por cero
+            
+            // Dibujar barras de gráfico
+            int i = 0;
+            foreach (var fecha in fechas)
+            {
+                int cantidadActividades = actividadesPorDia[fecha];
+                int altura = (int)((cantidadActividades / (float)maxActividades) * (tamaño.Height - 40));
+                altura = Math.Max(5, altura); // Altura mínima para visibilidad
+                
                 var barra = new Panel
                 {
                     Location = new Point(50 + i * 70, tamaño.Height - altura - 20),
@@ -335,65 +249,22 @@ namespace Habitus.Vistas
                     BackColor = Color.FromArgb(52, 152, 219)
                 };
                 panelGrafico.Controls.Add(barra);
-
+                
+                // Tooltip con información
+                var tooltip = new ToolTip();
+                tooltip.SetToolTip(barra, $"{cantidadActividades} actividades");
+                
                 var lblDia = new Label
                 {
-                    Text = DateTime.Today.AddDays(-6 + i).ToString("dd/MM"),
+                    Text = fecha.ToString("dd/MM"),
                     Font = new Font("Segoe UI", 8),
                     Location = new Point(40 + i * 70, tamaño.Height - 15),
                     Size = new Size(60, 15),
                     TextAlign = ContentAlignment.MiddleCenter
                 };
                 panelGrafico.Controls.Add(lblDia);
-            }
-        }
-
-        private void DibujarGraficoCaloriasSimulado(Panel panel, Point ubicacion, Size tamaño)
-        {
-            var panelGrafico = new Panel
-            {
-                Location = ubicacion,
-                Size = tamaño,
-                BackColor = Color.White
-            };
-            panel.Controls.Add(panelGrafico);
-
-            // Simular líneas de gráfico
-            var lblLeyenda = new Label
-            {
-                Text = "🔥 Quemadas    🍎 Consumidas",
-                Font = new Font("Segoe UI", 9),
-                Location = new Point(10, 10),
-                Size = new Size(200, 20),
-                ForeColor = Color.FromArgb(127, 140, 141)
-            };
-            panelGrafico.Controls.Add(lblLeyenda);
-
-            // Simular puntos de datos
-            var random = new Random();
-            for (int i = 0; i < 7; i++)
-            {
-                var x = 50 + i * 70;
-                var yQuemadas = 30 + random.Next(0, 40);
-                var yConsumidas = 30 + random.Next(0, 40);
-
-                // Punto quemadas
-                var puntoQuemadas = new Panel
-                {
-                    Location = new Point(x - 3, yQuemadas - 3),
-                    Size = new Size(6, 6),
-                    BackColor = Color.FromArgb(231, 76, 60)
-                };
-                panelGrafico.Controls.Add(puntoQuemadas);
-
-                // Punto consumidas
-                var puntoConsumidas = new Panel
-                {
-                    Location = new Point(x - 3, yConsumidas - 3),
-                    Size = new Size(6, 6),
-                    BackColor = Color.FromArgb(39, 174, 96)
-                };
-                panelGrafico.Controls.Add(puntoConsumidas);
+                
+                i++;
             }
         }
 
@@ -423,11 +294,32 @@ namespace Habitus.Vistas
                 // Cargar retos completados
                 var retosCompletados = _controladorRetos.ObtenerRetosActivos().Count(r => r.Completado && r.FechaInicio >= fechaInicio && r.FechaInicio <= fechaFin);
                 ActualizarTarjetaResumen("🎯 Retos", retosCompletados.ToString());
+                
+                // Actualizar gráficos con datos reales
+                ActualizarGraficos(fechaInicio, fechaFin);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al cargar estadísticas: {ex.Message}", "Error", 
                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        
+        private void ActualizarGraficos(DateTime fechaInicio, DateTime fechaFin)
+        {
+            // Limpiar gráficos anteriores
+            var panelGraficoActividades = panelGraficos.Controls.Find("panelGraficoActividades", true).FirstOrDefault() as Panel;
+            var panelGraficoCalorias = panelGraficos.Controls.Find("panelGraficoCalorias", true).FirstOrDefault() as Panel;
+            
+            if (panelGraficoActividades != null)
+            {
+                // Mantener solo la etiqueta del título
+                var lblTitulo = panelGraficoActividades.Controls[0];
+                panelGraficoActividades.Controls.Clear();
+                panelGraficoActividades.Controls.Add(lblTitulo);
+                
+                // Dibujar gráfico de actividades con datos reales
+                DibujarGraficoActividades(panelGraficoActividades, new Point(10, 35), new Size(540, 280), fechaInicio, fechaFin);
             }
         }
 
@@ -494,94 +386,22 @@ namespace Habitus.Vistas
 
         private void CmbPeriodo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var personalizado = cmbPeriodo.SelectedItem.ToString() == "Personalizado";
-            dtpFechaInicio.Enabled = personalizado;
-            dtpFechaFin.Enabled = personalizado;
-
-            if (!personalizado)
+            switch (cmbPeriodo.SelectedIndex)
             {
-                switch (cmbPeriodo.SelectedItem.ToString())
-                {
-                    case "Última semana":
-                        dtpFechaInicio.Value = DateTime.Today.AddDays(-7);
-                        dtpFechaFin.Value = DateTime.Today;
-                        break;
-                    case "Último mes":
-                        dtpFechaInicio.Value = DateTime.Today.AddMonths(-1);
-                        dtpFechaFin.Value = DateTime.Today;
-                        break;
-                    case "Últimos 3 meses":
-                        dtpFechaInicio.Value = DateTime.Today.AddMonths(-3);
-                        dtpFechaFin.Value = DateTime.Today;
-                        break;
-                }
-                CargarEstadisticas();
+                case 0: // "Última semana":
+                    dtpFechaInicio.Value = DateTime.Today.AddDays(-7);
+                    dtpFechaFin.Value = DateTime.Today;
+                    break;
+                case 1: // "Último mes":
+                    dtpFechaInicio.Value = DateTime.Today.AddMonths(-1);
+                    dtpFechaFin.Value = DateTime.Today;
+                    break;
+                case 2: // "Últimos 3 meses":
+                    dtpFechaInicio.Value = DateTime.Today.AddMonths(-3);
+                    dtpFechaFin.Value = DateTime.Today;
+                    break;
             }
-        }
-
-        private void DtpFecha_ValueChanged(object sender, EventArgs e)
-        {
-            if (cmbPeriodo.SelectedItem.ToString() == "Personalizado")
-            {
-                CargarEstadisticas();
-            }
-        }
-
-        private void BtnActualizar_Click(object sender, EventArgs e)
-        {
             CargarEstadisticas();
-            MessageBox.Show("Estadísticas actualizadas correctamente.", "Actualización", 
-                           MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void BtnExportar_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var saveDialog = new SaveFileDialog
-                {
-                    Filter = "Archivo de texto (*.txt)|*.txt|Todos los archivos (*.*)|*.*",
-                    Title = "Exportar Estadísticas",
-                    FileName = $"Estadisticas_Habitus_{DateTime.Now:yyyyMMdd}.txt"
-                };
-
-                if (saveDialog.ShowDialog() == DialogResult.OK)
-                {
-                    var contenido = GenerarReporteTexto();
-                    System.IO.File.WriteAllText(saveDialog.FileName, contenido);
-                    MessageBox.Show($"Estadísticas exportadas exitosamente a:\n{saveDialog.FileName}", 
-                                   "Exportación Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al exportar estadísticas: {ex.Message}", "Error", 
-                               MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private string GenerarReporteTexto()
-        {
-            var reporte = $"REPORTE DE ESTADÍSTICAS - HABITUS\n";
-            reporte += $"Generado el: {DateTime.Now:dd/MM/yyyy HH:mm}\n";
-            reporte += $"Período: {dtpFechaInicio.Value:dd/MM/yyyy} - {dtpFechaFin.Value:dd/MM/yyyy}\n";
-            reporte += $"Usuario: {_usuario?.Nombre ?? "No especificado"}\n\n";
-            
-            reporte += "=== RESUMEN GENERAL ===\n";
-            // Aquí se agregarían los datos reales del resumen
-            reporte += "Actividades registradas: [Valor]\n";
-            reporte += "Calorías quemadas: [Valor]\n";
-            reporte += "Comidas registradas: [Valor]\n";
-            reporte += "Puntos ganados: [Valor]\n";
-            reporte += "Retos completados: [Valor]\n\n";
-            
-            reporte += "=== TENDENCIAS ===\n";
-            reporte += "[Aquí irían las tendencias calculadas]\n\n";
-            
-            reporte += "=== RECOMENDACIONES ===\n";
-            reporte += "[Aquí irían las recomendaciones personalizadas]\n";
-            
-            return reporte;
         }
     }
 }

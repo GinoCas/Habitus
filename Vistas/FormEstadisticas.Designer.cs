@@ -111,49 +111,11 @@ namespace Habitus.Vistas
                 Size = new Size(150, 25),
                 DropDownStyle = ComboBoxStyle.DropDownList
             };
-            this.cmbPeriodo.Items.AddRange(new object[] { "Última semana", "Último mes", "Últimos 3 meses", "Personalizado" });
+            this.cmbPeriodo.Items.AddRange(new object[] { "Última semana", "Último mes", "Últimos 3 meses" });
             this.cmbPeriodo.SelectedIndex = 0;
             this.cmbPeriodo.SelectedIndexChanged += CmbPeriodo_SelectedIndexChanged;
             panelFiltros.Controls.Add(this.cmbPeriodo);
-
-            var lblFechaInicio = new Label
-            {
-                Text = "Desde:",
-                Font = new Font("Segoe UI", 9, FontStyle.Bold),
-                Location = new Point(250, 20),
-                Size = new Size(50, 20),
-                Visible = false
-            };
-            panelFiltros.Controls.Add(lblFechaInicio);
-
-            this.dtpFechaInicio = new DateTimePicker
-            {
-                Location = new Point(300, 18),
-                Size = new Size(150, 25),
-                Format = DateTimePickerFormat.Short,
-                Visible = false
-            };
-            panelFiltros.Controls.Add(this.dtpFechaInicio);
-
-            var lblFechaFin = new Label
-            {
-                Text = "Hasta:",
-                Font = new Font("Segoe UI", 9, FontStyle.Bold),
-                Location = new Point(470, 20),
-                Size = new Size(50, 20),
-                Visible = false
-            };
-            panelFiltros.Controls.Add(lblFechaFin);
-
-            this.dtpFechaFin = new DateTimePicker
-            {
-                Location = new Point(520, 18),
-                Size = new Size(150, 25),
-                Format = DateTimePickerFormat.Short,
-                Visible = false
-            };
-            panelFiltros.Controls.Add(this.dtpFechaFin);
-
+            
             var btnAplicar = new Button
             {
                 Text = "Aplicar",
