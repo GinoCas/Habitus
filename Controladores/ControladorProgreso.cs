@@ -1,5 +1,6 @@
 using Habitus.Modelos;
 using Habitus.Utilidades;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,24 +16,6 @@ namespace Habitus.Controladores
             _progreso = new GestorJson<Progreso>("progreso.json", false);
         }
 
-        public void RegistrarProgresoDiario(double peso, double caloriasConsumidas, double caloriasQuemadas,
-                                           int minutosActividad, int pasos, string notas)
-        {
-            var progreso = new Progreso
-            {
-                Fecha = DateTime.Now.Date,
-                Peso = peso,
-                CaloriasConsumidas = caloriasConsumidas,
-                CaloriasQuemadas = caloriasQuemadas,
-                MinutosActividad = minutosActividad,
-                PasosRealizados = pasos,
-                Notas = notas,
-                PuntosGanados = CalcularPuntosDiarios(caloriasConsumidas, caloriasQuemadas, minutosActividad, pasos)
-            };
-            _progreso.Delete(p => p.Fecha.Date == DateTime.Now.Date);
-            _progreso.Add(progreso);
-        }
-
         public void RegistrarConsumoCalorias(DateTime fecha, double calorias)
         {
             var registros = _progreso.GetAll();
@@ -40,9 +23,7 @@ namespace Habitus.Controladores
 
             if (registroExistente != null)
             {
-                registroExistente.CaloriasConsumidas += calorias;
-                _progreso.Delete(p => p.Fecha.Date == fecha.Date);
-                _progreso.Add(registroExistente);
+                _progreso.Update(p => p.Fecha.Date == fecha.Date, p => p.CaloriasConsumidas += calorias);
             }
             else
             {
@@ -62,9 +43,7 @@ namespace Habitus.Controladores
 
             if (registroExistente != null)
             {
-                registroExistente.CaloriasQuemadas += calorias;
-                _progreso.Delete(p => p.Fecha.Date == fecha.Date);
-                _progreso.Add(registroExistente);
+                _progreso.Update(p => p.Fecha.Date == fecha.Date, p => p.CaloriasQuemadas += calorias);
             }
             else
             {
@@ -77,6 +56,19 @@ namespace Habitus.Controladores
             }
         }
 
+        public void RegistrarPuntos(DateTime fecha, int puntos)
+        {
+            var registro = ObtenerProgresoPorFecha(fecha);
+            if (registro != null)
+            {
+                _progreso.Update(p => p.Fecha.Date == fecha.Date, p => p.PuntosGanados += puntos);
+            }
+            else
+            {
+                MessageBox.Show("No existe un progreso para la fecha:", fecha.ToString());
+            }
+        }
+
         public void RegistrarMinutosActividad(DateTime fecha, int minutos)
         {
             var registros = _progreso.GetAll();
@@ -84,9 +76,7 @@ namespace Habitus.Controladores
 
             if (registroExistente != null)
             {
-                registroExistente.MinutosActividad += minutos;
-                _progreso.Delete(p => p.Fecha.Date == fecha.Date);
-                _progreso.Add(registroExistente);
+                _progreso.Update(p => p.Fecha.Date == fecha.Date, p => p.MinutosActividad += minutos);
             }
             else
             {
@@ -166,24 +156,6 @@ namespace Habitus.Controladores
                 PorcentajeCambio = CalcularPorcentajeCambio(valores.First(), valores.Last())
             };
             return tendencia;
-        }
-
-        private int CalcularPuntosDiarios(double caloriasConsumidas, double caloriasQuemadas, int minutosActividad, int pasos)
-        {
-            int puntos = 0;
-            double balanceCalorico = caloriasConsumidas - caloriasQuemadas;
-            if (balanceCalorico >= -500 && balanceCalorico <= 500) puntos += 20;
-            else if (balanceCalorico < -500) puntos += 10;
-            else puntos += 5;
-            if (minutosActividad >= 60) puntos += 30;
-            else if (minutosActividad >= 30) puntos += 20;
-            else if (minutosActividad >= 15) puntos += 10;
-            if (pasos >= 10000) puntos += 25;
-            else if (pasos >= 7500) puntos += 20;
-            else if (pasos >= 5000) puntos += 15;
-            else if (pasos >= 2500) puntos += 10;
-
-            return puntos;
         }
 
         private string CalcularTendenciaGeneral(List<double> valores)

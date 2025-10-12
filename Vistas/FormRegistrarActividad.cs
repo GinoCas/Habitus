@@ -343,6 +343,7 @@ namespace Habitus.Vistas
                 // Actualizar puntos del usuario
                 var puntosGanados = CalcularPuntosActividad(actividad.DuracionMinutos, actividad.Intensidad);
                 _controladorUsuario.ActualizarPuntos(puntosGanados);
+                _controladorProgreso.RegistrarPuntos(actividad.Fecha, puntosGanados);
 
                 MessageBox.Show($"Actividad registrada exitosamente.\n\nCalorías quemadas: {actividad.CaloriasQuemadas:F0} kcal\nPuntos ganados: {puntosGanados}",
                                "Actividad Registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);

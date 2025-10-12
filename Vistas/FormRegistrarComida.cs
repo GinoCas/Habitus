@@ -444,6 +444,7 @@ namespace Habitus.Vistas
 
                 var puntosGanados = CalcularPuntosComida(totalCalorias);
                 _controladorUsuario.ActualizarPuntos(puntosGanados);
+                _controladorProgreso.RegistrarPuntos(fecha, puntosGanados);
 
                 MessageBox.Show($"Comida registrada exitosamente.\n\nTotal de calorías: {totalCalorias:F0} kcal\nPuntos ganados: {puntosGanados}", 
                                "Comida Registrada", MessageBoxButtons.OK, MessageBoxIcon.Information);

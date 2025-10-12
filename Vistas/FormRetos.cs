@@ -21,15 +21,12 @@ namespace Habitus.Vistas
         private Label lblInfoReto;
         private PerfilUsuario _usuario;
 
-        private ControladorProgreso _controladorProgreso;
-
         public FormRetos(ControladorProgreso controladorProgreso = null)
         {
             InitializeComponent();
             _controladorRetos = new ControladorRetos();
             _controladorUsuario = new ControladorPerfilUsuario();
             _controladorNiveles = new ControladorNiveles();
-            _controladorProgreso = controladorProgreso ?? new ControladorProgreso();
             _usuario = _controladorUsuario.ObtenerUsuario();
             InicializarComponentes();
             CargarRetos();
