@@ -96,6 +96,7 @@ namespace Habitus.Vistas
             Controls.Add(panelResumen);
             Controls.Add(panelGraficos);
             Controls.Add(panelTendencias);
+            MaximizeBox = false;
             Name = "FormEstadisticas";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Estadísticas y Análisis - Habitus";

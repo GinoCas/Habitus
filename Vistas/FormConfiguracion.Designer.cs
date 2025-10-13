@@ -27,6 +27,7 @@ namespace Habitus.Vistas
                 this.Size = new System.Drawing.Size(700, 600);
                 this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
                 this.BackColor = System.Drawing.Color.FromArgb(240, 248, 255);
+            this.MaximizeBox = false;
 
                 // Inicializar los componentes
                 this.tabControl = new System.Windows.Forms.TabControl();

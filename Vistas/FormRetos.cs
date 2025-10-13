@@ -40,6 +40,7 @@ namespace Habitus.Vistas
             // 
             BackColor = Color.FromArgb(240, 248, 255);
             ClientSize = new Size(782, 753);
+            MaximizeBox = false;
             Name = "FormRetos";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Retos - Habitus";
