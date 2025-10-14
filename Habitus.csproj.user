@@ -17,9 +17,6 @@
     <Compile Update="Vistas\FormPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Vistas\FormProgreso.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Vistas\FormRegistrarActividad.cs">
       <SubType>Form</SubType>
     </Compile>

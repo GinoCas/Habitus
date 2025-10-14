@@ -84,12 +84,6 @@ namespace Habitus.Vistas
             panelLateral.Controls.Add(btnRegistrarComida);
             yPos += spacing;
 
-            // Botón Ver Progreso
-            btnVerProgreso = CrearBotonMenu("Ver Progreso", yPos);
-            btnVerProgreso.Click += BtnVerProgreso_Click;
-            panelLateral.Controls.Add(btnVerProgreso);
-            yPos += spacing;
-
             // Botón Retos
             btnRetos = CrearBotonMenu("Retos", yPos);
             btnRetos.Click += BtnRetos_Click;
@@ -201,7 +195,7 @@ namespace Habitus.Vistas
                 new { Titulo = "Calorías\nConsumidas", Valor = "0", Color = Color.FromArgb(231, 76, 60) },
                 new { Titulo = "Calorías\nQuemadas", Valor = "0", Color = Color.FromArgb(230, 126, 34) },
                 new { Titulo = "Minutos de\nActividad", Valor = "0", Color = Color.FromArgb(39, 174, 96) },
-                new { Titulo = "Pasos\nRealizados", Valor = "0", Color = Color.FromArgb(155, 89, 182) }
+               
             };
 
             for (int i = 0; i < tarjetas.Length; i++)
@@ -275,14 +269,7 @@ namespace Habitus.Vistas
             }
         }
 
-        private void BtnVerProgreso_Click(object sender, EventArgs e)
-        {
-            var formProgreso = new FormProgreso();
-            if (formProgreso.ShowDialog() == DialogResult.OK)
-            {
-                CargarDatosUsuario(); // Actualizar datos después de cambios en progreso
-            }
-        }
+
 
         private void BtnRetos_Click(object sender, EventArgs e)
         {
