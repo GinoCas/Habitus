@@ -318,10 +318,6 @@ namespace Habitus.Vistas
             }
             // Obtener retos activos
             var retosActivos = _controladorRetos.ObtenerRetosActivos();
-            foreach(var reto in retosActivos)
-            {
-                MessageBox.Show(reto.ToString());
-            }
 
 
             if (retosActivos.Count == 0)
