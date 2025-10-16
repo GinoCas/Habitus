@@ -116,7 +116,6 @@ namespace Habitus.Vistas
             this.Hide();
             var formPrincipal = new FormPrincipal();
             formPrincipal.Show();
-            this.Close();
         }
     }
 }

@@ -385,7 +385,7 @@ namespace Habitus.Vistas
                     Size = new Size(150, 15)
                 };
                 panelReto.Controls.Add(lblFecha);
-                // TODO: arreglar que los puntos siempre son 0. -> Baja prioridad
+                // Check
                 var lblPuntos = new Label
                 {
                     Text = $"+{reto.PuntosRecompensa} pts",
