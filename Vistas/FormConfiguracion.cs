@@ -1,9 +1,10 @@
-using System;
-using System.Drawing;
-using System.Windows.Forms;
 using Habitus.Controladores;
 using Habitus.Modelos;
 using Habitus.Modelos.Enums;
+using Microsoft.VisualBasic.ApplicationServices;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace Habitus.Vistas
 {
@@ -580,9 +581,37 @@ namespace Habitus.Vistas
                 {
                     try
                     {
-                        // TODO: Implementar lógica para eliminar todos los archivos de datos -> Baja prioridad
+                        string rutaCarpeta = "C:\\Users\\Expedientes\\AppData\\Roaming\\Habitus\\Datos";
+
+                        if (Directory.Exists(rutaCarpeta))
+                        {
+                            Directory.Delete(rutaCarpeta, true); // Elimina todo el contenido recursivamente
+                        }
+                        string[] archivosJSON = new string[]
+                        {
+                          "C:\\Users\\Expedientes\\AppData\\Roaming\\Habitus\\configuracion.json"
+
+                         };
+                        foreach (string archivo in archivosJSON)
+                        {
+                            if (File.Exists(archivo))
+                            {
+                                // Opcional: Eliminar el archivo completo
+                                File.Delete(archivo);
+
+                                // O restablecer el contenido del archivo a vacío o con un objeto vacío
+                                // Esto lo haces solo si prefieres mantener el archivo pero vacío
+                                // var objetoVacio = new { }; // Un objeto vacío o con valores predeterminados
+                                // File.WriteAllText(archivo, JsonConvert.SerializeObject(objetoVacio));
+
+                                // O incluso podrías borrar el contenido con un texto vacío
+                                // File.WriteAllText(archivo, string.Empty);
+                            }
+                        }
+
                         MessageBox.Show("Aplicación reiniciada. La aplicación se cerrará.", "Reinicio Completo", 
                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                         
                         Application.Exit();
                     }
