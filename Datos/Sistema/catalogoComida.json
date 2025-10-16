@@ -6,7 +6,7 @@
     "Carbohidratos": 14,
     "Grasas": 0.2,
     "Fibra": 2.4,
-    "Categoria": "Frutas"
+    "Categoria": "Desayuno"
   },
   {
     "Nombre": "Pl\u00E1tano",
@@ -15,7 +15,178 @@
     "Carbohidratos": 23,
     "Grasas": 0.3,
     "Fibra": 2.6,
+    "Categoria": "Desayuno"
+  },
+  {
+    "Nombre": "Carne vacuna",
+    "Calorias": 250,
+    "Proteinas": 26,
+    "Carbohidratos": 0,
+    "Grasas": 17,
+    "Fibra": 0,
+    "Categoria": "Cena"
+  },
+  {
+    "Nombre": "Pescado (merluza)",
+    "Calorias": 90,
+    "Proteinas": 18,
+    "Carbohidratos": 0,
+    "Grasas": 2,
+    "Fibra": 0,
+    "Categoria": "Merienda"
+  },
+  {
+    "Nombre": "Atún en agua",
+    "Calorias": 120,
+    "Proteinas": 26,
+    "Carbohidratos": 0,
+    "Grasas": 1,
+    "Fibra": 0,
+    "Categoria": "Almuerzo"
+  },
+  {
+    "Nombre": "Huevo entero",
+    "Calorias": 143,
+    "Proteinas": 13,
+    "Carbohidratos": 1.1,
+    "Grasas": 10,
+    "Fibra": 0,
+    "Categoria": "Almuerzo"
+  },
+  {
+    "Nombre": "Clara de huevo",
+    "Calorias": 52,
+    "Proteinas": 11,
+    "Carbohidratos": 0.7,
+    "Grasas": 0.2,
+    "Fibra": 0,
+    "Categoria": "Merienda"
+  },
+  {
+    "Nombre": "Lentejas cocidas",
+    "Calorias": 116,
+    "Proteinas": 9,
+    "Carbohidratos": 20,
+    "Grasas": 0.4,
+    "Fibra": 8,
+    "Categoria": "Legumbres"
+  },
+  {
+    "Nombre": "Garbanzos cocidos",
+    "Calorias": 164,
+    "Proteinas": 9,
+    "Carbohidratos": 27,
+    "Grasas": 2.6,
+    "Fibra": 8,
+    "Categoria": "Legumbres"
+  },
+  {
+    "Nombre": "Arroz integral cocido",
+    "Calorias": 111,
+    "Proteinas": 2.6,
+    "Carbohidratos": 23,
+    "Grasas": 0.9,
+    "Fibra": 1.8,
+    "Categoria": "Cereales"
+  },
+  {
+    "Nombre": "Avena",
+    "Calorias": 389,
+    "Proteinas": 16.9,
+    "Carbohidratos": 66,
+    "Grasas": 6.9,
+    "Fibra": 10.6,
+    "Categoria": "Cereales"
+  },
+  {
+    "Nombre": "Pan integral",
+    "Calorias": 250,
+    "Proteinas": 13,
+    "Carbohidratos": 41,
+    "Grasas": 4.2,
+    "Fibra": 7,
+    "Categoria": "Cereales"
+  },
+  {
+    "Nombre": "Papa hervida",
+    "Calorias": 86,
+    "Proteinas": 2,
+    "Carbohidratos": 20,
+    "Grasas": 0.1,
+    "Fibra": 1.8,
+    "Categoria": "Verduras"
+  },
+  {
+    "Nombre": "Batata asada",
+    "Calorias": 90,
+    "Proteinas": 2,
+    "Carbohidratos": 21,
+    "Grasas": 0.2,
+    "Fibra": 3,
+    "Categoria": "Verduras"
+  },
+  {
+    "Nombre": "Brócoli",
+    "Calorias": 34,
+    "Proteinas": 3,
+    "Carbohidratos": 7,
+    "Grasas": 0.4,
+    "Fibra": 2.6,
+    "Categoria": "Verduras"
+  },
+  {
+    "Nombre": "Zanahoria",
+    "Calorias": 41,
+    "Proteinas": 0.9,
+    "Carbohidratos": 10,
+    "Grasas": 0.2,
+    "Fibra": 2.8,
+    "Categoria": "Verduras"
+  },
+  {
+    "Nombre": "Manzana",
+    "Calorias": 52,
+    "Proteinas": 0.3,
+    "Carbohidratos": 14,
+    "Grasas": 0.2,
+    "Fibra": 2.4,
     "Categoria": "Frutas"
+  },
+  {
+    "Nombre": "Banana",
+    "Calorias": 89,
+    "Proteinas": 1.1,
+    "Carbohidratos": 23,
+    "Grasas": 0.3,
+    "Fibra": 2.6,
+    "Categoria": "Frutas"
+  },
+  {
+    "Nombre": "Palta (aguacate)",
+    "Calorias": 160,
+    "Proteinas": 2,
+    "Carbohidratos": 9,
+    "Grasas": 15,
+    "Fibra": 7,
+    "Categoria": "Frutas"
+  },
+  {
+    "Nombre": "Aceite de oliva",
+    "Calorias": 884,
+    "Proteinas": 0,
+    "Carbohidratos": 0,
+    "Grasas": 100,
+    "Fibra": 0,
+    "Categoria": "Grasas"
+  },
+  {
+    "Nombre": "Yogur natural",
+    "Calorias": 61,
+    "Proteinas": 3.5,
+    "Carbohidratos": 4.7,
+    "Grasas": 3.3,
+    "Fibra": 0,
+    "Categoria": "Lácteos"
   },
   {
     "Nombre": "Pollo (pechuga)",
