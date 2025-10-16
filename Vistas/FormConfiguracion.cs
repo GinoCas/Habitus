@@ -23,9 +23,13 @@ namespace Habitus.Vistas
             _controladorNiveles = new ControladorNiveles();
             _usuario = _controladorUsuario.ObtenerUsuario();
             CargarDatosUsuario();
+            this.FormClosing += FormConfiguracion_FormClosing;
         }
 
-
+        private void FormConfiguracion_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+        }
         // TODO: No se guarda al cambiar los valores
         private void CrearTabPerfil()
         {
