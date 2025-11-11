@@ -585,34 +585,23 @@ namespace Habitus.Vistas
                 {
                     try
                     {
-                        string rutaCarpeta = "C:\\Users\\Expedientes\\AppData\\Roaming\\Habitus\\Datos";
+                        string rutaUsuario = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
+                        // Construir la ruta completa de la carpeta y el archivo
+                        string rutaCarpeta = Path.Combine(rutaUsuario, "AppData\\Roaming\\Habitus\\Datos");
+                        string archivoConfig = Path.Combine(rutaUsuario, "AppData\\Roaming\\Habitus\\configuracion.json");
+
+                        // Eliminar la carpeta si existe
                         if (Directory.Exists(rutaCarpeta))
                         {
-                            Directory.Delete(rutaCarpeta, true); // Elimina todo el contenido recursivamente
-                        }
-                        string[] archivosJSON = new string[]
-                        {
-                          "C:\\Users\\Expedientes\\AppData\\Roaming\\Habitus\\configuracion.json"
-
-                         };
-                        foreach (string archivo in archivosJSON)
-                        {
-                            if (File.Exists(archivo))
-                            {
-                                // Opcional: Eliminar el archivo completo
-                                File.Delete(archivo);
-
-                                // O restablecer el contenido del archivo a vacío o con un objeto vacío
-                                // Esto lo haces solo si prefieres mantener el archivo pero vacío
-                                // var objetoVacio = new { }; // Un objeto vacío o con valores predeterminados
-                                // File.WriteAllText(archivo, JsonConvert.SerializeObject(objetoVacio));
-
-                                // O incluso podrías borrar el contenido con un texto vacío
-                                // File.WriteAllText(archivo, string.Empty);
-                            }
+                            Directory.Delete(rutaCarpeta, true);
                         }
 
+                        // Eliminar el archivo de configuración si existe
+                        if (File.Exists(archivoConfig))
+                        {
+                            File.Delete(archivoConfig);
+                        }
                         MessageBox.Show("Aplicación reiniciada. La aplicación se cerrará.", "Reinicio Completo", 
                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
 
