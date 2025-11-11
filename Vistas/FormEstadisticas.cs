@@ -148,9 +148,8 @@ namespace Habitus.Vistas
             CrearTarjetaResumen("🔥 Calorías", "0", "Quemadas", new Point(200, 40), Color.FromArgb(231, 76, 60));
             CrearTarjetaResumen("🍎 Comidas", "0", "Registradas", new Point(380, 40), Color.FromArgb(39, 174, 96));
             CrearTarjetaResumen("🏆 Puntos", "0", "Ganados", new Point(560, 40), Color.FromArgb(230, 126, 34));
-            CrearTarjetaResumen("🎯 Retos", "0", "Completados", new Point(740, 40), Color.FromArgb(155, 89, 182));
+            //CrearTarjetaResumen("🎯 Retos", "0", "Completados", new Point(740, 40), Color.FromArgb(155, 89, 182));
         }
-
         private void CrearTarjetaResumen(string titulo, string valor, string descripcion, Point ubicacion, Color color)
         {
             var panel = new Panel
@@ -397,8 +396,9 @@ namespace Habitus.Vistas
                 ActualizarTarjetaResumen("🏆 Puntos", puntosGanados.ToString());
 
                 // Cargar retos completados
-                var retosCompletados = _controladorRetos.ObtenerRetosActivos().Count(r => r.Completado && r.FechaInicio >= fechaInicio && r.FechaInicio <= fechaFin);
-                ActualizarTarjetaResumen("🎯 Retos", retosCompletados.ToString());
+                //var retosCompletados = _controladorRetos.ObtenerRetosActivos().Count(r => r.Completado && r.FechaInicio >= fechaInicio && r.FechaInicio <= fechaFin);
+                //MessageBox.Show("Completado:" + retosCompletados);
+                //ActualizarTarjetaResumen("🎯 Retos", retosCompletados.ToString());
 
                 // Actualizar gráficos con datos reales
                 ActualizarGraficos(fechaInicio, fechaFin);

@@ -168,20 +168,6 @@ namespace Habitus.Vistas
             btnAsignarReto.Click += BtnAsignarReto_Click;
             tab.Controls.Add(btnAsignarReto);
 
-            btnGenerarRetos = new Button
-            {
-                Text = "Generar Nuevos\nRetos",
-                Location = new Point(530, 100),
-                Size = new Size(120, 50),
-                Font = new Font("Segoe UI", 9),
-                BackColor = Color.FromArgb(52, 152, 219),
-                ForeColor = Color.White,
-                FlatStyle = FlatStyle.Flat
-            };
-            btnGenerarRetos.FlatAppearance.BorderSize = 0;
-            btnGenerarRetos.Click += BtnGenerarRetos_Click;
-            tab.Controls.Add(btnGenerarRetos);
-
             // Información adicional
             var lblInfo = new Label
             {
@@ -445,25 +431,7 @@ namespace Habitus.Vistas
             }
         }
 
-        private void BtnGenerarRetos_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var nivelUsuario = _usuario != null ? _controladorNiveles.ObtenerNivelActual(_usuario.Puntos).Numero : 1;
-                //_controladorRetos.ObtenerRetosDisponibles(nivelUsuario);
-                
-                MessageBox.Show("¡Nuevos retos generados exitosamente!\n\n" +
-                               "Los retos se han adaptado a tu nivel actual.", 
-                               "Retos Generados", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
-                CargarRetosDisponibles();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al generar retos: {ex.Message}", "Error", 
-                               MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+
 
         private void ActualizarEstadisticasRetos(Label lblStats)
         {
